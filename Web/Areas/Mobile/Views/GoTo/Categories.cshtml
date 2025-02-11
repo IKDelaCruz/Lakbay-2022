@@ -1,0 +1,121 @@
+﻿@using Project.Models;
+@using Project.Models.Models;
+@using Web.Utilities;
+@model Web.ViewModel.PlaceHomeViewModel
+
+@{
+    ViewBag.Title = "Categories";
+}
+
+<style>
+    .main_title_3 h2 {
+        font-size: 17px;
+    }
+
+    .btn-municipality {
+        border-radius: 20px;
+        height: 30px;
+        font-size: 12px;
+        border-color: #477d47;
+        color: #477d47;
+    }
+
+        .btn-municipality:hover {
+            /*border-color: #3dc13d;
+            background-color: #3dc13d;
+            color: white;*/
+
+            border-color: #477d47;
+            background-color: transparent;
+            color: #477d47;
+        }
+
+        .btn-municipality.selected {
+            border-color: #477d47;
+            background-color: #477d47;
+            color: white;
+        }
+
+    .items {
+        text-align: center;
+        padding: 5px;
+        text-decoration: none;
+    }
+
+        .items div {
+            /*border: 1px solid green;*/
+            border-radius: 10px;
+            /*background-color: #eeffe0;*/
+            height: 75px;
+            padding: 20px 0;
+        }
+
+        .items em {
+            width: 100%;
+            font-size: 20px;
+        }
+
+        .items span {
+            font-size: 12px;
+            color: black;
+            text-transform: capitalize;
+        }
+</style>
+
+<div class="bg_color_1">
+
+    <div class="container mt-3">
+
+        <div class="grid mb-4">
+            <h5 class="ml-2">Experience</h5>
+            <div class="row" style="padding: 0 20px;">
+                <a href="javascript:;" class="items col-3" onclick="CategoriesNavigate('@Url.Action("categoriesdetails", "goto", new { userid = Model.UserId, types = ((int)Enums.CategoryTypeEnum.Attraction).ToString(), municipalid = 2, area = "", longitude = Model.UserLongitude, latitude = Model.UserLatitude })')"><div><em class="fas fa-ticket-alt"></em><span>attractions</span></div></a>
+                <a href="javascript:;" class="items col-3" onclick="CategoriesNavigate('@Url.Action("categoriesdetails", "goto", new { userid = Model.UserId, types = ((int)Enums.CategoryTypeEnum.DiveShops).ToString(), municipalid = 18, area = "", longitude = Model.UserLongitude, latitude = Model.UserLatitude })')">
+                    <div>
+                        @*<em class="fas fa-life-ring"></em><span>diving</span>*@
+            
+                        <em class="fas "><img src="~/Content/img/diving.png" height="20"></em>
+                        <span>diving</span>
+                  
+                    </div>
+                </a>
+                <a href="javascript:;" class="items col-3" onclick="CategoriesNavigate('@Url.Action("categoriesdetails", "goto", new { userid = Model.UserId, types = ((int)Enums.CategoryTypeEnum.Restaurant).ToString(), municipalid = 2, area = "", longitude = Model.UserLongitude, latitude = Model.UserLatitude })')"><div><em class="fas fa-utensils"></em><span>food &amp; dining</span></div></a>
+                <a href="javascript:;" class="items col-3" onclick="CategoriesNavigate('@Url.Action("categoriesdetails", "goto", new { userid = Model.UserId, types = ((int)Enums.CategoryTypeEnum.Recreation).ToString(), municipalid = 2, area = "", longitude = Model.UserLongitude, latitude = Model.UserLatitude })')"><div><em class="fas fa-hiking"></em><span>recreations</span></div></a>
+            </div>
+
+            <hr />
+
+            <h5 class="ml-2">Accommodation</h5>
+            <div class="row" style="padding: 0 20px;">
+                <a href="javascript:;" class="items col-3"><div><em class="fas fa-bed" onclick="CategoriesNavigate('@Url.Action("categoriesdetails", "goto", new { userid = Model.UserId, types = ((int)Enums.CategoryTypeEnum.Accommodation).ToString(), municipalid = 2, area = "", longitude = Model.UserLongitude, latitude = Model.UserLatitude })')"></em><span>hotels &amp; more</span></div></a>
+            </div>
+
+            <hr />
+
+            <h5 class="ml-2">More to explore</h5>
+            <div class="row" style="padding: 0 20px;">
+                <a href="javascript:;" class="items col-3"><div><em class="fas fa-store" onclick="CategoriesNavigate('@Url.Action("categoriesdetails", "goto", new { userid = Model.UserId, types = ((int)Enums.CategoryTypeEnum.Shop).ToString(), municipalid = 2, area = "", longitude = Model.UserLongitude, latitude = Model.UserLatitude })')"></em><span>shopping</span></div></a>
+                <a href="javascript:;" class="items col-3"><div><em class="fas fa-tv" onclick="CategoriesNavigate('/GoTo/TurismoTVMobile/')"></em><span>tourismo tv</span></div></a>
+                <a href="javascript:;" class="items col-3"><div><em class="fas fa-calendar" onclick="CategoriesNavigate('@Url.Action("categoriesdetails", "goto", new { userid = Model.UserId, types = ((int)Enums.CategoryTypeEnum.NewsEvents).ToString(), municipalid = 2, area = "", longitude = Model.UserLongitude, latitude = Model.UserLatitude })')"></em><span>festivals</span></div></a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+
+        });
+
+        function CategoriesNavigate(url) {
+            if (url !== "") {
+                invokeCSCode('type:isURL|value:' + url + '|function:');
+            }
+        }
+    </script>
+}

@@ -1,0 +1,38 @@
+﻿@model Web.ViewModel.PlaceDetailViewModel
+@using Project.Models.Models;
+@using Web.Utilities;
+
+@{
+    ViewBag.Title = "Mobile History";
+    Layout = "~/Views/Shared/_MobileLayoutLite.cshtml";
+}
+
+<link href="~/Content/css/blog.css" rel="stylesheet">
+
+
+
+<div class="bg_color_1">
+
+    <!-- /container -->
+    <div class="container margin_60_35">
+
+        @*<div class="mb-2 d-block d-lg-none">
+            <button type="button" class="btn btn-success" onclick="goBack()">❮ Back</button>
+        </div>*@
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="bloglist singlepost">
+                    @Html.Raw(Model.Place.DescriptionHTML)
+                </div>
+            </div>
+            <!-- /col -->
+
+
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+
+
+</div>

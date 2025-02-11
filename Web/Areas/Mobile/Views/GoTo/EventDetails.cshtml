@@ -1,0 +1,81 @@
+﻿@model Web.ViewModel.PlaceDetailViewModel
+@using Project.Models.Models;
+@using Web.Utilities;
+@{
+    ViewBag.Title = "Event Details";
+}
+<!-- SPECIFIC CSS -->
+<link href="~/Content/css/blog.css" rel="stylesheet">
+<section class="hero_in  cart_section start_bg_zoom">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>@Model.Place.Title</h1>
+        </div>
+
+    </div>
+</section>
+
+<div class="bg_color_1">
+
+    <!-- /container -->
+    <div class="container margin_60_35">
+
+        @*<div class="mb-2 d-block d-lg-none">
+            <button type="button" class="btn btn-success" onclick="goBack()">❮ Back</button>
+        </div>*@
+        <div class="grid mb-4">
+            <div class="magnific-gallery">
+
+                @if (Model.Images != null)
+                {
+                    foreach (PlaceImagesDto t in Model.Images)
+                    {
+
+
+                        if (t.Type == Project.Models.Enums.PlaceImagesType.YoutubeURL)
+                        {
+
+                            <a class="mfp-iframe" href="@t.Filename">
+                                <img src="@t.ImageText" class="mb-2 ">
+                            </a>
+
+                        }
+                        else
+                        {
+
+                            <a href="@Model.CDNHOST@t.Filename" class="mb-2" title="@t.ImageText">
+                                <img src="@Model.CDNHOST@t.Filename.Replace(".jpg", "_thumb.jpg")" class="mb-2 img-thumbnail img-fluid">
+                            </a>
+
+                        }
+
+
+                    }
+                }
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="bloglist singlepost">
+                    @Html.Raw(Model.Place.DescriptionHTML)
+                </div>
+            </div>
+            <!-- /col -->
+
+
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+
+
+</div>
+<!-- /bg_color_1 -->
+
+
+<script>
+
+
+
+</script>

@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Xamarin.Forms.4.5.0.617\build\Xamarin.Forms.props" Condition="Exists('..\packages\Xamarin.Forms.4.5.0.617\build\Xamarin.Forms.props')" />
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CEB6E22F-F4DF-4329-8F69-CCEA832924A2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Project.Database</RootNamespace>
+    <AssemblyName>Project.Database</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Buttons.XForms, Version=18.4451.0.39, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Xamarin.Buttons.18.4.0.39\lib\netstandard2.0\Syncfusion.Buttons.XForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Core.XForms, Version=18.4451.0.39, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Xamarin.Core.18.4.0.39\lib\netstandard2.0\Syncfusion.Core.XForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.DataSource.Portable, Version=18.4451.0.39, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Xamarin.DataSource.18.4.0.39\lib\netstandard2.0\Syncfusion.DataSource.Portable.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.GridCommon.Portable, Version=18.4451.0.39, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Xamarin.GridCommon.18.4.0.39\lib\netstandard2.0\Syncfusion.GridCommon.Portable.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Licensing, Version=18.4460.0.39, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Licensing.18.4.0.39\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfListView.XForms, Version=18.4451.0.39, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Xamarin.SfListView.18.4.0.39\lib\netstandard2.0\Syncfusion.SfListView.XForms.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Forms.4.5.0.617\lib\netstandard2.0\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Forms.4.5.0.617\lib\netstandard2.0\Xamarin.Forms.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Forms.4.5.0.617\lib\netstandard2.0\Xamarin.Forms.Xaml.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DbContext\Announcement.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\AspNetRole.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\AspNetUser.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\AspNetUserClaim.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\AspNetUserLogin.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\Baranggay.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\City.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\CMSUser.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\CMSUserRole.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\Country.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\C__MigrationHistory.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\email_queue.cs">
+      <DependentUpon>LakbayQueueModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\Favorite.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\FirebaseUserToken.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\Image.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\LakbayDbModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LakbayDbModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\LakbayDbModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\LakbayDbModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LakbayDbModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\LakbayQueueModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LakbayQueueModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\LakbayQueueModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LakbayQueueModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\LakbayQueueModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LakbayQueueModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\Log.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\Place.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\PlaceFacility.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\PlaceImage.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\PlaceOperatingHour.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\PlaceReview.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\Province.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\sms_queue.cs">
+      <DependentUpon>LakbayQueueModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\User.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\UserDetail.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\UserLinkedAccount.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\UserPlaceVisitHistory.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContext\UserUploadedFile.cs">
+      <DependentUpon>LakbayDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="DbContext\LakbayQueueModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LakbayQueueModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="DbContext\LakbayDbModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LakbayDbModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DbContext\LakbayDbModel.edmx.diagram">
+      <DependentUpon>LakbayDbModel.edmx</DependentUpon>
+    </None>
+    <None Include="DbContext\LakbayQueueModel.edmx.diagram">
+      <DependentUpon>LakbayQueueModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DbContext\LakbayDbModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LakbayDbModel.edmx</DependentUpon>
+      <LastGenOutput>LakbayDbModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DbContext\LakbayDbModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LakbayDbModel.edmx</DependentUpon>
+      <LastGenOutput>LakbayDbModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="DbContext\LakbayQueueModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LakbayQueueModel.edmx</DependentUpon>
+      <LastGenOutput>LakbayQueueModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DbContext\LakbayQueueModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LakbayQueueModel.edmx</DependentUpon>
+      <LastGenOutput>LakbayQueueModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\Xamarin.Forms.4.5.0.617\build\Xamarin.Forms.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.4.5.0.617\build\Xamarin.Forms.props'))" />
+    <Error Condition="!Exists('..\packages\Xamarin.Forms.4.5.0.617\build\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.4.5.0.617\build\Xamarin.Forms.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\packages\Xamarin.Forms.4.5.0.617\build\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.4.5.0.617\build\Xamarin.Forms.targets')" />
+</Project>

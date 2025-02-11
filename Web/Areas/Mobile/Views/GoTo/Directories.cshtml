@@ -1,0 +1,139 @@
+﻿
+@{
+    ViewBag.Title = "Directory";
+    Layout = "~/Views/Shared/_MobileLayoutLite.cshtml";
+}
+@model Web.ViewModel.PlaceHomeViewModel
+@using Project.Models.Models;
+@using Web.Utilities;
+@using Infrastructure;
+
+<style>
+    .cart_section {
+        background: #477d47 url(@Model.CDNHOST@("attraction.png")) center bottom repeat-x !important;
+        color: rgba(255, 255, 255, 0.7);
+    }
+</style>
+<section class="hero_in  cart_section start_bg_zoom">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp">
+
+                @{
+                    var headerText = "";
+                    switch (Model.Type)
+                    {
+                        case Project.Models.Enums.CategoryTypeEnum.TourGuides:
+                            headerText = "TRAVEL AND TOURS";
+                            break;
+                        default:
+                            headerText = "TOURISM OFFICES";
+                            break;
+                    }
+                }
+
+                <span></span> @headerText
+            </h1>
+        </div>
+
+    </div>
+</section>
+
+<div class="bg_color_1">
+    <!--/hero_in-->
+    <div class="container margin_60_35">
+
+        <div class="row">
+
+            @if (Model.Places != null)
+            {
+                foreach (PlaceDto t in Model.Places)
+                {
+
+
+                    <div class="col-md-4 mb-3">
+
+                        <div class="card  directory_box_height" style="min-height: 100%;">
+                            <h6 class="card-header bg_green text_white">@t.Title</h6>
+                            <div class="card-body">
+                                <h6 class="card-title"> @t.ContactPerson.ToUpper()</h6>
+                                <p class="card-text">@t.CompleteAddress.ToLower().FixCase()</p>
+                                @if (t.ContactNumber.IndexOf(',') > 0)
+                                {
+                                    var nos = t.ContactNumber.Split(',');
+                                    foreach (string s in nos)
+                                    {
+                                        if (s.Length > 0)
+                                        {
+                                            <a href="javascript:;" class="btn-call-number" link-value="@s"><i class="ti-mobile mr-2"></i>@s</a>
+                                            <br />
+                                        }
+
+                                    }
+
+                                }
+                                else
+                                {
+                                    <a href="javascript:;" class="btn-call-number" link-value="@t.ContactNumber"><i class="ti-mobile mr-2"></i>@t.ContactNumber</a>
+                                    <br />
+                                }
+                                @if (t.Email != null && t.Email.IndexOf(',') > 0)
+                                {
+                                    var nos = t.Email.Split(',');
+                                    foreach (string s in nos)
+                                    {
+                                        if (s.Length > 0)
+                                        {
+
+                                            <a href="javascript:;" class="btn-send-email" link-value="@s"><i class="ti-email mr-2"></i> @s</a>
+                                            <br />
+                                        }
+
+                                    }
+
+                                }
+                                else
+                                {
+
+                                    <a href="javascript:;" class="btn-send-email" link-value="@t.Email"><i class="ti-email mr-2"></i> @t.Email</a>
+                                }
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                }
+            }
+
+
+
+        </div>
+        <!--/row-->
+    </div>
+    <!-- /container -->
+</div>
+
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+
+            $(document).on('click', '.btn-call-number', function (e) {
+                var value = $(this).attr('link-value');
+                if (value !== "") {
+                    invokeCSCode('type:isPhoneNumber|value:' + value + '|function:');
+                }
+            });
+
+            $(document).on('click', '.btn-send-email', function (e) {
+                var value = $(this).attr('link-value');
+                if (value !== "") {
+                    invokeCSCode('type:isEmail|value:' + value + '|function:');
+                }
+            });
+
+        });
+    </script>
+}

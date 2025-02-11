@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Web.ViewModel.UserUploadFileViewModel>
+@{
+    var CDNHOST = System.Configuration.ConfigurationManager.AppSettings["CDNHOST"];
+}
+
+@if (Model == null || Model.Count() == 0)
+{
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible fade show " role="alert">
+                <strong>No uploaded documents to display.</strong>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-12">
+
+            <div class="list_general">
+                <ul>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var t in Model.OrderByDescending(a => a.DateUploaded))
+                        {
+                            <li>
+                               <figure onclick="UserAddNewFile('userupload/details?guid=@t.Guid.ToString()&isfromios=false')">
+                                    <img style="" src="@t.imgUrl" class="" alt="" loading="lazy">
+                                </figure>
+                                <small>@t.DateUploaded.ToLongDateString()</small>
+                                @*<h4><a href="javascript:;">@t.Filename</a></h4>*@
+                                <p class="mb-0">Type: @t.Type.ToString().Replace("_", " ")</p>
+                                <p class="text-justify">@t.Remarks</p>
+
+                                <ul class="buttons">
+                                    <li>
+                                        @*<a href="javascript:;" class="wish_bt @favoritesClass" t-userid="@Model.UserId" t-id="@t.Id" onclick="FavoritesToggle(this)"></a>*@
+                                        <a href="javascript:;" class="btn_1 bg-warning btn-document-details" link-id="@t.Id"><i class="fa fa-fw fa-eye"></i> View</a>
+                                        <a href="/Profile/DeleteUploadedDocument/@t.Id" class="btn_1 bg-danger"><i class="fa fa-fw fa-times-circle-o"></i> Remove</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+}

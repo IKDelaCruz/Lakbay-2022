@@ -1,0 +1,80 @@
+﻿
+@model Web.ViewModel.PlaceDetailViewModel
+@using Project.Models.Models;
+@using Web.Utilities;
+
+@{
+    ViewBag.Title = "Turismo TV";
+    ViewBag.URL = Request.Url.AbsoluteUri;
+    Layout = "~/Views/Shared/_PlacesLayoutTurismoTV.cshtml";
+}
+
+<link href="~/Content/css/blog.css" rel="stylesheet">
+<section class="hero_in  cart_section start_bg_zoom  ">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>@Model.Place.Title</h1>
+        </div>
+
+    </div>
+</section>
+<div class="bg_color_1">
+
+    <!-- /container -->
+    <div class="container margin_60_35">
+        <div class="row">
+            <div class="col-lg-12 ">
+                <div class=" videoplayer min-height-650">
+                    <div>
+                        <div class="col-lg-10 offset-lg-1  min-turismotv  mb-2">
+                            <iframe loading="lazy" id="vid_frame" src="https://www.youtube.com/embed/6EYlexCIzYo?rel=0&showinfo=0&autohide=1&autoplay=1&rel=0" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+                        </div>
+
+
+                        <div class="row">
+                            <div id="reccomended" class="owl-carousel owl-theme">
+                                @if (Model.Images != null)
+                                {
+                                    foreach (PlaceImagesDto t in Model.Images)
+                                    {
+                                        var thumbnail = t.YoutubeThumbnail;
+                                        if (!string.IsNullOrEmpty(t.Filename))
+                                        {
+                                            thumbnail = Model.CDNHOST+t.Filename.Replace(".jpg", "_thumb.jpg");
+                                        }
+                                        <div class="item">
+                                            <a class="grid_item turismotv_grid">
+                                                <figure style="background:url(@thumbnail)">
+                                                    <div class="score" style="cursor:pointer;" onClick="document.getElementById('vid_frame').src='https://youtube.com/embed/@(t.YouTubeId)?autoplay=1&rel=0&showinfo=0&autohide=1&autoplay=1&rel=0'">
+                                                        <strong><i class="pe-7s-play"></i></strong>
+                                                    </div>
+
+                                                    <div class="info">
+                                                        <h3>@t.ImageText</h3>
+                                                    </div>
+                                                </figure>
+
+
+                                            </a>
+                                        </div>
+
+
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .videoplayer iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>

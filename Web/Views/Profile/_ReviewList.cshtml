@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Web.ViewModel.Profile.ReviewHistoryViewModel>
+@{
+    var CDNHOST = System.Configuration.ConfigurationManager.AppSettings["CDNHOST"];
+}
+
+@if (Model == null || Model.Count() == 0)
+{
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible fade show " role="alert">
+                <strong>No reviews to display.</strong>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-12">
+
+            <div class="list_general">
+                <ul>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var t in Model)
+                        {
+                            <li>
+                                <figure>
+                                    <img src="@(CDNHOST + (t.Place.HomeThumbnail.Replace(".jpg", "_thumb.jpg")))" class="" alt="" loading="lazy">
+                                </figure>
+                                <small>@t.Place.ParentName</small>
+                                <h4><a href="/Places/Details/@t.Place.Id">@t.Place.Title</a></h4>
+                                <p class="text-justify mb-0">
+                                    @for (int x = 0; x < t.Review.ReviewStars; x++)
+                                    {
+                                        <i class="fa fa-star" style="color: #3dc13d;"></i>
+                                    }
+
+                                    &nbsp;&nbsp; - &nbsp;&nbsp; @t.Review.CreatedDate.ToLongDateString()
+                                </p>
+                                <p class="text-justify">@t.Review.ReviewText</p>
+
+                                <ul class="buttons">
+                                    <li>
+                                        @*<a href="javascript:;" class="wish_bt @favoritesClass" t-userid="@Model.UserId" t-id="@t.Id" onclick="FavoritesToggle(this)"></a>*@
+                                        <a href="javascript:;" class="btn_1 bg-warning btn-edit-review" link-id="@t.Review.Id"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                        <a href="javascript:;" class="btn_1 bg-danger btn-delete-review" link-id="@t.Review.Id"><i class="fa fa-fw fa-times-circle-o"></i> Remove</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+}

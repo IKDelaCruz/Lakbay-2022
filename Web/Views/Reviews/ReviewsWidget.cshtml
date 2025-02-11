@@ -1,0 +1,385 @@
+﻿@model Web.ViewModel.ReviewViewModel
+@using Project.Models.Models;
+@using Web.Utilities;
+
+
+@{
+    ViewBag.Title = "ReviewsWidget";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+<style>
+    .rating-star-icon {
+        font-size: 2rem;
+        color: lightgray;
+    }
+
+        .rating-star-icon:hover {
+            cursor: pointer;
+        }
+
+        .rating-star-icon.checked {
+            color: #086908;
+        }
+</style>
+<style>
+    .rating-star-icon {
+        font-size: 2rem;
+        color: lightgray;
+    }
+
+        .rating-star-icon:hover {
+            cursor: pointer;
+        }
+
+        .rating-star-icon.checked {
+            color: #086908;
+        }
+
+    table.dataTable tbody tr {
+        background-color: transparent !important;
+    }
+
+    table.dataTable.no-footer, table.dataTable {
+        border: none !important;
+        border-bottom: none !important;
+        border-top: none !important;
+    }
+
+    #example_wrapper .top {
+        display: none !important;
+    }
+
+    .reviews-container .rev-content {
+        padding: 10px !important;
+    }
+
+        .reviews-container .rev-content p {
+            margin-bottom: 0px !important;
+        }
+
+    .reviews-container .review-box {
+        margin-bottom: 10px !important;
+    }
+
+    table.dataTable thead th {
+        border-bottom: none;
+    }
+
+    .wordwrap {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        -ms-word-break: break-all;
+        /* This is the dangerous one in WebKit, as it breaks things wherever */
+        word-break: break-all;
+        /* Instead use this non-standard one: */
+        word-break: break-word;
+        /* Adds a hyphen where the word breaks, if supported (No Blink) */
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+</style>
+
+<section id="reviews">
+    <h2>Reviews</h2>
+
+    <div class="">
+
+        <table id="example" class="ml-0 mr-0 mt-3 p-0" style="width:100%; height:100%;">
+            <thead>
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+    </div>
+    <!-- /review-container -->
+</section>
+@if (User.Identity.IsAuthenticated)
+{
+
+    <div class="add-review">
+        @if (Model.UserReview == null)
+        {
+            <h5 id="leave-review-header-title">Leave a review</h5>
+        }
+        else
+        {
+            <h5 id="leave-review-header-title">Edit your review</h5>
+        }
+
+        <form>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Rating </label>
+                    <br />
+                    <input type="hidden" name="rating_id" id="rating_id" value="0" />
+                    <input type="hidden" name="rating_place_id" id="rating_place_id" value="0" />
+                    <input type="hidden" name="rating_user_id" id="rating_user_id" value="0" />
+                    <input type="hidden" name="rating_review" id="rating_review" value="0" />
+
+                    <span onclick="ChangeRating(1)" id="rate-1" class="fa fa-star rating-star-icon @(Model.UserReview?.ReviewStars >= 1 ? "checked":"")"></span>
+                    <span onclick="ChangeRating(2)" id="rate-2" class="fa fa-star rating-star-icon @(Model.UserReview?.ReviewStars >= 2 ? "checked":"")"></span>
+                    <span onclick="ChangeRating(3)" id="rate-3" class="fa fa-star rating-star-icon @(Model.UserReview?.ReviewStars >= 3 ? "checked":"")"></span>
+                    <span onclick="ChangeRating(4)" id="rate-4" class="fa fa-star rating-star-icon @(Model.UserReview?.ReviewStars >= 4 ? "checked":"")"></span>
+                    <span onclick="ChangeRating(5)" id="rate-5" class="fa fa-star rating-star-icon @(Model.UserReview?.ReviewStars >= 5 ? "checked":"")"></span>
+
+
+                </div>
+                <div class="form-group col-md-12">
+                    <label>Your Review</label>
+                    <textarea maxlength="2000" name="review_text" id="review_text" class="form-control" style="height:130px;">@Model.UserReviewText</textarea>
+                    <span id='remainingC'></span>
+                </div>
+                <div class="form-group col-md-12 add_top_20 ">
+                    <input type="submit" value="Submit" class="btn_1" id="submit-review">
+                </div>
+            </div>
+        </form>
+    </div>
+
+}
+
+
+
+
+
+
+
+<script>
+
+    function ChangeRating(rating) {
+
+        document.getElementById("rating_review").value = rating;
+
+        for (let i = 1; i <= 5; i++) {
+
+            var element = document.getElementById("rate-" + i);
+
+            if (i <= rating) {
+                element.classList.add("checked");
+            } else {
+                element.classList.remove("checked");
+            }
+
+        }
+    }
+
+    function EditReview(id, placeid, user, rating, remarks) {
+        ChangeRating(rating);
+        document.getElementById("rating_id").value = id;
+        document.getElementById("rating_place_id").value = placeid;
+        document.getElementById("rating_user_id").value = user;
+        document.getElementById("review_text").value = remarks;
+        document.getElementById("review_text").focus();
+
+        document.getElementById("leave-review-header-title").innerHTML = "Edit your review";
+        document.getElementById("submit-review").value = "Submit Changes";
+    }
+
+</script>
+
+<script>
+        var tableElementId = '#example';
+        var emptyTableString =
+			 ' <div class="row">'
+			 +'  <div class="col-12">'
+			 +'       <div class="alert alert-success alert-dismissible fade show " role="alert">'
+			 +'          No reviews'
+			 +'       </div>'
+			 +'   </div>'
+			 +' </div>'
+            ;
+        var requestUrl = '@Url.Action("ReviewsDatatable", "Reviews", new {area = ""})';
+        var requestData = function (d) {
+			d.id = placeId;
+			d.userid = userId;
+        };
+        var processing = '<div><i class="fa fa-spinner fa-spin fa-2x fa-fw"></i></div>';
+        var tdClassname = 'm-0 p-0';
+        var dom = '<"top">tr<"bottom"p>';
+        var searching = false;
+        function Template(full) {
+              var temp =
+' <div class="">'
++'	 <div class="review-box clearfix" style="padding: 0;">'
++'		<div class="rev-content">'
++'			<a href="javascript:;" class="float-right btn-redit-review" style="font-size: 15px; color: #3dc13d; display:%-ShowReviewControls-%;"'
++'			   onclick=\'EditReview("%-Id-%", "%-PlaceId-%", "%-UserId-%", "%-ReviewStars-%", "%-ReviewText-%")\' title="Edit"><i class="fa fa-edit"></i></a>'
++'			<a href="javascript:;" class="float-right btn-delete-review" link-id="%-Id-%" style="font-size: 15px; color: red; margin-right: 20px; display:%-ShowReviewControls-%;" title="Remove"><i class="fa fa-trash"></i></a>'
++'			<div class="rating" >'
++'				<table class="table-borderless p-0 no-footer">'
++'					<tr >'
++'						<td class="pr-1 align-top"  style="width: 75px ">'
++'							<img src="%-profileImgSrc-%"'
++'								 class="img-fluid img-thumbnail" alt="" loading="lazy"'
++'								 style="width:70px; height:70px; border-radius: 50%;">'
++'						</td>'
++'						<td style="vertical-align: baseline;">'
++'							%-ReviewStarsDiv-%'
++'							<div class="rev-info mb-0">'
++'								 %-Info-%'
+                  +'		</div>					<div  class="rev-text text-dark wordwrap" >%-ReviewText-%</div>'
++'						</td>'
++'					</tr>'
++'				</table>'
++'			</div>'
+
++'		</div>'
++'	</div>'
++'</div>'
+
+            temp = temp
+			    .replace(/%-Id-%/g, full.t.Id)
+				.replace(/%-PlaceId-%/g, full.t.PlaceId)
+				.replace(/%-UserId-%/g, full.UserId)
+				.replace(/%-ReviewStarsDiv-%/g, full.ReviewStars)
+				.replace(/%-ReviewStars-%/g, full.t.ReviewStars)
+				.replace(/%-ReviewText-%/g, full.t.ReviewText)
+				.replace(/%-Info-%/g, full.Info)
+                .replace(/%-profileImgSrc-%/g, full.profileImgSrc)
+                .replace(/%-ShowReviewControls-%/g, full.ShowReviewControls)
+				;
+            return temp;
+        }
+</script>
+<script>
+    var placeId = 0;
+    var userId = 0;
+    var focusOnFirstReview = false;
+    function resetForm() {
+        $('.custom-search-input-2 select, .custom-select-form select').niceSelect();
+
+        $('#rating_id').val('0');
+        $('#rating_place_id').val(placeId);
+        $('#rating_user_id').val(userId);
+        $('#rating_review').val('');
+        $('#review_text').val('');
+
+        ChangeRating(0);
+
+        //$('#submit-review').prop('disabled', false);
+    }
+    function REVIEW_INIT(
+        _placeId,
+        _userId
+    ) {
+        placeId = _placeId;
+        userId = _userId;
+        $(document).on('click', '.btn-delete-review', function (e) {
+            e.preventDefault();
+            $(this).prop('disabled', true);
+
+            $.ajax({
+                url: '@Url.Action("delete", "profile", new {area = ""})',
+                type: 'get',
+                data: { id: $(this).attr('link-id') },
+                success: function (data) {
+                    resetForm();
+                    RefreshView();
+                }
+            });
+        });
+        $('textarea').on("input", function () {
+            var maxLength = 2000;
+            if (this.value.length > maxLength) {
+                return false;
+            }
+            if (this.value.length == 0) {
+                $("#remainingC").html('');
+            } else {
+                $("#remainingC").html((this.value.length) + "/" + maxLength);
+            }
+        });
+
+        $(document).on('click', '#submit-review', function (e) {
+            e.preventDefault();
+            //$(this).prop('disabled', true);
+
+            var rating = $('#rating_review').val();
+            if (!rating) {
+                rating = "0";
+            }
+
+            if (parseInt(rating) > 0 && $('#review_text').val() !== "") {
+                var data = {
+                    id: $('#rating_id').val(),
+                    placeid: placeId,
+                    userId: userId,
+                    rating: rating,
+                    review: $('#review_text').val()
+                };
+                $.ajax({
+                    url: '@Url.Action("Review", "widgets", new {area = "mobile"})',
+                    type: 'post',
+                    data: data,
+                    success: function (data) {
+                        //alert(data);
+                        //GetReviews(5);
+
+                        resetForm();
+                        RefreshView();
+                        if (!data.Success) {
+                            modalMessage(data.Message, "Message");
+                        }
+                        $(this).prop('disabled', false);
+
+                        $('html, body').animate({ scrollTop: $('#example').offset().top - 150 }, 200);
+                        
+                    },
+                    error(jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus);
+                        $(this).prop('disabled', false);
+                    }
+                });
+            } else {
+                modalMessage('Please fill all required fields.', 'Required');
+            }
+        });
+
+
+
+        PARAMS.init(
+            tableElementId,
+            emptyTableString,
+            requestUrl,
+            requestData,
+            Template,
+            processing,
+            tdClassname,
+            dom,
+            searching
+        );
+    }
+</script>
+<script type="text/javascript" src="~/Scripts/datatable-script.js?2"></script>
+
+
+@*ADD TO PARENT VIEW*@
+
+@*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">*@
+
+@*<div id="reviews-container" class="reviews-container">
+
+    </div>*@
+
+@*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>*@
+
+@*$(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("ReviewsWidget", "Reviews", new { id = Model.Place.Id, area = "" })',
+            type: 'get',
+            data: { },
+            success: function (data) {
+                $("#reviews-container").html(data);
+                REVIEW_INIT(
+                    '@Model.Place.Id',
+                    '@Model.UserId'
+                );
+            }
+        });
+    });*@

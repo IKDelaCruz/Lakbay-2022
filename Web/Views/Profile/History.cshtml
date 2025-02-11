@@ -1,0 +1,140 @@
+﻿@model Web.ViewModel.UserPlaceVisitHistoryViewModel﻿
+@using Project.Models.Models.UserModels;
+@using Web.ViewModel;
+@using Web.Utilities;
+
+@{
+    ViewBag.Title = "History";
+    Layout = "~/Views/Shared/_ProfileLayout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<style>
+    /* Apply this to your `table` element. */
+    #page {
+        border-collapse: collapse;
+    }
+
+        /* And this to your table's `td` elements. */
+        #page td {
+            padding: 0;
+            margin: 0;
+        }
+
+        #page tr {
+            padding: 0;
+            margin: 0;
+        }
+
+
+</style>
+
+
+<div class="content-wrapper">
+
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Profile</a>
+            </li>
+            <li class="breadcrumb-item active">History</li>
+        </ol>
+        @if (!string.IsNullOrEmpty(ViewBag.Message))
+        {
+            <div class="row">
+                <div class="col-8">
+                    <div class="alert alert-success alert-dismissible fade show " role="alert">
+                        @ViewBag.Message
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="box_general padding_bottom">
+                    <div class="header_box version_2">
+                        <h2><i class="fa fa-history"></i>Visit History</h2>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <table id="example" class="" style="width:100%; height:100%;">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        var tableElementId = '#example';
+        var emptyTableString =
+            '     <div class="alert alert-success alert-dismissible fade show " role="alert">'
+            + '      <strong>No Visit History to display.</strong> Start exploring Oriental Mindoro now!'
+            + '   </div>'
+            ;
+        var requestUrl = '@Url.Action("HistoryTable")';
+        var requestData = function (d) {
+           
+        };
+        var processing = '<div><i class="fa fa-spinner fa-spin fa-2x fa-fw"></i></div>';
+        var tdClassname = 'm-0 p-0';
+        var dom = '<"top">tr<"bottom"p>';
+        var searching = false;
+        function Template(full) {
+            var temp =
+                '<div class="list_general"><ul>'
+                + '	<li>'
+                + '		<figure>'
+                + '			<img src="%-imgsrc-%" class="" alt="" loading="lazy">'
+                + '		</figure>'
+                + '		<small>%-parentName-%</small>'
+                + '		<h4><a href="/Places/Details/%-placeId-%">%-Title-%</a></h4>'
+                + '		<p class="mb-0">%-longdate-% &gt; %-shorttime-%</p>'
+                + '		<p class="mb-0">%-completeAddress-%</p>'
+                + '		<p class="">Remarks: %-remarks-%</p>'
+                + '	</li>'
+                + '</ul></div>';
+            temp = temp
+                .replace(/%-imgsrc-%/g, full.imgSrc)
+                .replace(/%-parentName-%/g, full.t.Place.ParentName)
+                .replace(/%-Title-%/g, full.t.Place.Title)
+                .replace(/%-longdate-%/g, full.DateVisitLongDate)
+                .replace(/%-shorttime-%/g, full.DateVisitShortTime)
+                .replace(/%-completeAddress-%/g, full.t.Place.CompleteAddress)
+                .replace(/%-remarks-%/g, full.Remarks)
+                .replace(/%-placeId-%/g, full.t.Place.Id);
+
+            return temp;
+        }
+    </script>
+
+    <script type="text/javascript" src="~/Scripts/datatable-script.js?2"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            PARAMS.init(
+                tableElementId,
+                emptyTableString,
+                requestUrl,
+                requestData,
+                Template,
+                processing,
+                tdClassname,
+                dom,
+                searching
+            );
+        });
+    </script>
+}

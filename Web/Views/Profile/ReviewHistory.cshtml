@@ -1,0 +1,253 @@
+﻿@using Project.Models.Models;
+@using Web.ViewModel;
+@using Web.Utilities;
+@{
+    ViewBag.Title = "My Reviews";
+    Layout = "~/Views/Shared/_ProfileLayout.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<style>
+    .wordwrap {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        -ms-word-break: break-all;
+        /* This is the dangerous one in WebKit, as it breaks things wherever */
+        word-break: break-all;
+        /* Instead use this non-standard one: */
+        word-break: break-word;
+        /* Adds a hyphen where the word breaks, if supported (No Blink) */
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+</style>
+<style>
+    /* Apply this to your `table` element. */
+    #page {
+        border-collapse: collapse;
+    }
+
+        /* And this to your table's `td` elements. */
+        #page td {
+            padding: 0;
+            margin: 0;
+        }
+
+        #page tr {
+            padding: 0;
+            margin: 0;
+        }
+</style>
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Profile</a>
+            </li>
+            <li class="breadcrumb-item active">Review History</li>
+        </ol>
+        @if (!string.IsNullOrEmpty(ViewBag.Message))
+        {
+            <div class="row">
+                <div class="col-8">
+                    <div class="alert alert-success alert-dismissible fade show " role="alert">
+                        @ViewBag.Message
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- /box_general-->
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="box_general padding_bottom">
+                    <div class="header_box version_2">
+                        <h2><i class="fa fa-star"></i>My Reviews</h2>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <table id="example" class="" style="width:100%; height:100%;">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /row-->
+
+    </div>
+    <!-- /.container-fluid-->
+</div>
+<!-- /.container-wrapper-->
+
+<div id="review-detail-container"></div>
+
+
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            //GetReviews();
+
+            $(document).on('click', '.btn-delete-review', function () {
+                $.ajax({
+                    url: '@Url.Action("Delete")',
+                    type: "get",
+                    data: { id: $(this).attr('link-id') },
+                    success: function (data) {
+                        $('#modal-review-detail').modal('hide');
+                        RefreshView();
+                    }
+                });
+            });
+
+            $(document).on('click', '.btn-edit-review', function () {
+                $('.btn-edit-review').prop('disabled', true);
+                $.ajax({
+                    url: '@Url.Action("ReviewDetail")',
+                    type: "get",
+                    data: { id: $(this).attr('link-id') },
+                    success: function (data) {
+                        //$('#review-detail-container').html(data);
+                        $('#modal-review-detail').modal({ 'backdrop': 'static' }).modal('show');
+                        $('.btn-edit-review').prop('disabled', false);
+                        RefreshView();
+                    }
+                });
+            });
+
+            $(document).on('submit', '#form-update-review', function (e) {
+                e.preventDefault();
+                $('#btn-submit-review').prop('disabled', true);
+
+                $.ajax({
+                    url: '@Url.Action("UpdateReview")',
+                    type: "get",
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        //GetReviews();
+                        $('#modal-review-detail').modal('hide');
+                        RefreshView();
+                        //$('#review-detail-container').html('');
+                    },
+                    error: function () {
+                        $('#btn-submit-review').prop('disabled', false);
+                    }
+                });
+            });
+
+        });
+
+        function GetReviews() {
+
+            $.ajax({
+                url: '@Url.Action("GetReviews")',
+                type: "get",
+                data: {},
+                beforeSend: function () {
+                    $('#review-list-container').hide();
+                    $('#indicator').show();
+                },
+                success: function (data) {
+                    $('#indicator').hide();
+                    $('#review-list-container').show();
+                    $('#review-list-container').html(data);
+                },
+                error: function () {
+                    $('#indicator').hide();
+                    $('#review-list-container').show();
+                }
+            });
+        }
+    </script>
+
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        var tableElementId = '#example';
+        var emptyTableString =
+			 ' <div class="row">'
+			 +'  <div class="col-12">'
+			 +'       <div class="alert alert-success alert-dismissible fade show " role="alert">'
+            +'           <strong>No reviews to display.</strong>'
+			 +'       </div>'
+			 +'   </div>'
+			 +' </div>'
+            ;
+        var requestUrl = '@Url.Action("DatatableReviews")';
+        var requestData = function (d) {
+        };
+        var processing = '<div><i class="fa fa-spinner fa-spin fa-2x fa-fw"></i></div>';
+        var tdClassname = 'm-0 p-0';
+        var dom = '<"top">tr<"bottom"p>';
+        var searching = false;
+        function Template(full) {
+
+
+
+            var temp =
+                '<div class="list_general"><ul><li>'
+                + ' <div class="row">'
+                +'       <figure>'
+                + '	        <img src="%-imgSrc-%" class="" alt="" loading="lazy">'
+                + ' 	</figure>'
+                + '	    <ul class="buttons"  style="top: 10px;">'
+                + '	    	<li>'
+                + '		    	<a href="javascript:;" class="btn_1 bg-warning btn-edit-review" link-id="%-reviewId-%"><i class="fa fa-fw fa-edit"></i> Edit</a>'
+                + '		    	<a href="javascript:;" class="btn_1 bg-danger btn-delete-review" link-id="%-reviewId-%"><i class="fa fa-fw fa-times-circle-o"></i> Remove</a>'
+                + '		    </li>'
+                + '	    </ul>'
+                + ' </div>'
+                + '	<small>%-parentName-%</small>'
+                + '	<h4><a href="/Places/Details/%-placeId-%">%-placeTitle-%</a></h4>'
+                + '	<p class="text-justify mb-0">'
+                + '		%-reviewStars-%'
+                + '		&nbsp;&nbsp; - &nbsp;&nbsp; %-createdDate-%'
+                + '	</p>'
+                + '	<p class="text-justify wordwrap">%-reviewText-%</p>'
+
+                + '</li></ul></div>'
+                ;
+
+            temp = temp
+                .replace(/%-createdDate-%/g, full.createdDate)
+                .replace(/%-placeId-%/g, full.p.Id)
+                .replace(/%-parentName-%/g, full.p.ParentName)
+                .replace(/%-placeTitle-%/g, full.p.Title)
+                .replace(/%-imgSrc-%/g, full.placeImgSrc)
+                .replace(/%-reviewId-%/g, full.t.Id)
+                .replace(/%-reviewText-%/g, full.t.ReviewText)
+                .replace(/%-reviewStars-%/g, full.ReviewStars)
+                ;
+            return temp;
+        }
+    </script>
+
+    <script type="text/javascript" src="~/Scripts/datatable-script.js?2"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            PARAMS.init(
+                tableElementId,
+                emptyTableString,
+                requestUrl,
+                requestData,
+                Template,
+                processing,
+                tdClassname,
+                dom,
+                searching
+            );
+        });
+    </script>
+}

@@ -1,0 +1,202 @@
+﻿@model Web.ViewModel.Menu.HeaderViewModel
+@using Project.Models;
+
+@{
+    AuthenticatedUserModel user = (AuthenticatedUserModel)TempData.Peek("UserIdentity");
+}
+
+<header class="header menu_fixed">
+    <div id="preloader"><div data-loader="circle-side"></div></div><!-- /Page Preload -->
+    <div id="logo">
+        <a href="/Home/">
+            <img src="~/Content/img/logo-animation-green.gif" width="150" alt="logo-white" class="logo_normal">
+            <img src="~/Content/img/logo-animation-green.gif" width="150" alt="" class="logo_sticky">
+        </a>
+    </div>
+    <ul id="top_menu">
+        @*<li><a href="/Account/Login" class="login" title="Sign In">Sign In</a></li>
+            <li><a href="/Account/Logout" class="logout" title="Sign Out">Sign Out</a></li>*@
+        @*<li><a href="#sign-in-dialog" id="sign-in" class="login" title="Sign In">Sign In</a></li>*@
+        @*<li><a href="cart-1.html" class="cart-menu-btn" title="Cart"><strong>4</strong></a></li>
+            <li><a href="wishlist.html" class="wishlist_bt_top" title="Your wishlist">Your wishlist</a></li>*@
+    </ul>
+    <!-- /top_menu -->
+    <a href="#menu" class="btn_mobile">
+        <div class="hamburger hamburger--spin" id="hamburger">
+            <div class="hamburger-box">
+                <div class="hamburger-inner"></div>
+            </div>
+        </div>
+    </a>
+    <nav id="menu" class="main-menu green">
+        <ul>
+            @*<li>
+               
+                    <a href="http://shopmore.travelorientalmindoro.ph/" target="_blank" class="bg-success" style="color:white !important;">Visit Online Store</a>
+             
+            </li>*@
+            <li>
+                <span><a href="#0">Oriental Mindoro</a></span>
+                <ul>
+                    <li><a href="/Page/Lakbay">What is LAKBAY</a></li>
+                    <li><a href="/Page/TravelAdvisory">Travel Advisory</a></li>
+                    <li><a href="/Page/HowToGetToOrientalMindoro">How To Get Here</a></li>
+                    <li><a href="/Page/GovernorsMessage">Governor's Message</a></li>
+                    <li>
+                        <span><a href="#0">History</a></span>
+                        <ul class="scrollbar">
+                            @foreach (var place in Model.ListCityHistory)
+                            {
+                                <li><a href="/Page/History/@place.HomeSlug">@place.ParentName</a></li>
+                            }
+                            @*<li><a href="/Page/History/History-Of-Oriental-Mindoro">Oriental Mindoro</a></li>
+                                <li><a href="/Page/History/History-Of-Baco">Baco</a></li>
+                                <li><a href="/Page/History/History-Of-Bansud">Bansud</a></li>
+                                <li><a href="/Page/History/History-Of-Bongabong">Bongabong</a></li>
+                                <li><a href="/Page/History/History-Of-Bulalacao">Bulalacao</a></li>
+                                <li><a href="/Page/History/History-Of-Calapan">Calapan City</a></li>
+                                <li><a href="/Page/History/History-Of-Gloria">Gloria</a></li>
+                                <li><a href="/Page/History/History-Of-Mansalay">Mansalay</a></li>
+                                <li><a href="/Page/History/History-Of-Naujan">Naujan</a></li>
+                                <li><a href="/Page/History/History-Of-Pinamalayan">Pinamalayan</a></li>
+                                <li><a href="/Page/History/History-Of-Pola">Pola</a></li>
+                                <li><a href="/Page/History/History-Of-Puerto-Galera">Puerto Galera</a></li>
+                                <li><a href="/Page/History/History-Of-Roxas">Roxas</a></li>
+                                <li><a href="/Page/History/History-Of-San-Teodoro">San Teodoro</a></li>
+                                <li><a href="/Page/History/History-Of-Socorro">Socorro</a></li>
+                                <li><a href="/Page/History/History-Of-Victoria">Victoria</a></li>*@
+                        </ul>
+                    </li>
+
+                </ul>
+            </li>
+
+
+            <li>
+                <span><a href="javascript:;" class="nav-link">See &amp; Do</a></span>
+                <ul class="text-left">
+                    <li>
+                        <span><a href="#0">Attraction</a></span>
+                        <ul class="scrollbar">
+                            <li><a href="/Places/Attractions/14">Baco</a></li>
+                            <li><a href="/Places/Attractions/15">Bansud</a></li>
+                            <li><a href="/Places/Attractions/12">Bongabong</a></li>
+                            <li><a href="/Places/Attractions/6">Bulalacao</a></li>
+                            <li><a href="/Places/Attractions/2">Calapan City</a></li>
+                            <li><a href="/Places/Attractions/13">Gloria</a></li>
+                            <li><a href="/Places/Attractions/5">Mansalay</a></li>
+                            <li><a href="/Places/Attractions/8">Naujan</a></li>
+                            <li><a href="/Places/Attractions/16">Pinamalayan</a></li>
+                            <li><a href="/Places/Attractions/17">Pola</a></li>
+                            <li><a href="/Places/Attractions/18">Puerto Galera</a></li>
+                            <li><a href="/Places/Attractions/4">Roxas</a></li>
+                            <li><a href="/Places/Attractions/19">San Teodoro</a></li>
+                            <li><a href="/Places/Attractions/20">Socorro</a></li>
+                            <li><a href="/Places/Attractions/21">Victoria</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span><a href="#0">Shopping</a></span>
+                        <ul class="scrollbar">
+                            @*<li><a href="/Places/Shops/14">Baco</a></li>
+                                <li><a href="/Places/Shops/15">Bansud</a></li>
+                                <li><a href="/Places/Shops/12">Bongabong</a></li>
+                                <li><a href="/Places/Shops/6">Bulalacao</a></li>*@
+                            <li><a href="/Places/Shops/2">Calapan</a></li>
+                            @*<li><a href="/Places/Shops/13">Gloria</a></li>*@
+                            @*<li><a href="/Places/Shops/5">Mansalay</a></li>*@
+                            <li><a href="/Places/Shops/8">Naujan</a></li>
+                            <li><a href="/Places/Shops/16">Pinamalayan</a></li>
+                            <li><a href="/Places/Shops/17">Pola</a></li>
+                            <li><a href="/Places/Shops/18">Puerto Galera</a></li>
+                            <li><a href="/Places/Shops/4">Roxas</a></li>
+                            <li><a href="/Places/Shops/19">San Teodoro</a></li>
+                            <li><a href="/Places/Shops/20">Socorro</a></li>
+                            <li><a href="/Places/Shops/21">Victoria</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span><a href="#0">Dining</a></span>
+                        <ul class="scrollbar">
+                            <li><a href="/Places/Restaurants/14">Baco</a></li>
+                            <li><a href="/Places/Restaurants/15">Bansud</a></li>
+                            <li><a href="/Places/Restaurants/12">Bongabong</a></li>
+                            <li><a href="/Places/Restaurants/6">Bulalacao</a></li>
+                            <li><a href="/Places/Restaurants/2">Calapan City</a></li>
+                            <li><a href="/Places/Restaurants/13">Gloria</a></li>
+                            <li><a href="/Places/Restaurants/5">Mansalay</a></li>
+                            <li><a href="/Places/Restaurants/8">Naujan</a></li>
+                            <li><a href="/Places/Restaurants/16">Pinamalayan</a></li>
+                            <li><a href="/Places/Restaurants/17">Pola</a></li>
+                            <li><a href="/Places/Restaurants/18">Puerto Galera</a></li>
+                            <li><a href="/Places/Restaurants/4">Roxas</a></li>
+                            <li><a href="/Places/Restaurants/19">San Teodoro</a></li>
+                            <li><a href="/Places/Restaurants/20">Socorro</a></li>
+                            <li><a href="/Places/Restaurants/21">Victoria</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/Places/DiveShops/18">Diving</a></li>
+                    <li>
+                        <span><a href="#0">Accommodation</a></span>
+                        <ul class="scrollbar">
+                            <li><a href="/Places/Accommodations/14">Baco</a></li>
+                            <li><a href="/Places/Accommodations/15">Bansud</a></li>
+                            <li><a href="/Places/Accommodations/12">Bongabong</a></li>
+                            <li><a href="/Places/Accommodations/6">Bulalacao</a></li>
+                            <li><a href="/Places/Accommodations/2">Calapan City</a></li>
+                            <li><a href="/Places/Accommodations/13">Gloria</a></li>
+                            <li><a href="/Places/Accommodations/5">Mansalay</a></li>
+                            <li><a href="/Places/Accommodations/8">Naujan</a></li>
+                            <li><a href="/Places/Accommodations/16">Pinamalayan</a></li>
+                            <li><a href="/Places/Accommodations/17">Pola</a></li>
+                            <li><a href="/Places/Accommodations/18">Puerto Galera</a></li>
+                            <li><a href="/Places/Accommodations/4">Roxas</a></li>
+                            <li><a href="/Places/Accommodations/19">San Teodoro</a></li>
+                            <li><a href="/Places/Accommodations/20">Socorro</a></li>
+                            <li><a href="/Places/Accommodations/21">Victoria</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <span><a href="/Festival/">Festivals</a></span>
+            </li>
+            <li>
+                <span><a href="/TurismoTV/">TurismoTV</a></span>
+            </li>
+            <li>
+                <span><a href="#">Contact Us</a></span>
+                <ul>
+                    <li><a href="/Places/Directory/">Tourism Offices</a></li>
+                    <li><a href="/Places/TourGuides/">Travel and Tours</a></li>
+                    @*<li><a href="/Places/DRRMOffices/">DRRM Offices</a></li>*@
+                    @*<li><a href="/Places/GovernmentAgency/">Other Government Agency</a></li>*@
+
+                </ul>
+            </li>
+
+            <li>
+                <span><a href="#0">My Account</a></span>
+                <ul class="second_level_right">
+                    @if (@User.Identity.IsAuthenticated)
+                    {
+                        <li><a href="/Profile/">Profile</a></li>
+                        <li><a href="/Profile/Upload">Upload</a></li>
+                        <li><a href="/Profile/Favorites">Favorites</a></li>
+                        <li><a href="/Profile/History">Visit History</a></li>
+                        <li><a href="/Profile/Reviews">My Reviews</a></li>
+                        <li><a href="/Profile/ChangePassword">Password</a></li>
+                        <li><a href="/Account/Logout">Sign Out</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="/Profile/">Sign In</a></li>
+                        <li><a href="/Account/Register">Register</a></li>
+                    }
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</header>
+

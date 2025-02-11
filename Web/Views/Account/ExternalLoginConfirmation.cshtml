@@ -1,0 +1,45 @@
+﻿@model Web.Models.ExternalLoginConfirmationViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+
+<div id="login">
+    <aside>
+        <figure>
+            <a href="/Home/"><img src="~/Content/img/logo.png" width="155" data-retina="true" alt="" class="logo_sticky"></a>
+        </figure>
+        @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(m => m.LinkId, new { @class = "form-control" })
+
+            <p class="text-info text-justify">
+                You've successfully authenticated with <strong>@ViewBag.LoginProvider</strong>.
+                Please enter a user name for this site below and click the Register button to finish
+                logging in.
+            </p>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "" })
+
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                <i class="ti-user"></i>
+            </div>
+
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+
+                <input type="submit" class="btn_1 rounded full-width" value="Register" />
+
+            </div>
+        }
+
+        <div class="copy">© 2021 Lakbay Oriental Mindoro</div>
+    </aside>
+</div>
+<!-- /login -->

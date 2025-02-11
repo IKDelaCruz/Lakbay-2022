@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LakbayQueueModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="email_queue">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="recipient" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sender" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="message" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="send_date" Type="datetime" />
+          <Property Name="subject" Type="varchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sms_queue">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sender" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="recipient" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="message" Type="varchar" MaxLength="512" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="send_date" Type="datetime" />
+          <Property Name="status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="LakbayQueueModelStoreContainer">
+          <EntitySet Name="email_queue" EntityType="Self.email_queue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sms_queue" EntityType="Self.sms_queue" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LakbayQueueModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="email_queue">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="recipient" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="message" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="send_date" Type="DateTime" Precision="3" />
+          <Property Name="subject" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sms_queue">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="recipient" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="message" Type="String" MaxLength="512" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="send_date" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="LakbayQueueEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="email_queue" EntityType="Self.email_queue" />
+          <EntitySet Name="sms_queue" EntityType="Self.sms_queue" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LakbayQueueModelStoreContainer" CdmEntityContainer="LakbayQueueEntities">
+          <EntitySetMapping Name="email_queue">
+            <EntityTypeMapping TypeName="LakbayQueueModel.email_queue">
+              <MappingFragment StoreEntitySet="email_queue">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="recipient" ColumnName="recipient" />
+                <ScalarProperty Name="sender" ColumnName="sender" />
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="send_date" ColumnName="send_date" />
+                <ScalarProperty Name="subject" ColumnName="subject" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sms_queue">
+            <EntityTypeMapping TypeName="LakbayQueueModel.sms_queue">
+              <MappingFragment StoreEntitySet="sms_queue">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sender" ColumnName="sender" />
+                <ScalarProperty Name="recipient" ColumnName="recipient" />
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="send_date" ColumnName="send_date" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

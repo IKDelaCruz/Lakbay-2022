@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "Travel and Tours";
+    ViewBag.URL = Request.Url.AbsoluteUri;
+    Layout = "~/Views/Shared/_PlacesLayout.cshtml";
+}
+@model Web.ViewModel.PlaceHomeViewModel
+@using Project.Models.Models;
+@using Web.Utilities;
+@using Infrastructure;
+<style>
+    .cart_section {
+        background: #477d47 url(@Model.CDNHOST@(Model.Type.ToString() + ".png")) center bottom repeat-x !important;
+        color: rgba(255, 255, 255, 0.7);
+    }
+</style>
+<section class="hero_in  cart_section start_bg_zoom">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>Travel and Tours</h1>
+        </div>
+
+    </div>
+</section>
+<div class="bg_color_1">
+    <!--/hero_in-->
+    <div class="container margin_60_35">
+
+        <div class="row">
+            <div class="mb-2 d-block d-lg-none col-12">
+                <button type="button" class="btn btn-success" onclick="goBack()">❮ Back</button>
+            </div>
+            @if (Model.Places != null)
+            {
+                foreach (PlaceDto t in Model.Places)
+                {
+
+
+                    <div class="col-md-4 mb-3">
+
+                        <div class="card travel_box_height">
+                            <h6 class="card-header bg_green text_white text-center">@t.Title</h6>
+                            <div class="card-body">
+                                <h6 class="card-title"> @t.ContactPerson.ToUpper()</h6>
+                                <p class="card-text">@t.CompleteAddress.ToLower().FixCase()</p>
+                                @if (t.ContactNumber.IndexOf(',') > 0)
+                                {
+                                    var nos = t.ContactNumber.Split(',');
+                                    foreach (string s in nos)
+                                    {
+                                        if (s.Length > 0)
+                                        {
+                                            <a href="tel:@s" target="_blank"><i class="ti-mobile mr-2"></i>@s  </a>
+                                            <br />
+                                        }
+
+                                    }
+
+
+                                }
+                                else
+                                {
+                                    <a href="tel:@t.ContactNumber" target="_blank"><i class="ti-mobile mr-2"></i>@t.ContactNumber</a>
+                                    <br />
+                                }
+                                @if (!String.IsNullOrEmpty(t.Email))
+                                {
+                                    <a href="mailto:@t.Email" target="_blank"><i class="ti-email mr-2"></i> @t.Email</a>
+                                }
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                }
+            }
+
+
+
+        </div>
+        <!--/row-->
+    </div>
+    <!-- /container -->
+</div>

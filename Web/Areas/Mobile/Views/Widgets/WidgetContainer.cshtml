@@ -1,0 +1,51 @@
+﻿
+
+@model Web.ViewModel.PlaceHomeViewModel
+@using Project.Models.Models;
+@using Web.Utilities;
+@{
+    ViewBag.Title = "Attraction";
+    Layout = "";
+}
+
+<div class="add_bottom_15">
+    <div class="main_title_3">
+
+        @if (ViewBag.ShowDevider != null && ViewBag.ShowDevider)
+        {
+            <span><em></em></span>
+        }
+
+        <h2>@ViewBag.MainTitle</h2>
+        <p>@ViewBag.Description</p>
+    </div>
+    <div class="row">
+        @if (Model.Places != null && Model.Places.Any())
+        {
+            <div class="owl-carousel owl-theme">
+                @foreach (PlaceDto t in Model.Places)
+                {
+                    var url = Url.Action("details", "destination", new { area = "mobile", id = t.Id, userid = Model.UserId });
+
+                    <div class="item">
+                        <div class="box_grid">
+                            <a href="@url" class="grid_item">
+                                <figure>
+                                    <div class="score"><strong>@t.DistanceFromManila kms</strong></div>
+                                    <img src="@(Model.CDNHOST + (t.HomeThumbnail.Replace(".jpg", "_thumb.jpg")))"  class="img-fluid" alt=""  loading="lazy" width="400" height="267">
+                                    <div class="info">
+                                        <em>@t.Description.TruncateLongString(30)</em>
+                                        <h3>@t.Title</h3>
+                                    </div>
+                                </figure>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+    <!-- /row -->
+    <a href="@(!string.IsNullOrEmpty(ViewBag.ViewAllUrl) ? ViewBag.ViewAllUrl : "javascript:;")"><strong>View all<i class="arrow_carrot-right"></i></strong></a>
+</div>
+<!-- /section -->

@@ -1,0 +1,32 @@
+﻿
+<script>
+    function modalMessage(message, title) {
+        $('#message-modal-title').html(title);
+        $('#message-modal-body').html(message);
+        $('#message-modal').appendTo('body').modal('show');
+    }
+</script>
+
+<style>
+    header {
+        z-index: 99999999 !important;
+    }
+
+    #message-modal {
+        z-index: 999999999 !important;
+    }
+</style>
+
+<div class="modal" id="message-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="message-modal-title">Message</h4>
+            </div>
+            <div class="modal-body" id="message-modal-body">Message</div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-default btn-flat" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>

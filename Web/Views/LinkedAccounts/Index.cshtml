@@ -1,0 +1,206 @@
+﻿@model  IEnumerable<Web.ViewModel.Profile.LinkedAccountViewModel>
+@using Web.Models
+
+@{
+    ViewBag.Title = "Linked Accounts";
+    Layout = "~/Views/Shared/_ProfileLayout.cshtml";
+}
+
+<style>
+    /* Apply this to your `table` element. */
+    #page {
+        border-collapse: collapse;
+    }
+
+        /* And this to your table's `td` elements. */
+        #page td {
+            padding: 0;
+            margin: 0;
+        }
+
+        #page tr {
+            padding: 0;
+            margin: 0;
+        }
+</style>
+
+
+<div class="content-wrapper">
+
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Profile</a>
+            </li>
+            <li class="breadcrumb-item active">Linked Accounts</li>
+        </ol>
+        @*<div data-alerts="alerts" data-ids="myid" data-fade="3000"></div>
+
+        <div class="alert alert-danger" role="alert">
+            This is a primary alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+        </div>*@
+        @if (!string.IsNullOrEmpty(ViewBag.Message))
+        {
+            <div class="row">
+                <div class="col-8">
+                    <div id="alertDiv" class="alert alert-success alert-dismissible fade show " role="alert">
+                        @ViewBag.Message
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="box_general padding_bottom">
+                    <div class="header_box version_2">
+                        <h2><i class="fa fa-history"></i>Linked Accounts</h2>
+                    </div>
+
+                    @{
+                        var mail = Model.FirstOrDefault(s => s.Type == Project.Models.Enums.UserLinkedAccountTypeEnums.Email);
+                    }
+                    <div class="row m-1 p-1" style="vertical-align:middle">
+                        <i class="fa fa-envelope pt-1" style="width:20px;"></i>
+                        <span class="ml-1 pl-1">@mail.Description</span>
+                        <button class="btn_1 small @mail.LinkClass ml-auto btn-link" link-id="@mail.Id" link-type="@mail.Type" style="width:80px;">@mail.LinkText</button>
+                    </div>
+
+
+
+                    @{
+                        var phone = Model.FirstOrDefault(s => s.Type == Project.Models.Enums.UserLinkedAccountTypeEnums.Mobile);
+                    }
+                    <div class="row m-1 p-1" style="vertical-align:middle">
+                        <i class="fa fa-mobile pt-1" style="width:20px;"></i>
+                        <span class="ml-1 pl-1">@phone.Description</span>
+                        <button class="btn_1 small @phone.LinkClass ml-auto btn-link" link-id="@phone.Id" link-type="@phone.Type" style="width:80px;">@phone.LinkText</button>
+                    </div>
+
+
+
+
+                    @{
+                        using (Html.BeginForm("ExternalLink", "LinkedAccounts", new { ReturnUrl = "/LinkedAccounts" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            var gmail = Model.FirstOrDefault(s => s.Type == Project.Models.Enums.UserLinkedAccountTypeEnums.Gmail);
+                            var fb = Model.FirstOrDefault(s => s.Type == Project.Models.Enums.UserLinkedAccountTypeEnums.Facebook);
+
+                            <div class="row m-1 p-1" style="vertical-align:middle">
+                                <i class="fa fa-google pt-1" style="width:20px;"></i>
+                                <span class="ml-1 pl-1">@gmail.Description</span>
+
+                                @if(gmail.Id > 0)
+                                {
+                                <button type="button" class="btn_1 small @gmail.LinkClass ml-auto btn-link"
+                                        link-id="@gmail.Id" link-type="@gmail.Type"
+                                        style="width:80px;">
+                                    @gmail.LinkText
+                                </button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn_1 small ml-auto btn-link"
+                                            id="Google" name="provider"
+                                            value="Google" style="width:80px;">
+                                        @gmail.LinkText
+                                    </button>
+                                }
+                             
+                            </div>
+
+                            <div class="row m-1 p-1" style="vertical-align:middle">
+                                <i class="fa fa-facebook pt-1" style="width:20px;"></i>
+                                <span class="ml-1 pl-1">@fb.Description</span>
+                                @if (fb.Id > 0)
+                                {
+                                    <button type="button" class="btn_1 small @fb.LinkClass ml-auto btn-link"
+                                            link-id="@fb.Id" link-type="@fb.Type"
+                                            style="width:80px;">
+                                        @fb.LinkText
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn_1 small ml-auto btn-link"
+                                            id="Facebook" name="provider"
+                                            value="Facebook" style="width:80px;">
+                                        @fb.LinkText
+                                    </button>
+                                }
+
+
+                            </div>
+
+
+
+
+                        }
+
+                    }
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+@section scripts{
+    @*<script src="~/Scripts/jquery.bsAlerts.min.js"></script>*@
+<script>
+        function toggleLinkButton(btn, link, newId) {
+            if (link) {
+                $(btn).text("Link");
+                $(btn).removeClass("bg-danger");
+            }
+            else {
+                $(btn).text("Unlink");
+                $(btn).addClass("bg-danger");
+            }
+
+        }
+
+        function Unlink(btn, id) {
+            $.ajax({
+                url: '@Url.Action("Unlink")',
+                type: "post",
+                data: { id: id },
+                success: function (data) {
+                    console.log(data);
+                    if (data.success) {
+                         window.location.href='@Url.Action("")';
+                         //toggleLinkButton(btn, false);
+                    }
+                    else {
+                        alert(data.returnData.Message);
+                    }
+                },
+                error: function () {
+                }
+            });
+        }
+        function Link(btn) {
+            var type = btn.attr("link-type");
+            window.location.href='@Url.Action("LinkAccount")?type='+type;
+        }
+
+        $(document).ready(function () {
+
+            $(document).on('click', '.btn-link', function () {
+                var id = $(this).attr('link-id');
+                if (id != 0) {
+                    Unlink($(this), id);
+                }
+                else {
+                    Link($(this));
+                }
+            });
+        });
+</script>
+}
+

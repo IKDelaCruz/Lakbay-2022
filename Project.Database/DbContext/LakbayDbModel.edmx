@@ -1,0 +1,1778 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LakbayDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Announcement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImageURL" Type="varchar(max)" />
+          <Property Name="DateUploaded" Type="datetime" Nullable="false" />
+          <Property Name="UploadBy" Type="int" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="Details" Type="varchar(max)" />
+          <Property Name="LinkId" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="MobileImageURL" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Baranggay">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CityId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="Longitude" Type="float" Nullable="false" />
+          <Property Name="Latitude" Type="float" Nullable="false" />
+          <Property Name="ZipCode" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProvinceId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="PlaceId" Type="int" />
+        </EntityType>
+        <EntityType Name="CMSUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+          <Property Name="Firstname" Type="varchar" MaxLength="50" />
+          <Property Name="Lastname" Type="varchar" MaxLength="50" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CMSUserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="CMSUserId" Type="int" Nullable="false" />
+          <Property Name="Role" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Favorites">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlaceId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FirebaseUserTokens">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Token" Type="varchar(max)" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="DeviceId" Type="varchar(max)" Nullable="false" />
+          <Property Name="LastUpdate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Path" Type="varchar(max)" Nullable="false" />
+          <Property Name="SystemName" Type="varchar(max)" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="FileType" Type="varchar(max)" Nullable="false" />
+          <Property Name="FileName" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Message" Type="varchar(max)" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Place">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BaranggayId" Type="int" />
+          <Property Name="CompleteAddress" Type="varchar(max)" />
+          <Property Name="Title" Type="varchar(max)" />
+          <Property Name="ContactNumber" Type="varchar" MaxLength="250" />
+          <Property Name="ContactPerson" Type="varchar" MaxLength="250" />
+          <Property Name="Email" Type="varchar" MaxLength="250" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="DescriptionHTML" Type="varchar(max)" />
+          <Property Name="Directions" Type="varchar(max)" />
+          <Property Name="Url" Type="varchar(max)" />
+          <Property Name="PaymentOption" Type="int" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="HomeThumbnail" Type="varchar(max)" />
+          <Property Name="HomeSlug" Type="varchar" MaxLength="50" />
+          <Property Name="DistanceFromManila" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalPlaces" Type="int" />
+          <Property Name="DisplayPriority" Type="int" />
+          <Property Name="PublishedDate" Type="datetime" />
+          <Property Name="PublishedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="TagLine" Type="varchar" MaxLength="250" />
+          <Property Name="MapsLongtitude" Type="varchar" MaxLength="50" />
+          <Property Name="MapsLatitude" Type="varchar" MaxLength="50" />
+          <Property Name="HeaderVideoURL" Type="varchar" MaxLength="250" />
+          <Property Name="GUID" Type="varchar(max)" Nullable="false" />
+          <Property Name="ShopURL" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="PlaceFacilities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlaceId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar(max)" />
+          <Property Name="Icon" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="PlaceImages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlaceId" Type="int" Nullable="false" />
+          <Property Name="Filename" Type="varchar(max)" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="ImageText" Type="varchar(max)" />
+          <Property Name="YoutubeUrl" Type="varchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LakbayDB.dbo.PlaceOperatingHour' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PlaceOperatingHour">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="PlaceId" />
+            <PropertyRef Name="Day" />
+            <PropertyRef Name="TimeFrom" />
+            <PropertyRef Name="TimeTo" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="PlaceId" Type="int" Nullable="false" />
+          <Property Name="Day" Type="int" Nullable="false" />
+          <Property Name="TimeFrom" Type="time" Precision="7" Nullable="false" />
+          <Property Name="TimeTo" Type="time" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlaceReview">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlaceId" Type="int" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ReviewStars" Type="int" Nullable="false" />
+          <Property Name="ReviewText" Type="varchar" MaxLength="2000" Nullable="false" />
+          <Property Name="CreatedDatte" Type="datetime" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Province">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Password" Type="varchar(max)" />
+          <Property Name="PasswordKey" Type="varchar(max)" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="LastLoginDate" Type="datetime" />
+          <Property Name="LastLoginAttempt" Type="datetime" />
+          <Property Name="LoginCounter" Type="int" Nullable="false" />
+          <Property Name="IsLocked" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DateDeleted" Type="datetime" />
+          <Property Name="GUID" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="FullName" Type="varchar(max)" Nullable="false" />
+          <Property Name="Address" Type="varchar(max)" />
+          <Property Name="Email" Type="varchar(max)" />
+          <Property Name="Mobile" Type="varchar(max)" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Gender" Type="int" Nullable="false" />
+          <Property Name="Country" Type="varchar(max)" />
+          <Property Name="City" Type="varchar(max)" />
+          <Property Name="ProfilePictureUrl" Type="varchar(max)" />
+          <Property Name="ProfilePictureId" Type="int" />
+        </EntityType>
+        <EntityType Name="UserLinkedAccount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="LinkId" Type="varchar(max)" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="DateLinked" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="IsVerified" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserPlaceVisitHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="PlaceId" Type="int" Nullable="false" />
+          <Property Name="DateVisit" Type="datetime" Nullable="false" />
+          <Property Name="Remarks" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="UserUploadedFiles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Path" Type="varchar(max)" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Filename" Type="varchar(max)" Nullable="false" />
+          <Property Name="FileExtension" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="FileSize" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="UploadBy" Type="int" Nullable="false" />
+          <Property Name="DateUploaded" Type="datetime" Nullable="false" />
+          <Property Name="LastDateModified" Type="datetime" Nullable="false" />
+          <Property Name="Remarks" Type="varchar(max)" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="Guid" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Baranggay_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="Baranggay" Type="Self.Baranggay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Baranggay">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_City_Place">
+          <End Role="Place" Type="Self.Place" Multiplicity="0..1" />
+          <End Role="City" Type="Self.City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="PlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_City_Province">
+          <End Role="Province" Type="Self.Province" Multiplicity="1" />
+          <End Role="City" Type="Self.City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="ProvinceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Favorites_Place">
+          <End Role="Place" Type="Self.Place" Multiplicity="1" />
+          <End Role="Favorites" Type="Self.Favorites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Favorites">
+              <PropertyRef Name="PlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Favorites_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Favorites" Type="Self.Favorites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Favorites">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FirebaseUserTokens_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="FirebaseUserTokens" Type="Self.FirebaseUserTokens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FirebaseUserTokens">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Place_Barangay">
+          <End Role="Baranggay" Type="Self.Baranggay" Multiplicity="0..1" />
+          <End Role="Place" Type="Self.Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Baranggay">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="BaranggayId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Place_ParentCity">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="Place" Type="Self.Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlaceImages_Place">
+          <End Role="Place" Type="Self.Place" Multiplicity="1" />
+          <End Role="PlaceImages" Type="Self.PlaceImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlaceImages">
+              <PropertyRef Name="PlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlaceReview_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="PlaceReview" Type="Self.PlaceReview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlaceReview">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Province_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="Province" Type="Self.Province" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Province">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetail_Image">
+          <End Role="Image" Type="Self.Image" Multiplicity="0..1" />
+          <End Role="UserDetail" Type="Self.UserDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetail">
+              <PropertyRef Name="ProfilePictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetail_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserDetail" Type="Self.UserDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLinkedAccount_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserLinkedAccount" Type="Self.UserLinkedAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLinkedAccount">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPlaceVisitHistory_Place">
+          <End Role="Place" Type="Self.Place" Multiplicity="1" />
+          <End Role="UserPlaceVisitHistory" Type="Self.UserPlaceVisitHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserPlaceVisitHistory">
+              <PropertyRef Name="PlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPlaceVisitHistory_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserPlaceVisitHistory" Type="Self.UserPlaceVisitHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserPlaceVisitHistory">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LakbayDBModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Announcement" EntityType="Self.Announcement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Baranggay" EntityType="Self.Baranggay" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CMSUser" EntityType="Self.CMSUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CMSUserRole" EntityType="Self.CMSUserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Favorites" EntityType="Self.Favorites" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FirebaseUserTokens" EntityType="Self.FirebaseUserTokens" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlaceFacilities" EntityType="Self.PlaceFacilities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlaceImages" EntityType="Self.PlaceImages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlaceReview" EntityType="Self.PlaceReview" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Province" EntityType="Self.Province" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDetail" EntityType="Self.UserDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLinkedAccount" EntityType="Self.UserLinkedAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPlaceVisitHistory" EntityType="Self.UserPlaceVisitHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserUploadedFiles" EntityType="Self.UserUploadedFiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlaceOperatingHour" EntityType="Self.PlaceOperatingHour" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PlaceOperatingHour].[Id] AS [Id], 
+    [PlaceOperatingHour].[PlaceId] AS [PlaceId], 
+    [PlaceOperatingHour].[Day] AS [Day], 
+    [PlaceOperatingHour].[TimeFrom] AS [TimeFrom], 
+    [PlaceOperatingHour].[TimeTo] AS [TimeTo]
+    FROM [dbo].[PlaceOperatingHour] AS [PlaceOperatingHour]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Baranggay_City" Association="Self.FK_Baranggay_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="Baranggay" EntitySet="Baranggay" />
+          </AssociationSet>
+          <AssociationSet Name="FK_City_Place" Association="Self.FK_City_Place">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="City" EntitySet="City" />
+          </AssociationSet>
+          <AssociationSet Name="FK_City_Province" Association="Self.FK_City_Province">
+            <End Role="Province" EntitySet="Province" />
+            <End Role="City" EntitySet="City" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Favorites_Place" Association="Self.FK_Favorites_Place">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="Favorites" EntitySet="Favorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Favorites_User" Association="Self.FK_Favorites_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Favorites" EntitySet="Favorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FirebaseUserTokens_User" Association="Self.FK_FirebaseUserTokens_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="FirebaseUserTokens" EntitySet="FirebaseUserTokens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_Barangay" Association="Self.FK_Place_Barangay">
+            <End Role="Baranggay" EntitySet="Baranggay" />
+            <End Role="Place" EntitySet="Place" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_ParentCity" Association="Self.FK_Place_ParentCity">
+            <End Role="City" EntitySet="City" />
+            <End Role="Place" EntitySet="Place" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlaceImages_Place" Association="Self.FK_PlaceImages_Place">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="PlaceImages" EntitySet="PlaceImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlaceReview_User" Association="Self.FK_PlaceReview_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="PlaceReview" EntitySet="PlaceReview" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Province_Country" Association="Self.FK_Province_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Province" EntitySet="Province" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetail_Image" Association="Self.FK_UserDetail_Image">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="UserDetail" EntitySet="UserDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetail_User" Association="Self.FK_UserDetail_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserDetail" EntitySet="UserDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLinkedAccount_User" Association="Self.FK_UserLinkedAccount_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserLinkedAccount" EntitySet="UserLinkedAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPlaceVisitHistory_Place" Association="Self.FK_UserPlaceVisitHistory_Place">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="UserPlaceVisitHistory" EntitySet="UserPlaceVisitHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPlaceVisitHistory_User" Association="Self.FK_UserPlaceVisitHistory_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserPlaceVisitHistory" EntitySet="UserPlaceVisitHistory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LakbayDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="LakbayDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="LakbayDBModel.C__MigrationHistory" />
+          <EntitySet Name="Announcements" EntityType="LakbayDBModel.Announcement" />
+          <EntitySet Name="AspNetRoles" EntityType="LakbayDBModel.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="LakbayDBModel.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="LakbayDBModel.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="LakbayDBModel.AspNetUser" />
+          <EntitySet Name="Baranggays" EntityType="LakbayDBModel.Baranggay" />
+          <EntitySet Name="Cities" EntityType="LakbayDBModel.City" />
+          <EntitySet Name="CMSUsers" EntityType="LakbayDBModel.CMSUser" />
+          <EntitySet Name="CMSUserRoles" EntityType="LakbayDBModel.CMSUserRole" />
+          <EntitySet Name="Countries" EntityType="LakbayDBModel.Country" />
+          <EntitySet Name="Favorites" EntityType="LakbayDBModel.Favorite" />
+          <EntitySet Name="FirebaseUserTokens" EntityType="LakbayDBModel.FirebaseUserToken" />
+          <EntitySet Name="Images" EntityType="LakbayDBModel.Image" />
+          <EntitySet Name="Logs" EntityType="LakbayDBModel.Log" />
+          <EntitySet Name="Places" EntityType="LakbayDBModel.Place" />
+          <EntitySet Name="PlaceFacilities" EntityType="LakbayDBModel.PlaceFacility" />
+          <EntitySet Name="PlaceImages" EntityType="LakbayDBModel.PlaceImage" />
+          <EntitySet Name="PlaceReviews" EntityType="LakbayDBModel.PlaceReview" />
+          <EntitySet Name="Provinces" EntityType="LakbayDBModel.Province" />
+          <EntitySet Name="Users" EntityType="LakbayDBModel.User" />
+          <EntitySet Name="UserDetails" EntityType="LakbayDBModel.UserDetail" />
+          <EntitySet Name="UserLinkedAccounts" EntityType="LakbayDBModel.UserLinkedAccount" />
+          <EntitySet Name="UserPlaceVisitHistories" EntityType="LakbayDBModel.UserPlaceVisitHistory" />
+          <EntitySet Name="UserUploadedFiles" EntityType="LakbayDBModel.UserUploadedFile" />
+          <EntitySet Name="PlaceOperatingHours" EntityType="LakbayDBModel.PlaceOperatingHour" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="LakbayDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="LakbayDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Baranggay_City" Association="LakbayDBModel.FK_Baranggay_City">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Baranggay" EntitySet="Baranggays" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_Barangay" Association="LakbayDBModel.FK_Place_Barangay">
+            <End Role="Baranggay" EntitySet="Baranggays" />
+            <End Role="Place" EntitySet="Places" />
+          </AssociationSet>
+          <AssociationSet Name="FK_City_Place" Association="LakbayDBModel.FK_City_Place">
+            <End Role="Place" EntitySet="Places" />
+            <End Role="City" EntitySet="Cities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_City_Province" Association="LakbayDBModel.FK_City_Province">
+            <End Role="Province" EntitySet="Provinces" />
+            <End Role="City" EntitySet="Cities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_ParentCity" Association="LakbayDBModel.FK_Place_ParentCity">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Place" EntitySet="Places" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Province_Country" Association="LakbayDBModel.FK_Province_Country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Province" EntitySet="Provinces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Favorites_Place" Association="LakbayDBModel.FK_Favorites_Place">
+            <End Role="Place" EntitySet="Places" />
+            <End Role="Favorite" EntitySet="Favorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Favorites_User" Association="LakbayDBModel.FK_Favorites_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Favorite" EntitySet="Favorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FirebaseUserTokens_User" Association="LakbayDBModel.FK_FirebaseUserTokens_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="FirebaseUserToken" EntitySet="FirebaseUserTokens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetail_Image" Association="LakbayDBModel.FK_UserDetail_Image">
+            <End Role="Image" EntitySet="Images" />
+            <End Role="UserDetail" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlaceImages_Place" Association="LakbayDBModel.FK_PlaceImages_Place">
+            <End Role="Place" EntitySet="Places" />
+            <End Role="PlaceImage" EntitySet="PlaceImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPlaceVisitHistory_Place" Association="LakbayDBModel.FK_UserPlaceVisitHistory_Place">
+            <End Role="Place" EntitySet="Places" />
+            <End Role="UserPlaceVisitHistory" EntitySet="UserPlaceVisitHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlaceReview_User" Association="LakbayDBModel.FK_PlaceReview_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="PlaceReview" EntitySet="PlaceReviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetail_User" Association="LakbayDBModel.FK_UserDetail_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserDetail" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLinkedAccount_User" Association="LakbayDBModel.FK_UserLinkedAccount_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserLinkedAccount" EntitySet="UserLinkedAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPlaceVisitHistory_User" Association="LakbayDBModel.FK_UserPlaceVisitHistory_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserPlaceVisitHistory" EntitySet="UserPlaceVisitHistories" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="LakbayDBModel.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Announcement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DateUploaded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UploadBy" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LinkId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="MobileImageURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="LakbayDBModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="LakbayDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="LakbayDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="LakbayDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="LakbayDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="AspNetRoles" Relationship="LakbayDBModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+        </EntityType>
+        <EntityType Name="Baranggay">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Longitude" Type="Double" Nullable="false" />
+          <Property Name="Latitude" Type="Double" Nullable="false" />
+          <Property Name="ZipCode" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="City" Relationship="LakbayDBModel.FK_Baranggay_City" FromRole="Baranggay" ToRole="City" />
+          <NavigationProperty Name="Places" Relationship="LakbayDBModel.FK_Place_Barangay" FromRole="Baranggay" ToRole="Place" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProvinceId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="PlaceId" Type="Int32" />
+          <NavigationProperty Name="Baranggays" Relationship="LakbayDBModel.FK_Baranggay_City" FromRole="City" ToRole="Baranggay" />
+          <NavigationProperty Name="Place" Relationship="LakbayDBModel.FK_City_Place" FromRole="City" ToRole="Place" />
+          <NavigationProperty Name="Province" Relationship="LakbayDBModel.FK_City_Province" FromRole="City" ToRole="Province" />
+          <NavigationProperty Name="Places" Relationship="LakbayDBModel.FK_Place_ParentCity" FromRole="City" ToRole="Place" />
+        </EntityType>
+        <EntityType Name="CMSUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <Property Name="Firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CMSUserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CMSUserId" Type="Int32" Nullable="false" />
+          <Property Name="Role" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Provinces" Relationship="LakbayDBModel.FK_Province_Country" FromRole="Country" ToRole="Province" />
+        </EntityType>
+        <EntityType Name="Favorite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlaceId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Place" Relationship="LakbayDBModel.FK_Favorites_Place" FromRole="Favorite" ToRole="Place" />
+          <NavigationProperty Name="User" Relationship="LakbayDBModel.FK_Favorites_User" FromRole="Favorite" ToRole="User" />
+        </EntityType>
+        <EntityType Name="FirebaseUserToken">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Token" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="DeviceId" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LastUpdate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="LakbayDBModel.FK_FirebaseUserTokens_User" FromRole="FirebaseUserToken" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Path" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SystemName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="FileType" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserDetails" Relationship="LakbayDBModel.FK_UserDetail_Image" FromRole="Image" ToRole="UserDetail" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Place">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BaranggayId" Type="Int32" />
+          <Property Name="CompleteAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNumber" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ContactPerson" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DescriptionHTML" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Directions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentOption" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="HomeThumbnail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="HomeSlug" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DistanceFromManila" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalPlaces" Type="Int32" />
+          <Property Name="DisplayPriority" Type="Int32" />
+          <Property Name="PublishedDate" Type="DateTime" Precision="3" />
+          <Property Name="PublishedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="TagLine" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MapsLongtitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MapsLatitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HeaderVideoURL" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="GUID" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ShopURL" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Baranggay" Relationship="LakbayDBModel.FK_Place_Barangay" FromRole="Place" ToRole="Baranggay" />
+          <NavigationProperty Name="Cities" Relationship="LakbayDBModel.FK_City_Place" FromRole="Place" ToRole="City" />
+          <NavigationProperty Name="City" Relationship="LakbayDBModel.FK_Place_ParentCity" FromRole="Place" ToRole="City" />
+          <NavigationProperty Name="Favorites" Relationship="LakbayDBModel.FK_Favorites_Place" FromRole="Place" ToRole="Favorite" />
+          <NavigationProperty Name="PlaceImages" Relationship="LakbayDBModel.FK_PlaceImages_Place" FromRole="Place" ToRole="PlaceImage" />
+          <NavigationProperty Name="UserPlaceVisitHistories" Relationship="LakbayDBModel.FK_UserPlaceVisitHistory_Place" FromRole="Place" ToRole="UserPlaceVisitHistory" />
+        </EntityType>
+        <EntityType Name="PlaceFacility">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlaceId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Icon" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PlaceImage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlaceId" Type="Int32" Nullable="false" />
+          <Property Name="Filename" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="ImageText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="YoutubeUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Place" Relationship="LakbayDBModel.FK_PlaceImages_Place" FromRole="PlaceImage" ToRole="Place" />
+        </EntityType>
+        <EntityType Name="PlaceReview">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlaceId" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ReviewStars" Type="Int32" Nullable="false" />
+          <Property Name="ReviewText" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDatte" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="User" Relationship="LakbayDBModel.FK_PlaceReview_User" FromRole="PlaceReview" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Province">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Cities" Relationship="LakbayDBModel.FK_City_Province" FromRole="Province" ToRole="City" />
+          <NavigationProperty Name="Country" Relationship="LakbayDBModel.FK_Province_Country" FromRole="Province" ToRole="Country" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
+          <Property Name="LastLoginAttempt" Type="DateTime" Precision="3" />
+          <Property Name="LoginCounter" Type="Int32" Nullable="false" />
+          <Property Name="IsLocked" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DateDeleted" Type="DateTime" Precision="3" />
+          <Property Name="GUID" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Favorites" Relationship="LakbayDBModel.FK_Favorites_User" FromRole="User" ToRole="Favorite" />
+          <NavigationProperty Name="FirebaseUserTokens" Relationship="LakbayDBModel.FK_FirebaseUserTokens_User" FromRole="User" ToRole="FirebaseUserToken" />
+          <NavigationProperty Name="PlaceReviews" Relationship="LakbayDBModel.FK_PlaceReview_User" FromRole="User" ToRole="PlaceReview" />
+          <NavigationProperty Name="UserDetails" Relationship="LakbayDBModel.FK_UserDetail_User" FromRole="User" ToRole="UserDetail" />
+          <NavigationProperty Name="UserLinkedAccounts" Relationship="LakbayDBModel.FK_UserLinkedAccount_User" FromRole="User" ToRole="UserLinkedAccount" />
+          <NavigationProperty Name="UserPlaceVisitHistories" Relationship="LakbayDBModel.FK_UserPlaceVisitHistory_User" FromRole="User" ToRole="UserPlaceVisitHistory" />
+        </EntityType>
+        <EntityType Name="UserDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Gender" Type="Int32" Nullable="false" />
+          <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ProfilePictureUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ProfilePictureId" Type="Int32" />
+          <NavigationProperty Name="Image" Relationship="LakbayDBModel.FK_UserDetail_Image" FromRole="UserDetail" ToRole="Image" />
+          <NavigationProperty Name="User" Relationship="LakbayDBModel.FK_UserDetail_User" FromRole="UserDetail" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserLinkedAccount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="LinkId" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="DateLinked" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsVerified" Type="Boolean" />
+          <NavigationProperty Name="User" Relationship="LakbayDBModel.FK_UserLinkedAccount_User" FromRole="UserLinkedAccount" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserPlaceVisitHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PlaceId" Type="Int32" Nullable="false" />
+          <Property Name="DateVisit" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Place" Relationship="LakbayDBModel.FK_UserPlaceVisitHistory_Place" FromRole="UserPlaceVisitHistory" ToRole="Place" />
+          <NavigationProperty Name="User" Relationship="LakbayDBModel.FK_UserPlaceVisitHistory_User" FromRole="UserPlaceVisitHistory" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserUploadedFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Path" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Filename" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FileExtension" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="FileSize" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="UploadBy" Type="Int32" Nullable="false" />
+          <Property Name="DateUploaded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastDateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="Guid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PlaceOperatingHour">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="PlaceId" />
+            <PropertyRef Name="Day" />
+            <PropertyRef Name="TimeFrom" />
+            <PropertyRef Name="TimeTo" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PlaceId" Type="Int32" Nullable="false" />
+          <Property Name="Day" Type="Int32" Nullable="false" />
+          <Property Name="TimeFrom" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="TimeTo" Type="Time" Nullable="false" Precision="7" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="LakbayDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="LakbayDBModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="LakbayDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="LakbayDBModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Baranggay_City">
+          <End Type="LakbayDBModel.City" Role="City" Multiplicity="1" />
+          <End Type="LakbayDBModel.Baranggay" Role="Baranggay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Baranggay">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Place_Barangay">
+          <End Type="LakbayDBModel.Baranggay" Role="Baranggay" Multiplicity="0..1" />
+          <End Type="LakbayDBModel.Place" Role="Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Baranggay">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="BaranggayId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_City_Place">
+          <End Type="LakbayDBModel.Place" Role="Place" Multiplicity="0..1" />
+          <End Type="LakbayDBModel.City" Role="City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="PlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_City_Province">
+          <End Type="LakbayDBModel.Province" Role="Province" Multiplicity="1" />
+          <End Type="LakbayDBModel.City" Role="City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="ProvinceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Place_ParentCity">
+          <End Type="LakbayDBModel.City" Role="City" Multiplicity="0..1" />
+          <End Type="LakbayDBModel.Place" Role="Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Province_Country">
+          <End Type="LakbayDBModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="LakbayDBModel.Province" Role="Province" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Province">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Favorites_Place">
+          <End Type="LakbayDBModel.Place" Role="Place" Multiplicity="1" />
+          <End Type="LakbayDBModel.Favorite" Role="Favorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Favorite">
+              <PropertyRef Name="PlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Favorites_User">
+          <End Type="LakbayDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="LakbayDBModel.Favorite" Role="Favorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Favorite">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FirebaseUserTokens_User">
+          <End Type="LakbayDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="LakbayDBModel.FirebaseUserToken" Role="FirebaseUserToken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FirebaseUserToken">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetail_Image">
+          <End Type="LakbayDBModel.Image" Role="Image" Multiplicity="0..1" />
+          <End Type="LakbayDBModel.UserDetail" Role="UserDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetail">
+              <PropertyRef Name="ProfilePictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlaceImages_Place">
+          <End Type="LakbayDBModel.Place" Role="Place" Multiplicity="1" />
+          <End Type="LakbayDBModel.PlaceImage" Role="PlaceImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlaceImage">
+              <PropertyRef Name="PlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPlaceVisitHistory_Place">
+          <End Type="LakbayDBModel.Place" Role="Place" Multiplicity="1" />
+          <End Type="LakbayDBModel.UserPlaceVisitHistory" Role="UserPlaceVisitHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserPlaceVisitHistory">
+              <PropertyRef Name="PlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlaceReview_User">
+          <End Type="LakbayDBModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="LakbayDBModel.PlaceReview" Role="PlaceReview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlaceReview">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetail_User">
+          <End Type="LakbayDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="LakbayDBModel.UserDetail" Role="UserDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLinkedAccount_User">
+          <End Type="LakbayDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="LakbayDBModel.UserLinkedAccount" Role="UserLinkedAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLinkedAccount">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPlaceVisitHistory_User">
+          <End Type="LakbayDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="LakbayDBModel.UserPlaceVisitHistory" Role="UserPlaceVisitHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserPlaceVisitHistory">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="LakbayDBModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="LakbayDBModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LakbayDBModelStoreContainer" CdmEntityContainer="LakbayDBEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="LakbayDBModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Announcements">
+            <EntityTypeMapping TypeName="LakbayDBModel.Announcement">
+              <MappingFragment StoreEntitySet="Announcement">
+                <ScalarProperty Name="MobileImageURL" ColumnName="MobileImageURL" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="LinkId" ColumnName="LinkId" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UploadBy" ColumnName="UploadBy" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="LakbayDBModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="LakbayDBModel.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="LakbayDBModel.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="LakbayDBModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Baranggays">
+            <EntityTypeMapping TypeName="LakbayDBModel.Baranggay">
+              <MappingFragment StoreEntitySet="Baranggay">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="LakbayDBModel.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CMSUsers">
+            <EntityTypeMapping TypeName="LakbayDBModel.CMSUser">
+              <MappingFragment StoreEntitySet="CMSUser">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CMSUserRoles">
+            <EntityTypeMapping TypeName="LakbayDBModel.CMSUserRole">
+              <MappingFragment StoreEntitySet="CMSUserRole">
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="CMSUserId" ColumnName="CMSUserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="LakbayDBModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Favorites">
+            <EntityTypeMapping TypeName="LakbayDBModel.Favorite">
+              <MappingFragment StoreEntitySet="Favorites">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FirebaseUserTokens">
+            <EntityTypeMapping TypeName="LakbayDBModel.FirebaseUserToken">
+              <MappingFragment StoreEntitySet="FirebaseUserTokens">
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="LakbayDBModel.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FileType" ColumnName="FileType" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="SystemName" ColumnName="SystemName" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="LakbayDBModel.Log">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Places">
+            <EntityTypeMapping TypeName="LakbayDBModel.Place">
+              <MappingFragment StoreEntitySet="Place">
+                <ScalarProperty Name="ShopURL" ColumnName="ShopURL" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="HeaderVideoURL" ColumnName="HeaderVideoURL" />
+                <ScalarProperty Name="MapsLatitude" ColumnName="MapsLatitude" />
+                <ScalarProperty Name="MapsLongtitude" ColumnName="MapsLongtitude" />
+                <ScalarProperty Name="TagLine" ColumnName="TagLine" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="PublishedBy" ColumnName="PublishedBy" />
+                <ScalarProperty Name="PublishedDate" ColumnName="PublishedDate" />
+                <ScalarProperty Name="DisplayPriority" ColumnName="DisplayPriority" />
+                <ScalarProperty Name="TotalPlaces" ColumnName="TotalPlaces" />
+                <ScalarProperty Name="DistanceFromManila" ColumnName="DistanceFromManila" />
+                <ScalarProperty Name="HomeSlug" ColumnName="HomeSlug" />
+                <ScalarProperty Name="HomeThumbnail" ColumnName="HomeThumbnail" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="PaymentOption" ColumnName="PaymentOption" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Directions" ColumnName="Directions" />
+                <ScalarProperty Name="DescriptionHTML" ColumnName="DescriptionHTML" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="CompleteAddress" ColumnName="CompleteAddress" />
+                <ScalarProperty Name="BaranggayId" ColumnName="BaranggayId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlaceFacilities">
+            <EntityTypeMapping TypeName="LakbayDBModel.PlaceFacility">
+              <MappingFragment StoreEntitySet="PlaceFacilities">
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlaceImages">
+            <EntityTypeMapping TypeName="LakbayDBModel.PlaceImage">
+              <MappingFragment StoreEntitySet="PlaceImages">
+                <ScalarProperty Name="YoutubeUrl" ColumnName="YoutubeUrl" />
+                <ScalarProperty Name="ImageText" ColumnName="ImageText" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Filename" ColumnName="Filename" />
+                <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlaceReviews">
+            <EntityTypeMapping TypeName="LakbayDBModel.PlaceReview">
+              <MappingFragment StoreEntitySet="PlaceReview">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CreatedDatte" ColumnName="CreatedDatte" />
+                <ScalarProperty Name="ReviewText" ColumnName="ReviewText" />
+                <ScalarProperty Name="ReviewStars" ColumnName="ReviewStars" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provinces">
+            <EntityTypeMapping TypeName="LakbayDBModel.Province">
+              <MappingFragment StoreEntitySet="Province">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="LakbayDBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="LoginCounter" ColumnName="LoginCounter" />
+                <ScalarProperty Name="LastLoginAttempt" ColumnName="LastLoginAttempt" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="PasswordKey" ColumnName="PasswordKey" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="LakbayDBModel.UserDetail">
+              <MappingFragment StoreEntitySet="UserDetail">
+                <ScalarProperty Name="ProfilePictureId" ColumnName="ProfilePictureId" />
+                <ScalarProperty Name="ProfilePictureUrl" ColumnName="ProfilePictureUrl" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLinkedAccounts">
+            <EntityTypeMapping TypeName="LakbayDBModel.UserLinkedAccount">
+              <MappingFragment StoreEntitySet="UserLinkedAccount">
+                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DateLinked" ColumnName="DateLinked" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="LinkId" ColumnName="LinkId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserPlaceVisitHistories">
+            <EntityTypeMapping TypeName="LakbayDBModel.UserPlaceVisitHistory">
+              <MappingFragment StoreEntitySet="UserPlaceVisitHistory">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="DateVisit" ColumnName="DateVisit" />
+                <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserUploadedFiles">
+            <EntityTypeMapping TypeName="LakbayDBModel.UserUploadedFile">
+              <MappingFragment StoreEntitySet="UserUploadedFiles">
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="LastDateModified" ColumnName="LastDateModified" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+                <ScalarProperty Name="UploadBy" ColumnName="UploadBy" />
+                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+                <ScalarProperty Name="FileExtension" ColumnName="FileExtension" />
+                <ScalarProperty Name="Filename" ColumnName="Filename" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlaceOperatingHours">
+            <EntityTypeMapping TypeName="LakbayDBModel.PlaceOperatingHour">
+              <MappingFragment StoreEntitySet="PlaceOperatingHour">
+                <ScalarProperty Name="TimeTo" ColumnName="TimeTo" />
+                <ScalarProperty Name="TimeFrom" ColumnName="TimeFrom" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="LakbayDBModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

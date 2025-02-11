@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="LakbayQueueModelStoreContainer" CdmEntityContainer="LakbayQueueEntities">
+    <EntitySetMapping Name="email_queue">
+      <EntityTypeMapping TypeName="LakbayQueueModel.email_queue">
+        <MappingFragment StoreEntitySet="email_queue">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="recipient" ColumnName="recipient" />
+          <ScalarProperty Name="sender" ColumnName="sender" />
+          <ScalarProperty Name="message" ColumnName="message" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="send_date" ColumnName="send_date" />
+          <ScalarProperty Name="subject" ColumnName="subject" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sms_queue">
+      <EntityTypeMapping TypeName="LakbayQueueModel.sms_queue">
+        <MappingFragment StoreEntitySet="sms_queue">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="sender" ColumnName="sender" />
+          <ScalarProperty Name="recipient" ColumnName="recipient" />
+          <ScalarProperty Name="message" ColumnName="message" />
+          <ScalarProperty Name="created_date" ColumnName="created_date" />
+          <ScalarProperty Name="send_date" ColumnName="send_date" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

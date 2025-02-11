@@ -1,0 +1,135 @@
+﻿@model Web.ViewModel.PlaceDetailViewModel
+@using Project.Models.Models;
+
+@{
+    ViewBag.Title = Model.Place.Title;
+    ViewBag.Description = Model.Place.Description;
+    ViewBag.Image = Model.CDNHOST + Model.Place.HomeThumbnail;
+    ViewBag.URL = Request.Url.AbsoluteUri;
+    Layout = "~/Views/Shared/_PlacesLayout.cshtml";
+}
+<!-- SPECIFIC CSS -->
+<link href="~/Content/css/blog.css" rel="stylesheet">
+<style>
+    .cart_section {
+          background: #477d47 url(@Model.CDNHOST@("pages.png")) center bottom repeat-x !important;
+        color: rgba(255, 255, 255, 0.7);
+    }
+    .mfp-counter {
+        font-size: 0;
+    } 
+</style>
+<section class="hero_in  cart_section start_bg_zoom">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>@Model.Place.Title</h1>
+        </div>
+
+    </div>
+</section>
+
+<div class="bg_color_1">
+
+    <!-- /container -->
+    <div class="container margin_60_35">
+
+        <div class="mb-2 d-block d-lg-none">
+            <button type="button" class="btn btn-success" onclick="goBack()">❮ Back</button>
+        </div>
+        <div class=" mb-4">
+            <div class="slick_demo_2 magnific-gallery">
+
+                @if (Model.Images != null)
+                {
+                    foreach (PlaceImagesDto t in Model.Images)
+                    {
+
+
+                        if (t.Type == Project.Models.Enums.PlaceImagesType.YoutubeURL)
+                        {
+                            var thumbnail = t.YoutubeThumbnail;
+                            if (!string.IsNullOrEmpty(t.Filename))
+                            {
+                                thumbnail = Model.CDNHOST + t.Filename.Replace(".jpg", "_thumb.jpg");
+                            }
+                            <a class="mfp-iframe" href="@t.YoutubeUrl">
+                                <img src="@thumbnail" class="mb-2 ">
+                            </a>
+
+                        }
+                        else
+                        {
+
+                            <a href="@Model.CDNHOST@t.Filename" class="mb-2 mr-1" title="@t.ImageText">
+                                <img src="@Model.CDNHOST@t.Filename.Replace(".jpg", "_thumb.jpg")" class="mb-2  img-fluid">
+                            </a>
+
+                        }
+
+
+                    }
+                }
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="bloglist singlepost">
+                    @Html.Raw(Model.Place.DescriptionHTML)
+                </div>
+            </div>
+            <!-- /col -->
+
+
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+
+
+</div>
+<!-- /bg_color_1 -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+
+
+        $('.slick_demo_2').slick({
+            infinite: true,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+             centerMode: @(Model.Images.Count() > 3 ? "true" : "false" ),
+            dots: true,
+
+            lazyLoad: 'ondemand',
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        arrows: false,
+                        centerMode: true,
+                        centerPadding: '40px',
+                        slidesToShow: 3
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        arrows: false,
+                        centerMode: true,
+                        centerPadding: '40px',
+                        slidesToShow: 1
+                    }
+                }
+            ]
+
+        });
+
+
+
+
+
+
+    });
+</script>
+

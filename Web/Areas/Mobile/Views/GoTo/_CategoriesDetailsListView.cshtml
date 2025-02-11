@@ -1,0 +1,126 @@
+﻿
+@using Project.Models;
+@using Project.Models.Models;
+@using Web.Utilities;
+@model Web.ViewModel.PlaceHomeViewModel
+
+@if (Model.Places != null && Model.Places.Any())
+{
+    foreach (var t in Model.Places)
+    {
+        if (t.Type == Enums.CategoryTypeEnum.NewsEvents)
+        {
+
+            var url = Url.Action("eventdetails", "goto", new { area = "mobile", id = t.Id, userid = Model.UserId });
+
+
+            <div class="isotope-item popular add_bottom_15" style="background-color: white;">
+                <div class="box_grid">
+                    <figure>
+                        @*<a href="#0" class="wish_bt"></a>*@
+                        <a href="@url"><img src="@(Model.CDNHOST + (t.HomeThumbnail.Replace(".jpg", "_thumb.jpg")))" class="img-fluid" alt="" loading="lazy"><div class="read_more"><span>Read more</span></div></a>
+                        @if (!string.IsNullOrEmpty(t.ParentName))
+                        {
+                            <small>@t.ParentName</small>
+                        }
+
+                    </figure>
+                    <div class="wrapper">
+                        <h3> <a href="javascript:;" onclick="EventNavigate('goto/eventdetails/@t.Id')" /></h3>
+                        <p class="">
+                            <i class="ti-pin "></i> @(t.ParentName.ToUpper())    <i class="icon-calendar"></i> @t.PublishedDate.ToString("MMMM dd")
+                        </p>
+
+                        <p class="text-justify">@t.Description.TruncateLongString(200)</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        }
+        else
+        {
+            var url = Url.Action("details", "goto", new { area = "mobile", id = t.Id, userid = Model.UserId });
+            <div class="col-xl-4 col-lg-6 isotope-item popular">
+                <div class="box_grid">
+                    <figure>
+                        @*<a href="#0" class="wish_bt"></a>*@
+                        <a href="@url">
+                            <img src="@(Model.CDNHOST + (t.HomeThumbnail.Replace(".jpg", "_thumb.jpg")))" class="img-fluid" alt="" loading="lazy">
+                            <div class="read_more"><span>Read more</span></div>
+                        </a>
+                        <small>@t.ParentName</small>
+                    </figure>
+                    <div class="wrapper">
+                        <h3><a href="@url">@t.Title</a></h3>
+                        @if (!String.IsNullOrEmpty(t.Description))
+                        {
+                            <p>@t.Description.TruncateLongString(100)</p>
+                        }
+
+                        <p>
+                            <i class="ti-pin mr-2"></i> @(t.CompleteAddress?.ToUpper())
+                        </p>
+                        <p>
+                            @if (!String.IsNullOrEmpty(t.Url))
+                            {
+                                <a href="@t.Url"><i class="ti-world mr-2"></i>Visit Website</a>
+                                <br />
+                            }
+                            @if (!String.IsNullOrEmpty(t.ShopUrl))
+                            {
+                                @*<a href="@t.ShopUrl"><i class="ti-shopping-cart mr-2"></i>Visit Online Store</a>*@
+                                @*<a href="#" onclick="goshop('@t.ShopUrl')" class="bg-success p-1 pr-2 pl-0 user-select-none" style="color:white !important;"><i class="ti-shopping-cart mr-2"></i> Visit Online Store</a>
+                                <br />*@
+                            }
+                            @if (!String.IsNullOrEmpty(t.Email))
+                            {
+                                <a href="mailto:@t.Email"><i class="ti-email mr-2"></i> @(t.Email.TruncateEmail(30))</a>
+                                <br />
+                            }
+
+                            @if (!String.IsNullOrEmpty(t.ContactNumber))
+                            {
+                                if (t.ContactNumber?.IndexOf(',') > 0)
+                                {
+                                    var nos = t.ContactNumber.Split(',');
+                                    foreach (string s in nos)
+                                    {
+                                        if (s.Length > 0)
+                                        {
+                                            <a href="tel:@s"><i class="ti-mobile mr-2"></i>@s </a>
+                                            <br />
+                                        }
+
+
+                                    }
+
+
+                                }
+                                else
+                                {
+                                    <a href="tel:@t.ContactNumber"><i class="ti-mobile mr-2"></i>@t.ContactNumber</a>
+                                    <br />
+                                }
+                            }
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+  
+        }
+    }
+}
+
+
+
+<script>
+    function goshop(url) {
+        //invokeCSCode('type:gotoshop|value:' + url + '|function:');
+        invokeCSCode('type:isExternalLink|value:' + url + '|function:');
+    }
+</script>

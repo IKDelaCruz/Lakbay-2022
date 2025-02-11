@@ -1,0 +1,92 @@
+﻿@model Web.ViewModel.PlaceHomeViewModel
+@using Project.Models.Models;
+@using Web.Utilities;
+
+@{
+    ViewBag.Title = "Municipalities";
+}
+
+<div class="main_title_2">
+    <h2>
+        Incredible destinations
+    </h2>
+    <p>Oriental Mindoro is home to pristine islands, incredible beaches and untouched nature.</p>
+</div>
+<style>
+    .carousel-caption {
+        right: 0% !important;
+        left: 0% !important;
+    }
+
+</style>
+@if (Model.Places != null && Model.Places.Count() > 0)
+{
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        @*<ol class="carousel-indicators">
+            @for (int x = 0; x < Model.Places.Count(); x++)
+            {
+                if (x == 0)
+                {
+                    <li data-target="#carouselExampleIndicators" data-slide-to="@x" class="active"></li>
+                }
+                else
+                {
+                    <li data-target="#carouselExampleIndicators" data-slide-to="@x"></li>
+                }
+            }
+        </ol>*@
+
+        <div class="carousel-inner">
+
+            @for (int x = 0; x < Model.Places.Count(); x++)
+            {
+                if (x == 0)
+                {
+
+                    <div class="carousel-item active" style="background-image: url(@Model.CDNHOST@(Model.Places[x]?.HomeThumbnail));">
+
+
+
+                        <div class="carousel-caption d-none d-block text-justify">
+                            <a href="/Places/Destination/@Model.Places[x].Id">
+                                <div class="bg-success p-4   opacity-4">
+                                    <h1 class="text-white text-center lobster">@Model.Places[x].Title</h1>
+                                    <h6 class="text-white text-justify d-none d-lg-block d-xl-block ">@Model.Places[x].Description</h6>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+
+                    <div class="carousel-item" style="background-image: url(@Model.CDNHOST@(Model.Places[x]?.HomeThumbnail));">
+                        <a href="/Places/Destination/@Model.Places[x].Id">
+
+                        </a>
+                        <div class="carousel-caption d-none d-block ">
+                            <a href="/Places/Destination/@Model.Places[x].Id">
+                                <div class="bg-success p-4    opacity-4">
+                                    <h1 class="text-white text-center lobster">@Model.Places[x].Title</h1>
+                                    <h6 class="text-white text-justify d-none d-lg-block d-xl-block ">@Model.Places[x].Description</h6>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                }
+            }
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+}
+
+<!-- /container -->

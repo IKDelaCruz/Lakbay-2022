@@ -1,0 +1,66 @@
+﻿@model Web.ViewModel.PlaceDetailViewModel
+@using Project.Models.Models;
+
+@{
+    ViewBag.Title = Model.Place.Title ?? "Municipality";
+    ViewBag.URL = Request.Url.AbsoluteUri;
+    Layout = "~/Views/Shared/_PlacesVideoLayout.cshtml";
+}
+
+<section class="header-video">
+    <div id="hero_video">
+        <div class="wrapper">
+            <div class="container">
+                <h3>WELCOME TO @Model.Place.Title</h3>
+                <p>Explore attractions, hotels, restaurants and shops</p>
+                <form>
+                    <div class="row no-gutters custom-search-input-2">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <input class="form-control" type="text" placeholder="What are you looking for...">
+                                <i class="icon_search"></i>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <input class="form-control" type="text" placeholder="Where">
+                                <i class="icon_pin_alt"></i>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="wide">
+                                <option>All Categories</option>
+                                <option>Accommodations</option>
+                                <option>Attractions</option>
+                                <option>Recreations</option>
+                                <option>Restaurants</option>
+                                <option>Shops</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <input type="submit" class="btn_search" value="Search">
+                        </div>
+                    </div>
+                    <!-- /row -->
+                </form>
+            </div>
+        </div>
+    </div>
+    <img src="/Content/img/video_fix.png" alt="" class="header-video--media" data-video-src="/Content/video/intro" data-teaser-source="/Content/video/intro" data-provider="" data-video-width="1920" data-video-height="960">
+</section>
+
+<div class="container container-custom margin_30_95">
+
+
+    @Html.Action("AttractionsWidget", "Places", new { id = @Model.Place.Id })
+
+    @Html.Action("AccomodationsWidget", "Places", new { id = @Model.Place.Id })
+
+    @Html.Action("RestaurantsWidget", "Places", new { id = @Model.Place.Id })
+
+    @Html.Action("ShopsWidget", "Places", new { id = @Model.Place.Id })
+
+    @Html.Action("RecreationsWidget", "Places", new { id = @Model.Place.Id })
+
+    @Html.Action("HomeWidget", "Events")
+</div>

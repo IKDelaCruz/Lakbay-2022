@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YZGTF8Y6PY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-YZGTF8Y6PY');
+    </script>
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="apple-itunes-app" content="app-id=1570131703, app-argument=https://travelorientalmindoro.ph">
+    @*<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">*@
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <meta name="description" content="@(ViewBag.Description ?? "The Province of Oriental Mindoro in the eastern half of the Mindoro Island is Southern Tagalog's primary food basket and tourism destination. Awaiting the brave and adventurous is a network of towering mountains, labyrinthine caves, unspoiled waterways and captivating shores.")">
+    <meta name="author" content="ITDC SYSTEMS DEVELOPMENT SERVICES">
+    <title>@ViewBag.Title | Travel Oriental Mindoro</title>
+
+    <!-- FB-->
+    <meta property="og:title" content="@ViewBag.Title | Travel Oriental Mindoro">
+    <meta property="og:description" content="@(ViewBag.Description ?? "The Province of Oriental Mindoro in the eastern half of the Mindoro Island is Southern Tagalog's primary food basket and tourism destination. Awaiting the brave and adventurous is a network of towering mountains, labyrinthine caves, unspoiled waterways and captivating shores.")">
+    <meta property="og:image" content="@(ViewBag.Image ?? "https://travelorientalmindoro.ph/Content/img/uploads/default.jpg")">
+    <meta property="og:url" content="@(ViewBag.URL  )">
+    <meta property="og:type" content="website">
+    <meta property="fb:app_id" content="539082640589797">
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="/Content/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" type="image/x-icon" href="img/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png">
+
+    <!-- GOOGLE WEB FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- BASE CSS -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/css/style.css" rel="stylesheet">
+    <link href="~/Content/css/vendors.css" rel="stylesheet">
+
+    <!-- YOUR CUSTOM CSS -->
+    <link href="~/Content/css/custom.css" rel="stylesheet">
+
+
+
+    <!-- Modernizr -->
+    <script src="~/Content/js/modernizr.js"></script>
+
+
+    <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
+
+    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+    <!-- <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script> -->
+
+</head>
+
+<body>
+
+    <div id="page">
+
+        @Html.Action("Header", "Menu")
+        <!-- /header -->
+
+        <main>
+
+            <!-- /header-video -->
+
+            @RenderBody()
+
+            <!--/call_section-->
+        </main>
+        <!-- /main -->
+
+        @Html.Action("Footer", "Menu")
+        <!--/footer-->
+    </div>
+    <!-- page -->
+
+
+    <div id="toTop"></div><!-- Back to top button -->
+    <!-- COMMON SCRIPTS -->
+    <script src="~/Content/js/common_scripts.js"></script>
+    <script src="~/Content/js/main.js"></script>
+
+
+    <script src="~/Content/vendor/jquery.magnific-popup.min.js"></script>
+
+    <!-- Masonry Filtering -->
+    <script src="~/Content/js/isotope.min.js"></script>
+    <script>
+        $(window).on('load', function () {
+            var $container = $('.isotope-wrapper');
+            $container.isotope({ itemSelector: '.isotope-item', layoutMode: 'masonry' });
+        });
+
+        $('.filters_listing').on('click', 'input', 'change', function () {
+            var selector = $(this).attr('data-filter');
+            $('.isotope-wrapper').isotope({ filter: selector });
+        });
+    </script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+    </script>
+
+</body>
+</html>

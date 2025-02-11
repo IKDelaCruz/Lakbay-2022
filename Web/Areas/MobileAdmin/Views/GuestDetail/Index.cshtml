@@ -1,0 +1,193 @@
+﻿@model Project.Models.Models.MobileAuthUserModel
+@using Project.Models.Models;
+@using Web.Utilities;
+@{
+    Layout = "~/Views/Shared/_MobileLayoutLite.cshtml";
+
+    var userId = TempData.Peek("UserGUID");
+    var placeId = TempData.Peek("PlaceID");
+    bool isFirstRun = !string.IsNullOrEmpty(TempData.Peek("IsFirstRun").ToString()) ? (bool)TempData.Peek("IsFirstRun") : false;
+}
+
+<style>
+    footer, #toTop {
+        display: none !important;
+    }
+
+    .btn_1 {
+        border: 1px solid #086908;
+        padding: 15px 0px;
+    }
+
+        .btn_1.outline_1 {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #086908;
+        }
+
+        .btn_1.red {
+            background-color: red;
+            border: 1px solid red;
+        }
+
+    .min-height-450 {
+        min-height: 90vh !important;
+    }
+</style>
+
+<div class="isotope-wrapper add_top_15">
+    @if (Model == null)
+    {
+        <div class="min-height-450" style="display: flex;">
+            <table class="table table-borderless" style="flex: 1;">
+                <tr style="height: 80%;">
+                    <td style="vertical-align: middle;">
+                        <div class="col-12">
+                            @if (!isFirstRun)
+                            {
+                                <div class="alert alert-success alert-dismissible fade show text-center" style="padding: .75rem 1.25rem;" role="alert">
+                                    <img src="~/Content/img/icon_qr.png" height="25" width="25" />
+                                    &nbsp;&nbsp;&nbsp;
+                                    <strong class="text-center">Scan Guest's QR Code</strong>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-success alert-dismissible fade show " style="padding: .75rem 1.25rem;" role="alert">
+
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td width="50" style="vertical-align: middle;">
+                                                <img src="~/Content/img/icon_user_search.png" height="50" width="50" />
+                                            </td>
+                                            <td style="vertical-align: middle;">
+                                                <strong>Unable to find guest details.</strong> Please press scan again button and scan a valid Guest QR code.
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            }
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 20%;">
+                    <td style="height: 20%; text-align: center;">
+                        <button class="btn_1 invokeScanQR" style="width: 150px;">@(!isFirstRun ? "Scan Again" : "Scan QR Code")</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="col-12 min-height-450">
+            <div class="row">
+                <div class="col-12 mb-4 text-center">
+                    @if (!string.IsNullOrEmpty(Model.ProfilePicturePath))
+                    {
+                        <img src="@Model.ProfilePicturePath" height="150" width="150" />
+                    }
+                    else
+                    {
+                        <img src="~/Content/img/uploads/avatar/default.png" height="150" width="150" />
+                    }
+                </div>
+
+                <div class="col-12 mb-2">
+                    <label>Full Name</label>
+                    <input type="text" class="form-control" disabled value="@Model.FirstName" />
+                </div>
+                <div class="col-7 mb-2">
+                    <label>Gender</label>
+                    <input type="text" class="form-control" disabled value="@Model.Gender" />
+                </div>
+                <div class="col-5 mb-2">
+                    <label>Age</label>
+                    <input type="text" class="form-control" disabled value="@Model.AgeDisplay" />
+                </div>
+                <div class="col-12 mb-2">
+                    <label>Mobile #</label>
+                    <input type="text" class="form-control" disabled value="@Model.Phone" />
+                </div>
+                <div class="col-12 mb-2">
+                    <label>Country</label>
+                    <input type="text" class="form-control" disabled value="@Model.Country" />
+                </div>
+                <div class="col-12 mb-2">
+                    <label>City</label>
+                    <input type="text" class="form-control" disabled value="@Model.City" />
+                </div>
+                <div class="col-12 mb-2">
+                    <label>Remarks</label>
+                    <textarea class="form-control" id="txt-remarks" style="min-height: 50px; max-height: 150px;"></textarea>
+                </div>
+
+                <div class="col-12 mt-3 mb-4">
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <button id="btn_view_documents" class="btn_1 outline_1" style="width: 100%;">Uploaded Documents</button>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <button id="btn_view_history" class="btn_1 outline_1" style="width: 100%;">View History</button>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <button class="btn_1 red invokeScanQR" style="width: 100%;">Scan Again</button>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <button class="btn_1" id="btn_save" style="width: 100%;">Save Visit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            var isFocused = true;
+
+            $(document).on('click', '.invokeScanQR', function () {
+                invokeCSCode('type:gotoScan|value:|function:');
+            });
+
+            $(document).on('click', '#btn_view_history', function () {
+                invokeCSCode('type:gotoHistory|value:|function:');
+            });
+
+            $(document).on('click', '#btn_view_documents', function () {
+                invokeCSCode('type:gotoDocuments|value:|function:');
+            });
+
+            $(document).on('click', '#btn_save', function () {
+
+                $.ajax({
+                    url: '@Url.Action("SaveVisitHistory")',
+                    type: 'get',
+                    data: {
+                        UserId: '@(Model?.Id ?? 0)',
+                        PlaceId: '@placeId',
+                        Remarks: $('#txt-remarks').val()
+                    },
+                    success: function (result) {
+                        $(this).focusout();
+
+                        if (result.Success) {
+                            $('#txt-remarks').val('');
+                        }
+
+                        invokeCSCode('type:showMessageAndReload|value:' + JSON.stringify(result) + '|function:');
+                    }
+                });
+            });
+
+
+        });
+
+    </script>
+}

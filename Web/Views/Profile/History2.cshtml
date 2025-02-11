@@ -1,0 +1,147 @@
+﻿@model Web.ViewModel.UserPlaceVisitHistoryViewModel﻿
+@using Project.Models.Models.UserModels;
+@using Web.ViewModel;
+@using Web.Utilities;
+
+@{
+    ViewBag.Title = "Bookmarks";
+    Layout = "~/Views/Shared/_ProfileLayout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<style>
+    /* Apply this to your `table` element. */
+    #page {
+        border-collapse: collapse;
+    }
+
+        /* And this to your table's `td` elements. */
+        #page td {
+            padding: 0;
+            margin: 0;
+        }
+
+        #page tr {
+            padding: 0;
+            margin: 0;
+        }
+</style>
+
+
+<div class="content-wrapper">
+
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Profile</a>
+            </li>
+            <li class="breadcrumb-item active">History</li>
+        </ol>
+        @if (!string.IsNullOrEmpty(ViewBag.Message))
+        {
+            <div class="row">
+                <div class="col-8">
+                    <div class="alert alert-success alert-dismissible fade show " role="alert">
+                        @ViewBag.Message
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="box_general padding_bottom">
+                    <div class="header_box version_2">
+                        <h2><i class="fa fa-history"></i>Visit History</h2>
+                    </div>
+                    @if (Model.List.Count() == 0)
+                    {
+
+
+                        <div class="alert alert-success alert-dismissible fade show " role="alert">
+                            <strong>No Visit History to display.</strong> Start exploring Oriental Mindoro now!
+                        </div>
+
+
+                    }
+
+                    @if (Model.List != null && Model.List.Count() > 0)
+                    {
+                        <div class="list_general">
+                            <ul>
+                                @if (Model != null && Model.List.Any())
+                                {
+                                    foreach (var t in Model.List)
+                                    {
+                                        <li>
+                                            <figure>
+                                                <img src="@(Model.CDNHOST + (t.Place.HomeThumbnail.Replace(".jpg", "_thumb.jpg")))" class="" alt="" loading="lazy">
+                                            </figure>
+                                            <small>@t.Place.ParentName</small>
+                                            <h4><a href="/Places/Details/@t.Place.Id">@t.Place.Title</a></h4>
+                                            <p class="mb-0">@t.dto.DateVisit.ToLongDateString() &gt; @t.dto.DateVisit.ToShortTimeString()</p>
+                                            <p class="mb-0">@t.Place.CompleteAddress</p>
+                                            <p class="">Remarks: @t.dto.Remarks</p>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+
+                        @*<div class="row">
+                            <table id="table1" class="table borderless">
+                                <thead>
+                                    <tr>
+                                        <th>Travel Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (UserPlaceVisitModel t in Model.List)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <div class="box_grid">
+
+                                                        <div class="wrapper">
+                                                            <h6><a href="/Places/Details/@t.Place.Id" target="_blank">@t.Place.Title</a></h6>
+                                                            <span>@t.dto.DateVisit.ToLongDateString() &gt; @t.dto.DateVisit.ToShortTimeString()</span><br />
+
+
+                                                            <span>@t.Place.CompleteAddress</span><br />
+                                                            <span>Remarks: @t.dto.Remarks</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>*@
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table1').css('display', 'table');
+            var table = $('#table1').DataTable({
+                "ordering": false,
+                "info": false,
+                "searching": false,
+                "bLengthChange": false,
+                "pageLength": 5,
+                "language": {
+                    "emptyTable": "No visit history"
+                }
+            });
+            $('#table1_wrapper').addClass('col-12 m-0 p-0');
+        });</script>
+}

@@ -1,0 +1,110 @@
+﻿@model Web.ViewModel.Profile.VerifyViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ProfileLayout.cshtml";
+}
+
+
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Profile</a>
+            </li>
+            <li class="breadcrumb-item active">Verify</li>
+        </ol>
+        @if (!string.IsNullOrEmpty(ViewBag.Message))
+        {
+            <div class="row">
+                <div class="col-8">
+                    <div class="alert alert-success alert-dismissible fade show " role="alert">
+                        @ViewBag.Message
+                    </div>
+                </div>
+            </div>
+        }
+        @using (Html.BeginForm("Verify", "LinkedAccounts", FormMethod.Post))
+        {
+            <!-- /box_general-->
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="box_general padding_bottom">
+                        <div class="header_box version_2">
+                            <h2><i class="fa fa-lock"></i>Verify @Model.LinkedAccount.GetUsername()</h2>
+                        </div>
+                        @Html.HiddenFor(s => s.LinkedAccount.MobileNumber)
+                        @Html.HiddenFor(s => s.LinkedAccount.Email)
+                        @Html.HiddenFor(s => s.LinkedAccount.Type)
+                        @Html.HiddenFor(s => s.hiddenVerifyCode)
+                    <div class="form-group">
+                        <label>Code</label>
+                        <div class="form-group row ml-1">
+                            @Html.TextBoxFor(s => s.VerifyCode, new { @class = "form-control  col-lg-6" })
+
+                            <a href="javascript:;" class="ml-2" id="sendCode" style="display: flex; align-items: center; "> Send code</a>
+                        </div>
+                       
+
+                        @Html.ValidationMessageFor(s => s.VerifyCode, "", new { @class = "text-danger" })
+                    </div>
+                       
+                    <p id="sentText" style="display:none;">
+                        @if (Model.LinkedAccount.Type == Project.Models.Enums.UserLinkedAccountTypeEnums.Email)
+                        {
+                            @:Verification code has been sent to your email
+                        }
+                        else
+                        {
+                            @:Verification code has been sent to your mobile number
+                        }
+
+                    </p>
+
+                        <p class="mt-5"><button href="#0" class="btn_1 medium">Verify</button></p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /row-->
+
+        }
+
+    </div>
+    <!-- /.container-fluid-->
+</div>
+<!-- /.container-wrapper-->
+
+
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            $(document).on('click', '#sendCode', function () {
+               $.ajax({
+                url: '@Url.Action("SendCode")',
+                type: "post",
+                   data: {
+                       username: '@Model.LinkedAccount.GetUsername()',
+                       type: '@Model.LinkedAccount.Type'
+                    },
+                   success: function (data) {
+                       if (data.returnData.Success) {
+                           $('#hiddenVerifyCode').val(data.returnData.ReturnParam);
+                           $('#sentText').show();
+                           $('#sendCode').hide();
+                       }
+
+                    },
+                    error: function () {
+                    }
+                });
+            });
+        });
+    </script>
+}
+

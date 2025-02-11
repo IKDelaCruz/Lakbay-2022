@@ -1,0 +1,146 @@
+﻿@model Web.ViewModel.PlaceHomeViewModel
+@using Project.Models.Models;
+@using Web.ViewModel;
+@using Web.Utilities;
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_MobileLayoutLite.cshtml";
+    // int userId = (int)ViewBag.UserId;
+}
+
+<style>
+    footer {
+        display: none;
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+
+<div class="isotope-wrapper add_top_15 col-12 m-0 p-0" style="width:100%; height:100%;">
+    <div class="col-12 m-0 p-0" style="width:100%; height:100%;">
+
+        <table id="example" class="col-12 ml-0 mr-0 mt-3 mb-2 p-0" style="width:100%; height:100%;">
+            <thead>
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <br/>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <script>
+        var longitude = '@Model.UserLongitude';
+        var latitude = '@Model.UserLatitude';
+        function FavoritesToggle(button) {
+            var id = $(button).attr('t-id');
+            var userid = $(button).attr('t-userid');
+            var liked = !$(button).hasClass('liked');
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ToggleFavorites", "Api")?userid=' + userid + '&id=' + id + '&liked='+liked,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (result) {
+                }
+            });
+        }
+        function RefreshView2(longi, lati) {
+            longitude = longi;
+            latitude = lati;
+            RefreshView();
+        }
+        $(document).ready(function () {
+
+            $(document).on('click', '.btn-navigate-details', function (e) {
+                var value = $(this).attr('link-value');
+                if (value !== "") {
+                    invokeCSCode('type:isURL|value:' + value + '|function:');
+                }
+            });
+
+        });
+    </script>
+
+    <script>
+        var tableElementId = '#example';
+        var emptyTableString =
+             ' <div class="row">'
+			 +'  <div class="col-12">'
+			 +'       <div class="alert alert-success alert-dismissible fade show " role="alert">'
+			 +'          <strong>No Favorites to display.</strong> To add your favorite place, search for places then click Add To Favorites button.'
+			 +'       </div>'
+			 +'   </div>'
+			 +' </div>'
+            ;
+        var requestUrl = '@Url.Action("FavoritesDatatable", "Api", new { area = "mobile" })';
+        var requestData = function (d) {
+            d.userid = @Model.UserId;
+            d.longitude = longitude;
+            d.latitude = latitude;
+        };
+        var processing = '<div><i class="fa fa-spinner fa-spin fa-2x fa-fw"></i></div>';
+        var tdClassname = 'm-0 p-0';
+        var dom = '<"top">tr<"bottom"p>';
+        var searching = false;
+        function Template(full) {
+             var temp =
+                 '<div class="isotope-item popular">'
+                + '	<div class="box_grid">'
+                + '		<figure>'
+             //   + '				<a href="javascript:;" style="display:%-favoritesDisplay-%" class="wish_bt %-favoritesClass-%" t-userid="%-UserId-%" t-id="%-Id-%" onclick="FavoritesToggle(this)"></a>'
+                + '			<a href="javascript:;" class="btn-navigate-details" link-value="%-url-%"><img src="%-cdn-%" loading="lazy" class="img-fluid" alt=""><div class="read_more"><span>Read more</span></div></a>'
+                + '			%-parent-%'
+                + '		</figure>'
+                + '		<div class="wrapper">'
+                + '         <div class="d-flex justify-content-between">'
+                + '		    	<h3><a href="javascript:;" class="btn-navigate-details" link-value="%-url-%">%-title-%</a></h3>'
+                 + '             <div class="font-weight-bolder" style="font-size: 13px !important;"><strong>%-approxDistance-%</strong></div>'
+                + '         </div>'
+                + '			<p class="mb-3">%-desc-%</p>'
+                + '			<span class="price">%-completeAddress-%</span>'
+                + '		</div>'
+                + '	</div>'
+                + '</div>'
+
+            temp = temp
+                .replace(/%-favoritesDisplay-%/g, full.favoritesDisplay)
+                .replace(/%-favoritesClass-%/g, full.favoritesClass)
+                .replace(/%-UserId-%/g, full.UserId)
+                .replace(/%-Id-%/g, full.t.Id)
+                .replace(/%-parentName-%/g, full.t.ParentName)
+                .replace(/%-url-%/g, full.url)
+                .replace(/%-cdn-%/g, full.imgSrc)
+                .replace(/%-title-%/g, full.t.Title)
+                .replace(/%-desc-%/g, full.Description)
+                .replace(/%-parent-%/g, full.parent)
+                .replace(/%-completeAddress-%/g, full.t.CompleteAddress)
+                .replace(/%-approxDistance-%/g, full.t.DistanceFromUserString);
+            return temp;
+        }
+    </script>
+
+    <script type="text/javascript" src="~/Scripts/datatable-script.js?2"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            PARAMS.init(
+                tableElementId,
+                emptyTableString,
+                requestUrl,
+                requestData,
+                Template,
+                processing,
+                tdClassname,
+                dom,
+                searching
+            );
+        });
+    </script>
+}

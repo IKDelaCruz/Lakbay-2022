@@ -1,0 +1,68 @@
+﻿
+@model Web.ViewModel.PlaceDetailViewModel
+@using Project.Models.Models
+
+@{
+    var isMobileView = TempData.Peek("MobileView") != null ? Convert.ToBoolean(TempData.Peek("MobileView")) : false;
+    var CDNHOST = System.Configuration.ConfigurationManager.AppSettings["CDNHOST"];
+    //isMobileView = true;
+}
+
+@if (Model.Images.Count() > 0)
+{
+    <div class="modal fade" id="announcementModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content ">
+                <div class="modal-body p-0 ">
+                    <div id="carousel" class="carousel slide" data-ride="carousel">
+
+                        <div class="carousel-inner">
+
+                            @{ var first = true; }  
+                            @foreach (PlaceImagesDto t in Model.Images)
+                            {
+                                var active = "";
+                                if (first)
+                                {
+                                    active = "active";
+                                }
+                                if (isMobileView)
+                                {
+                                    if (t.Type == Project.Models.Enums.PlaceImagesType.AnnouncementMobile)
+                                    {
+                                        <div class="carousel-item @active">
+                                            <img src="@Model.CDNHOST@t.Filename" class="d-block w-100 img-fluid announcement-web" />
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    if (t.Type == Project.Models.Enums.PlaceImagesType.AnnouncementWeb)
+                                    {
+                                         <div class="carousel-item @active">
+                                            <img src="@Model.CDNHOST@t.Filename" class="d-block w-100 img-fluid announcement-web" />
+                                         </div>
+                                    }
+
+                                }
+
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@if (Model != null && Model.Images.Count() > 0)
+{
+
+    <script>
+        $('#announcementModal').modal('show');
+        $('#carousel').carousel()
+    </script>
+}

@@ -1,0 +1,50 @@
+﻿@{
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+
+}
+
+
+
+
+
+<div class="container container-custom pb-5 margin_80_0">
+    @*  @Html.Action("MunicipalitiesWidget", "Places") *@
+
+    @Html.Action("DestinationsWidget", "Places")
+
+    @Html.Action("AttractionsWidget", "Places")
+
+    @Html.Action("ShopsWidget", "Places")
+
+    @Html.Action("DivingWidget", "Places")
+
+    @Html.Action("RestaurantsWidget", "Places")
+
+    @Html.Action("AccomodationsWidget", "Places")
+
+    @*@Html.Action("RecreationsWidget", "Places")*@
+
+    @Html.Action("HomeWidget", "Festival")
+
+    @*@Html.Action("GovernorsMessageWidget", "Page")*@
+
+    <div id="announcement-container"></div>
+</div>
+
+
+@section scripts{
+    <script>
+            $(document).ready(function () {
+                $.ajax({
+                    url: '@Url.Action("ShowAnnouncement", "Menu")',
+                    data: { mobileView: false },
+                    type: 'get',
+                    success: function (result) {
+                        $('#announcement-container').html(result);
+                    }
+                });
+            });
+    </script>
+}

@@ -1,0 +1,355 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="LakbayDBModelStoreContainer" CdmEntityContainer="LakbayDBEntities">
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="LakbayDBModel.C__MigrationHistory">
+        <MappingFragment StoreEntitySet="__MigrationHistory">
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Announcements">
+      <EntityTypeMapping TypeName="LakbayDBModel.Announcement">
+        <MappingFragment StoreEntitySet="Announcement">
+          <ScalarProperty Name="MobileImageURL" ColumnName="MobileImageURL" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LinkId" ColumnName="LinkId" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="UploadBy" ColumnName="UploadBy" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="LakbayDBModel.AspNetRole">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="LakbayDBModel.AspNetUserClaim">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="LakbayDBModel.AspNetUserLogin">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="LakbayDBModel.AspNetUser">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Baranggays">
+      <EntityTypeMapping TypeName="LakbayDBModel.Baranggay">
+        <MappingFragment StoreEntitySet="Baranggay">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cities">
+      <EntityTypeMapping TypeName="LakbayDBModel.City">
+        <MappingFragment StoreEntitySet="City">
+          <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CMSUsers">
+      <EntityTypeMapping TypeName="LakbayDBModel.CMSUser">
+        <MappingFragment StoreEntitySet="CMSUser">
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+          <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+          <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+          <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CMSUserRoles">
+      <EntityTypeMapping TypeName="LakbayDBModel.CMSUserRole">
+        <MappingFragment StoreEntitySet="CMSUserRole">
+          <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="CMSUserId" ColumnName="CMSUserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Countries">
+      <EntityTypeMapping TypeName="LakbayDBModel.Country">
+        <MappingFragment StoreEntitySet="Country">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Favorites">
+      <EntityTypeMapping TypeName="LakbayDBModel.Favorite">
+        <MappingFragment StoreEntitySet="Favorites">
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FirebaseUserTokens">
+      <EntityTypeMapping TypeName="LakbayDBModel.FirebaseUserToken">
+        <MappingFragment StoreEntitySet="FirebaseUserTokens">
+          <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+          <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Token" ColumnName="Token" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Images">
+      <EntityTypeMapping TypeName="LakbayDBModel.Image">
+        <MappingFragment StoreEntitySet="Image">
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="FileType" ColumnName="FileType" />
+          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+          <ScalarProperty Name="SystemName" ColumnName="SystemName" />
+          <ScalarProperty Name="Path" ColumnName="Path" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Logs">
+      <EntityTypeMapping TypeName="LakbayDBModel.Log">
+        <MappingFragment StoreEntitySet="Logs">
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Places">
+      <EntityTypeMapping TypeName="LakbayDBModel.Place">
+        <MappingFragment StoreEntitySet="Place">
+          <ScalarProperty Name="ShopURL" ColumnName="ShopURL" />
+          <ScalarProperty Name="GUID" ColumnName="GUID" />
+          <ScalarProperty Name="HeaderVideoURL" ColumnName="HeaderVideoURL" />
+          <ScalarProperty Name="MapsLatitude" ColumnName="MapsLatitude" />
+          <ScalarProperty Name="MapsLongtitude" ColumnName="MapsLongtitude" />
+          <ScalarProperty Name="TagLine" ColumnName="TagLine" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="PublishedBy" ColumnName="PublishedBy" />
+          <ScalarProperty Name="PublishedDate" ColumnName="PublishedDate" />
+          <ScalarProperty Name="DisplayPriority" ColumnName="DisplayPriority" />
+          <ScalarProperty Name="TotalPlaces" ColumnName="TotalPlaces" />
+          <ScalarProperty Name="DistanceFromManila" ColumnName="DistanceFromManila" />
+          <ScalarProperty Name="HomeSlug" ColumnName="HomeSlug" />
+          <ScalarProperty Name="HomeThumbnail" ColumnName="HomeThumbnail" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="PaymentOption" ColumnName="PaymentOption" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Directions" ColumnName="Directions" />
+          <ScalarProperty Name="DescriptionHTML" ColumnName="DescriptionHTML" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="CompleteAddress" ColumnName="CompleteAddress" />
+          <ScalarProperty Name="BaranggayId" ColumnName="BaranggayId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PlaceFacilities">
+      <EntityTypeMapping TypeName="LakbayDBModel.PlaceFacility">
+        <MappingFragment StoreEntitySet="PlaceFacilities">
+          <ScalarProperty Name="Icon" ColumnName="Icon" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PlaceImages">
+      <EntityTypeMapping TypeName="LakbayDBModel.PlaceImage">
+        <MappingFragment StoreEntitySet="PlaceImages">
+          <ScalarProperty Name="YoutubeUrl" ColumnName="YoutubeUrl" />
+          <ScalarProperty Name="ImageText" ColumnName="ImageText" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Filename" ColumnName="Filename" />
+          <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PlaceReviews">
+      <EntityTypeMapping TypeName="LakbayDBModel.PlaceReview">
+        <MappingFragment StoreEntitySet="PlaceReview">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="CreatedDatte" ColumnName="CreatedDatte" />
+          <ScalarProperty Name="ReviewText" ColumnName="ReviewText" />
+          <ScalarProperty Name="ReviewStars" ColumnName="ReviewStars" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Provinces">
+      <EntityTypeMapping TypeName="LakbayDBModel.Province">
+        <MappingFragment StoreEntitySet="Province">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="LakbayDBModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+          <ScalarProperty Name="GUID" ColumnName="GUID" />
+          <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+          <ScalarProperty Name="LoginCounter" ColumnName="LoginCounter" />
+          <ScalarProperty Name="LastLoginAttempt" ColumnName="LastLoginAttempt" />
+          <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="PasswordKey" ColumnName="PasswordKey" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserDetails">
+      <EntityTypeMapping TypeName="LakbayDBModel.UserDetail">
+        <MappingFragment StoreEntitySet="UserDetail">
+          <ScalarProperty Name="ProfilePictureId" ColumnName="ProfilePictureId" />
+          <ScalarProperty Name="ProfilePictureUrl" ColumnName="ProfilePictureUrl" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserLinkedAccounts">
+      <EntityTypeMapping TypeName="LakbayDBModel.UserLinkedAccount">
+        <MappingFragment StoreEntitySet="UserLinkedAccount">
+          <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DateLinked" ColumnName="DateLinked" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="LinkId" ColumnName="LinkId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserPlaceVisitHistories">
+      <EntityTypeMapping TypeName="LakbayDBModel.UserPlaceVisitHistory">
+        <MappingFragment StoreEntitySet="UserPlaceVisitHistory">
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="DateVisit" ColumnName="DateVisit" />
+          <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserUploadedFiles">
+      <EntityTypeMapping TypeName="LakbayDBModel.UserUploadedFile">
+        <MappingFragment StoreEntitySet="UserUploadedFiles">
+          <ScalarProperty Name="Guid" ColumnName="Guid" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="LastDateModified" ColumnName="LastDateModified" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="UploadBy" ColumnName="UploadBy" />
+          <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+          <ScalarProperty Name="FileExtension" ColumnName="FileExtension" />
+          <ScalarProperty Name="Filename" ColumnName="Filename" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Path" ColumnName="Path" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PlaceOperatingHours">
+      <EntityTypeMapping TypeName="LakbayDBModel.PlaceOperatingHour">
+        <MappingFragment StoreEntitySet="PlaceOperatingHour">
+          <ScalarProperty Name="TimeTo" ColumnName="TimeTo" />
+          <ScalarProperty Name="TimeFrom" ColumnName="TimeFrom" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="LakbayDBModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetUser">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="AspNetRole">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

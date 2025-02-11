@@ -1,0 +1,185 @@
+﻿@model Web.Models.RegisterViewModel
+    @using Project.Models;
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div id="login">
+    <aside>
+        <figure>
+            <a href="/Home/"><img src="~/Content/img/logo.png" width="155" data-retina="true" alt="" class="logo_sticky"></a>
+        </figure>
+        @if (!string.IsNullOrEmpty(Model?.Message))
+        {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                @Model.Message
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row  d-flex justify-content-center ml-1 mr-1 mb-2" style="height:35px;">
+                <button style="height:35px; font-size:smaller" id="btnMobile" class="btn btn_1 col-6" type="button">Mobile</button>
+                <button style="height: 35px; font-size: smaller" id="btnEmail" class="btn  btn-outline-secondary col-6" type="button">Email</button>
+            </div>
+
+            @Html.HiddenFor(s => s.Type)
+            <div id="mobileDiv" class="form-group">
+                <label>Mobile</label>
+                @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control", autocomplete = "nope" })
+                @Html.ValidationMessageFor(s => s.MobileNumber, "", new { @class = "text-danger", @id = "mobileValidation" })
+                <i class="ti-user"></i>
+            </div>
+
+            <div id="emailDiv" class="form-group" style="display:none;">
+                <label>Email</label>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", autocomplete = "nope" })
+                @Html.ValidationMessageFor(s => s.Email, "", new { @class = "text-danger", @id = "emailValidation" })
+                <i class="ti-user"></i>
+            </div>
+            <div class="form-group row ml-1">
+
+
+                @Html.HiddenFor(s => s.hiddenCode, new { @id = "_code" })
+                @Html.TextBoxFor(m => m.code, new { @class = "form-control col-8", style = "padding-left:15px;" })
+
+                @*<i class="icon_info_alt"></i>*@
+                <a href="javascript:;" class="ml-2" id="sendCode" style="display: flex; align-items: center; "> Send code</a>
+            </div>
+
+            <p id="sentText" style="display:none;">
+                @if (Model.Type == Project.Models.Enums.UserLinkedAccountTypeEnums.Email)
+                {
+                    @:Verification code has been sent to your email
+                }
+                else
+                {
+                    @:Verification code has been sent to your mobile number
+                }
+
+            </p>
+
+
+            <div id="pass-info" class="clearfix"></div>
+            <input type="submit" value="Register Now!" class="btn_1 rounded full-width" />
+
+            <div class="text-center add_top_10">Already have an acccount? <strong><a href="/Account/Login">Sign In</a></strong></div>
+        }
+
+        <div class="copy">© 2021 Lakbay Oriental Mindoro</div>
+    </aside>
+</div>
+<!-- /login -->
+
+
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+    <script src="~/Client Scripts/MvcFoolproofJQueryValidation.min.js" type="text/javascript"></script>
+
+    <script>
+
+   
+    </script>
+
+    <script>
+        var mobileType = @((int)Model.MobileType);
+        var emailType = @((int)Model.EmailType);
+        var type = @((int)Model.Type);
+        if (type == emailType) {
+            $('#btnEmail').addClass('btn_1');
+            $('#btnEmail').removeClass('btn-outline-secondary');
+            $('#btnMobile').addClass('btn-outline-secondary');
+            $('#btnMobile').removeClass('btn_1');
+
+            $('#mobileDiv').hide();
+            $('#emailDiv').show();
+        }
+
+        $(document).on('click', '#sendCode', function () {
+            var type = $('#Type').val();
+            var username = "";
+            console.log(type);
+            if (type == @Project.Models.Enums.UserLinkedAccountTypeEnums.Email) {
+                username = $('#Email').val();
+            } else {
+                username = $('#MobileNumber').val();
+            }
+            $.ajax({
+                url: '@Url.Action("SendCode")',
+                type: "post",
+                data: {
+                    username: username,
+                    type: type
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.returnData.Success) {
+                        $('#_code').val(data.returnData.ReturnParam);
+                        $('#sentText').show();
+                        $('#sendCode').hide();
+                    }
+
+                },
+                error: function () {
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $('#MobileNumber').val('');
+            $('#Email').val('');
+            $(document).on('click', '#btnMobile', function () {
+                $('#btnEmail').addClass('btn-outline-secondary');
+                $('#btnEmail').removeClass('btn_1');
+                $('#btnMobile').addClass('btn_1');
+                $('#btnMobile').removeClass('btn-outline-secondary');
+
+                $('#mobileDiv').show();
+                $('#emailDiv').hide();
+
+
+                $('#MobileNumber-error').hide();
+                $('#Email-error').hide();
+
+
+                $('#MobileNumber').val('');
+                $('#Email').val('');
+
+
+                $('#emailValidation').val('');
+                $('#Email-error').hide();
+
+                $('#Type').val(mobileType);
+            });
+            $(document).on('click', '#btnEmail', function () {
+                $('#btnEmail').addClass('btn_1');
+                $('#btnEmail').removeClass('btn-outline-secondary');
+                $('#btnMobile').addClass('btn-outline-secondary');
+                $('#btnMobile').removeClass('btn_1');
+
+                $('#mobileDiv').hide();
+                $('#emailDiv').show();
+                $('#MobileNumber-error').hide();
+                $('#Email-error').hide();
+
+
+                $('#MobileNumber').val('');
+                $('#Email').val('');
+
+                $('#emailValidation').val('');
+                $('#Type').val(emailType);
+            });
+
+
+        });
+
+
+    </script>
+
+}

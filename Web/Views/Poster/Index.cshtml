@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_PlacesLayout.cshtml";
+}
+
+
+
+@{
+    ViewBag.Title = "Agent";
+    Layout = "~/Views/Shared/_PlacesLayout.cshtml";
+}
+<style>
+    .cart_section {
+        background: #477d47 url("/Content/img/uploads/pages.png") center bottom repeat-x !important;
+        color: rgba(255, 255, 255, 0.7);
+    }
+</style>
+<section class="hero_in  cart_section start_bg_zoom">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>Travel Oriental Mindoro</h1>
+            <p>Find your home away from home</p>
+        </div>
+
+    </div>
+</section>
+<div class="container mt-4 min-height-300">
+    <div class="col-lg-12">
+    
+       
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
+            window.location.href = 'https://play.google.com/store/apps/details?id=app.travelorientalmindoro.ph';
+        }
+        else if (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) {
+            window.location.href = 'https://apps.apple.com/us/app/travel-oriental-mindoro-ph/id1570131703';
+        }
+        else {
+            window.location.href = 'https://travelorientalmindoro.ph/';
+        }
+    });
+</script>

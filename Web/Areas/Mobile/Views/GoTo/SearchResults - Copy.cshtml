@@ -1,0 +1,62 @@
+﻿@model Web.ViewModel.PlaceHomeViewModel
+@using Project.Models.Models;
+@using Web.Utilities;
+@{
+    Layout = "~/Views/Shared/_MobileLayoutLite.cshtml";
+}
+
+<div class="isotope-wrapper add_top_15">
+    <div class="row min-height-450">
+        @if (Model.Places != null)
+        {
+            foreach (PlaceDto t in Model.Places)
+            {
+                var url = Url.Action("destinationdetails", "goto", new { area = "mobile", id = t.Id, userid = Model.UserId });
+                <div class="col-xl-6 col-lg-6 col-md-6">
+                    <div class="box_grid">
+                        <a href="@url" class="btn-navigate-details grid_item" link-value="@url">
+                            <figure class="home-widget" style="background-image: url(@(Model.CDNHOST + (t.HomeThumbnail.Replace(".jpg", "_thumb.jpg")))); ">
+
+                                <div class="score"><strong>#@(t.ParentName.ToString().ToUpper())</strong></div>
+
+                                @*<img src="@(Model.CDNHOST + (t.HomeThumbnail.Replace(".jpg", "_thumb.jpg")))" class="img-fluid" alt="" loading="lazy">*@
+                                <div class="info">
+                                    @if (!String.IsNullOrEmpty(t.Description))
+                                    {
+                                        <span>@t.Description.TruncateLongString(80)</span>
+                                    }
+                                    <h3 class="text-white">@t.Title</h3>
+                                </div>
+                            </figure>
+                        </a>
+                    </div>
+                </div>
+                <!-- /grid_item -->
+            }
+
+            if (Model.Places.Count() == 0)
+            {
+                <div class="col-12">
+                    <div class="col-12">
+                        <div class="alert alert-success alert-dismissible fade show " role="alert">
+                            No result found.
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+</div>
+
+
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+
+        });
+
+    </script>
+}

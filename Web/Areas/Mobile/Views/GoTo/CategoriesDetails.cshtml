@@ -1,0 +1,495 @@
+﻿@using Project.Models;
+@using Project.Models.Models;
+@using Web.Utilities;
+@model Web.ViewModel.PlaceHomeViewModel
+
+@{
+    ViewBag.Title = "Categories";
+    Layout = "~/Views/Shared/_MobileLayoutLite.cshtml";
+    int municipalId = (int)TempData["SelectedMunicipality"];
+}
+
+<style>
+
+
+    /*@@media (hover: none) {
+        .btn-municipality:hover
+        .btn-category-type:hover {
+            color: inherit;
+        }
+    }*/
+
+    .main_title_3 h2 {
+        font-size: 17px;
+    }
+
+    .btn-municipality,
+    .btn-category-type {
+        border-radius: 20px;
+        height: 30px;
+        font-size: 12px;
+        border-color: #477d47;
+        color: #477d47;
+    }
+
+        .btn-municipality:hover,
+        .btn-category-type:hover {
+            /*border-color: #3dc13d;
+            background-color: #3dc13d;
+            color: white;*/
+            border-color: #477d47;
+            background-color: transparent;
+            color: #477d47;
+        }
+
+        .btn-municipality.selected,
+        .btn-category-type.selected {
+            border-color: #477d47;
+            background-color: #477d47;
+            color: white;
+        }
+
+    .items {
+        text-align: center;
+        padding: 5px;
+        text-decoration: none;
+    }
+
+        .items div {
+            /*border: 1px solid green;*/
+            border-radius: 10px;
+            /*background-color: #eeffe0;*/
+            height: 75px;
+            padding: 20px 0;
+        }
+
+        .items em {
+            width: 100%;
+            font-size: 20px;
+        }
+
+        .items span {
+            font-size: 12px;
+            color: black;
+            text-transform: capitalize;
+        }
+</style>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+<div class="bg_color_1">
+
+    <div class="container mt-3 mb-3">
+
+        <div class="grid">
+            <div class="row ml-2">
+                @{
+                    List<int> selectedcategories = (List<int>)TempData.Peek("SelectedCategory");
+                }
+
+                <button class="btn btn-xs btn-outline-primary btn-category-type col-auto mb-2 mr-2 @(selectedcategories.Any(a => a == (int)Enums.CategoryTypeEnum.Attraction) ? "selected" : "")" link-value="@((int)Enums.CategoryTypeEnum.Attraction)">Attraction</button>
+                <button class="btn btn-xs btn-outline-primary btn-category-type col-auto mb-2 mr-2 @(selectedcategories.Any(a => a == (int)Enums.CategoryTypeEnum.DiveShops) ? "selected" : "")" link-value="@((int)Enums.CategoryTypeEnum.DiveShops)">Diving</button>
+                <button class="btn btn-xs btn-outline-primary btn-category-type col-auto mb-2 mr-2 @(selectedcategories.Any(a => a == (int)Enums.CategoryTypeEnum.Restaurant) ? "selected" : "")" link-value="@((int)Enums.CategoryTypeEnum.Restaurant)">Food &amp; Dining</button>
+                <button class="btn btn-xs btn-outline-primary btn-category-type col-auto mb-2 mr-2 @(selectedcategories.Any(a => a == (int)Enums.CategoryTypeEnum.Recreation) ? "selected" : "")" link-value="@((int)Enums.CategoryTypeEnum.Recreation)">Recreation</button>
+                <button class="btn btn-xs btn-outline-primary btn-category-type col-auto mb-2 mr-2 @(selectedcategories.Any(a => a == (int)Enums.CategoryTypeEnum.Accommodation) ? "selected" : "")" link-value="@((int)Enums.CategoryTypeEnum.Accommodation)">Accommodation</button>
+                <button class="btn btn-xs btn-outline-primary btn-category-type col-auto mb-2 mr-2 @(selectedcategories.Any(a => a == (int)Enums.CategoryTypeEnum.Shop) ? "selected" : "")" link-value="@((int)Enums.CategoryTypeEnum.Shop)">Shopping</button>
+                <button class="btn btn-xs btn-outline-primary btn-category-type col-auto mb-2 mr-2 @(selectedcategories.Any(a => a == (int)Enums.CategoryTypeEnum.NewsEvents) ? "selected" : "")" link-value="@((int)Enums.CategoryTypeEnum.NewsEvents)">Festival</button>
+            </div>
+            <hr />
+            <div class="row ml-2">
+                <button id="all-municipal-btn" class="btn btn-xs btn-outline-primary btn-municipality col-auto mb-2 mr-2" link-value="0">All</button>
+
+                @{
+                    List<CityDto> municipalities = (List<CityDto>)TempData.Peek("Municipalities");
+                    List<CityDto> avaiableMunicipalities = (List<CityDto>)TempData.Peek("AvaiableMunicipalities"); 
+                }
+                <ol id="municipalList">
+                </ol>
+                @if (municipalities.Any())
+                {
+                    foreach (var mun in municipalities.OrderBy(a => a.Name))
+                    {
+                        var show = avaiableMunicipalities.Any(s => s.Id == mun.Id);
+                        var display = show ? "" : "display:none;";
+                        if (mun.Id == municipalId)
+                        {
+                            <button style="@display" class="btn btn-xs btn-outline-primary btn-municipality col-auto mb-2 mr-2 selected" link-value="@mun.Id">@mun.Name</button>
+                        }
+                        else
+                        {
+                            <button style="@display" class="btn btn-xs btn-outline-primary btn-municipality col-auto mb-2 mr-2" link-value="@mun.Id">@mun.Name</button>
+                        }
+
+                    }
+                }
+            </div>
+            <hr />
+
+
+
+            @*<div id="partialViewDiv"></div>*@
+            <table id="example" class="ml-0 mr-0 mt-3 mb-2 p-0" style="width:100%; height:100%;">
+                <thead>
+                    <tr>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <br/>
+        </div>
+
+    </div>
+
+</div>
+
+
+@section scripts{
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+
+    <script>
+        function GetEventTemplate(id, parentname, eventurl, parentnameupper, publisheddate, description, imgsrc, title,
+            isLiked, showFavorites, FavoritesClass, userId
+
+        ) {
+            var temp =
+                '<div class="add_bottom_15 " style="background-color: white;">'
+                + '    <div class="box_grid">'
+                + '        <figure>';
+
+            if (showFavorites) {
+                temp += '<a href="javascript:;" class="wish_bt %-favoritesclass-%" t-userid="%-UserId-%" t-id="%-Id-%" onclick="FavoritesToggle(this)"></a>';
+            }
+
+            temp += '            <a href="%-EventUrl-%"><img src="%-imgsrc-%" class="img-fluid" alt="" loading="lazy"><div class="read_more"><span>Read more</span></div></a>'
+                + '			<small>%-ParentName-%</small>'
+                + '       </figure>'
+                + '        <div class="wrapper">'
+                + '            <h3> <a href="javascript:;" onclick="EventNavigate(\'goto/eventdetails/%-Id-%\')" />%-Title-%</h3>'
+                + '            <p class="">'
+                + '                <i class="ti-pin "></i> %-ParentNameUpper-%   <i class="icon-calendar"></i> %-PublishedDate-%'
+                + '            </p>'
+                + '            <p class="text-justify">%-Description200-%</p>'
+                + '        </div>'
+                + '    </div>'
+                + '</div>';
+
+            temp = temp
+                .replace(/%-Id-%/g, id)
+                .replace(/%-ParentName-%/g, parentname)
+                .replace(/%-EventUrl-%/g, eventurl)
+                .replace(/%-ParentNameUpper-%/g, parentnameupper)
+                .replace(/%-PublishedDate-%/g, publisheddate)
+                .replace(/%-Description200-%/g, description)
+                .replace(/%-Title-%/g, title)
+                .replace(/%-UserId-%/g, userId)
+                .replace(/%-favoritesclass-%/g, FavoritesClass)
+                .replace(/%-imgsrc-%/g, imgsrc);
+
+            return temp;
+        }
+
+        function GetPlaceTemplate(
+            hasDescription, hasUrl, hasEmail, hasContactNumber, contactsList,
+            id, parentname, placeurl, parentnameupper, publisheddate, description100, imgsrc,
+            email, emailtruncate, title,
+            completeAddress, websiteurl,
+            isLiked, showFavorites, FavoritesClass, userId, DistanceFromUserString, shopUrl, hasShopUrl
+        ) {
+            var temp =
+                '<div class="add_bottom_15">'
+                + '	<div class="box_grid">'
+                + '		<figure>';
+
+            if (showFavorites) {
+                temp += '<a href="javascript:;" class="wish_bt %-favoritesclass-%" t-userid="%-UserId-%" t-id="%-Id-%" onclick="FavoritesToggle(this)"></a>';
+            }
+
+            temp += '			<a href="%-PlaceUrl-%">'
+                + '				<img src="%-imgsrc-%" class="img-fluid" alt="" loading="lazy">'
+                + '				<div class="read_more"><span>Read more</span></div>'
+                + '			</a>'
+                + '			<small>%-ParentName-%</small>'
+                + '		</figure>'
+                + '		<div class="wrapper">'
+                + '            <div class="d-flex justify-content-between">'
+                + '		        	<h3><a href="%-PlaceUrl-%">%-Title-%</a></h3>'
+                +'                  <div class="font-weight-bolder"  style="font-size: 13px !important;"><strong>%-approxDistance-%</strong></div>'
+                + '			   </div>'
+
+            if (hasDescription) {
+                temp += '			<p>%-Description100-%</p>';
+            }
+            temp += '			<p>'
+                + '				<i class="ti-pin mr-2"></i> %-CompleteAddress-%'
+                + '			</p>'
+                + '			<p>'
+
+            if (hasUrl) {
+                temp += '				<a href="%-WebsiteUrl-%" ><i class="ti-world mr-2"></i>Visit Website</a>'
+                    + '				<br />'
+            }
+
+
+            if (hasEmail) {
+                temp += '				<a href="mailto:%-Email-%" ><i class="ti-email mr-2"></i> %-EmailTruncate-%</a>'
+                    + '				<br />'
+            }
+
+            if (hasContactNumber) {
+                $(contactsList).each(function () {
+                    temp += '				<a href="tel:' + this + '" ><i class="ti-mobile mr-2"></i>' + this + '</a>'
+                        + '				<br />';
+                });
+
+            }
+
+            //if (hasShopUrl) {
+            //    //
+            //    temp += '			   <a href="javascript:;"  onclick="goshop(' + "'" + "%-ShopUrl-%" +"'" + ')"  class="bg-success p-1 pr-2 pl-0 user-select-none" style="color:white !important;"><i class="ti-shopping-cart mr-2"></i> Visit Online Store</a>'
+            //        + '				<br />'
+            //}
+
+
+            temp += '			</p>'
+                + '		</div>'
+                + '	</div>'
+                + '</div>';
+            temp = temp
+                .replace(/%-Id-%/g, id)
+                .replace(/%-ParentName-%/g, parentname)
+                .replace(/%-PlaceUrl-%/g, placeurl)
+                .replace(/%-WebsiteUrl-%/g, websiteurl)
+                .replace(/%-Title-%/g, title)
+                .replace(/%-ParentNameUpper-%/g, parentnameupper)
+                .replace(/%-PublishedDate-%/g, publisheddate)
+                .replace(/%-Email-%/g, email)
+                .replace(/%-CompleteAddress-%/g, completeAddress)
+                .replace(/%-EmailTruncate-%/g, emailtruncate)
+                .replace(/%-Description100-%/g, description100)
+                .replace(/%-UserId-%/g, userId)
+                .replace(/%-favoritesclass-%/g, FavoritesClass)
+                .replace(/%-approxDistance-%/g, DistanceFromUserString)
+                .replace(/%-imgsrc-%/g, imgsrc)
+                .replace(/%-ShopUrl-%/g, shopUrl);
+            return temp;
+        }
+
+
+    </script>
+
+    <script>
+        var tableElementId = '#example';
+        var emptyTableString =
+            '     <div class="alert alert-success alert-dismissible fade show " role="alert">'
+            + '    	No places available'
+            + '   </div>';
+            ;
+        var requestUrl = '@Url.Action("CategoriesDetailsDatatable")';
+        var requestData = function (d) {
+            d.userid = @Model.UserId;
+			d.cats = GetSelectedCategories;
+            d.cits = GetSelectedCities;
+            d.longitude = '@Model.UserLongitude';
+            d.latitude = '@Model.UserLatitude';
+        };
+        var processing = '<div><i class="fa fa-spinner fa-spin fa-2x fa-fw"></i></div>';
+        var tdClassname = 'm-0 p-0';
+        var dom = '<"top"fl>tr<"bottom"p>';
+        var searching = true;
+        function Template(full) {
+             if (full.IsEvent) {
+				 return GetEventTemplate(full.Id, full.ParentName, full.EventUrl, full.ParentNameUpper, full.PublishedDate, full.Description200, full.imgsrc, full.Title,
+					 full.IsLiked, full.ShowFavorites, full.FavoritesClass, full.UserId
+				 );
+				 //isLiked, showFavorites, FavoritesClass, userId
+			 }
+			 else {
+				 return GetPlaceTemplate(full.HasDescription, full.HasUrl, full.HasEmail, full.HasContactNumber, full.ContactNumbers,
+					 full.Id, full.ParentName, full.PlaceUrl, full.ParentNameUpper, full.PublishedDate, full.Description100, full.imgsrc, full.Email, full.EmailTruncate, full.Title,
+					 full.CompleteAddress, full.WebsiteUrl,
+                     full.IsLiked, full.ShowFavorites, full.FavoritesClass, full.UserId, full.Distance, full.ShopUrl, full.HasShopUrl
+				 );
+			 }
+        }
+    </script>
+
+    <script type="text/javascript" src="~/Scripts/datatable-script.js?3"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            PARAMS.init(
+                tableElementId,
+                emptyTableString,
+                requestUrl,
+                requestData,
+                Template,
+                processing,
+                tdClassname,
+                dom,
+                searching
+            );
+        });
+    </script>
+
+    <script>
+
+        function GetSelectedCategories() {
+            var text = $('.btn-category-type').map(function () {
+                if ($(this).hasClass("selected")) {
+                    return $(this).attr("link-value");
+                }
+                else {
+                    return;
+                }
+            }).get().join('|');
+            return text;
+        }
+
+        function GetSelectedCities() {
+            var text = $('.btn-municipality').map(function () {
+                if ($(this).hasClass("selected")) {
+                    return $(this).attr("link-value");
+                }
+                else {
+                    return;
+                }
+            }).get().join('|');
+            return text;
+        }
+
+       // function RefreshView() {
+            //var cats = GetSelectedCategories();
+            //var cits = GetSelectedCities();
+       //     table.ajax.reload(null, false);
+            @*$.ajax({
+                url: "CategoriesDetailsListView?userid=@Model.UserId&types="+cats+"&municipalid="+cits
+            }).done(function (data) {
+             /*   $("#partialViewDiv").html(data);*/
+            });*@
+      //  }
+
+        function FavoritesToggle(button) {
+            var id = $(button).attr('t-id');
+            var userid = $(button).attr('t-userid');
+            var liked = !$(button).hasClass('liked');
+
+            if (!liked) {
+                $(button).removeClass('liked');
+            } else {
+                $(button).addClass('liked');
+            }
+            $(button).blur();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ToggleFavorites", "Api")?userid=' + userid + '&id=' + id + '&liked='+liked,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (result) {
+                }
+            });
+        }
+
+        //return true if refreshview is called
+        function ResetIfHidden() {
+            var municipalButtons = $('.btn-municipality');
+            var reset = false;
+            $(municipalButtons).each(function () {
+                if ($(this).hasClass('selected') && $(this).is(":hidden")) {
+                    reset = true;
+                    $(this).removeClass('selected');
+                }
+            });
+            if (reset) {
+                $('#all-municipal-btn').addClass('selected');
+                RefreshView();
+                //console.log("reset");
+                return true;
+            }
+            return false;
+        }
+        function UpdateMunicipalList() {
+           // console.log("");
+            var cats = GetSelectedCategories();
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetMunicipalList", "Api")',
+                dataType: "json",
+                data: {
+                    cats: cats
+                },
+                contentType: "application/json",
+                success: function (result) {
+                    var municipalButtons = $('.btn-municipality');
+                    $(municipalButtons).each(function () {
+                        var value = $(this).attr('link-value');
+
+                        var found = false;
+                        $(result.data).each(function () {
+                            if (this == value) {
+                                found = true;
+                            }
+                        });
+                        if (!found) {
+                            $(this).hide();
+                        }
+                        else {
+                            $(this).show();
+                        }
+
+                    });
+                    return ResetIfHidden();
+                }
+            });
+            //municipalList
+}
+
+        $(document).ready(function () {
+
+            RefreshView();
+          //  UpdateMunicipalList();
+         //   $('.btn-municipality').unbind('hover');
+         //   $('.btn-category-type').unbind('hover');
+
+            $(document).on('click', '.btn-municipality', function (e) {
+                e.preventDefault();
+
+                $('.btn-municipality').removeClass('selected');
+                $(this).addClass('selected');
+
+                RefreshView();
+                $(this).blur();
+            });
+
+
+
+            $(document).on('click', '.btn-category-type', function (e) {
+                e.preventDefault();
+
+                if ($(this).hasClass("selected")) {
+                    $(this).removeClass('selected');
+                } else {
+                    $(this).addClass('selected');
+                }
+
+               
+                var updatedView = UpdateMunicipalList();
+                if (!updatedView) {
+                    //console.log('ref');
+                    RefreshView();
+                }
+                $(this).blur();
+            });
+
+        });
+
+        function CategoriesNavigate(url) {
+            if (url !== "") {
+                invokeCSCode('type:isURL|value:' + url + '|function:');
+            }
+        }
+        function goshop(url) {
+            //invokeCSCode('type:gotoshop|value:' + url + '|function:');
+            invokeCSCode('type:isExternalLink|value:' + url + '|function:');
+        }
+    </script>
+}

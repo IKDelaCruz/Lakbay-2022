@@ -1,0 +1,235 @@
+﻿@using Project.Models.Models.UserModels;
+
+@{
+    ViewBag.Title = "My Reviews";
+    Layout = "~/Views/Shared/_MobileLayoutLite.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<link href="~/Content/css/admin.css" rel="stylesheet">
+<style>
+    /* Apply this to your `table` element. */
+    #page {
+        border-collapse: collapse;
+    }
+
+        /* And this to your table's `td` elements. */
+        #page td {
+            padding: 0;
+            margin: 0;
+        }
+
+        #page tr {
+            padding: 0;
+            margin: 0;
+        }
+
+    .dropdown-manage-review {
+        left: -60px !important;
+        top: -30px !important;
+    }
+
+    .wordwrap {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        -ms-word-break: break-all;
+        /* This is the dangerous one in WebKit, as it breaks things wherever */
+        word-break: break-all;
+        /* Instead use this non-standard one: */
+        word-break: break-word;
+        /* Adds a hyphen where the word breaks, if supported (No Blink) */
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+</style>
+<div class="isotope-wrapper add_top_15 ">
+    <div class="row min-height-450 m-0 p-0">
+
+        <div class="col-12 m-0 p-0" style="width:100%; height:100%;">
+
+            <table id="example" class="col-12 ml-0 mr-0 mt-3 mb-2 p-0" style="width:100%; height:100%;">
+                <thead>
+                    <tr>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <br/>
+        </div>
+
+    </div>
+
+</div>
+
+<div id="review-detail-container"></div>
+
+@section scripts{
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $(document).on('click', '.btn-navigate-details', function (e) {
+                var value = $(this).attr('link-value');
+                if (value !== "") {
+                    invokeCSCode('type:isURL|value:' + value + '|function:');
+                }
+            });
+
+             $(document).on('click', '.btn-delete-review', function () {
+                $.ajax({
+                    url: '@Url.Action("Delete")',
+                    type: "post",
+                    data: { id: $(this).attr('link-id') },
+                    success: function (data) {
+                        $('#modal-review-detail').modal('hide');
+                        RefreshView();
+                    }
+                });
+            });
+
+            $(document).on('click', '.btn-edit-review', function () {
+                $('.btn-edit-review').prop('disabled', true);
+                $.ajax({
+                    url: '@Url.Action("ReviewDetail")',
+                    type: "get",
+                    data: { id: $(this).attr('link-id') },
+                    success: function (data) {
+                        $('#review-detail-container').html(data);
+                        $('#modal-review-detail').modal({ 'backdrop': 'static' }).modal('show');
+                        $('.btn-edit-review').prop('disabled', false);
+                    }
+                });
+            });
+
+            $(document).on('submit', '#form-update-review', function (e) {
+                e.preventDefault();
+                $('#btn-submit-review').prop('disabled', true);
+
+                $.ajax({
+                    url: '@Url.Action("UpdateReview", new { area ="mobile"})',
+                    type: "post",
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        //GetReviews();
+                        $('#modal-review-detail').modal('hide');
+                        RefreshView();
+                        //$('#review-detail-container').html('');
+                    },
+                    error: function () {
+                        $('#btn-submit-review').prop('disabled', false);
+                    }
+                });
+            });
+        });
+
+    </script>
+
+    <script>
+        var tableElementId = '#example';
+        var emptyTableString =
+			 ' <div class="row">'
+			 +'  <div class="col-12">'
+			 +'       <div class="alert alert-success alert-dismissible fade show " role="alert">'
+			 +'        No result found.'
+			 +'       </div>'
+			 +'   </div>'
+			 +' </div>'
+            ;
+        var requestUrl = '@Url.Action("DatatableReviews", "MyReviews", new { area = "mobile"})';
+        var requestData = function (d) {
+			d.id = '@ViewData["Guid"]';
+        };
+        var processing = '<div><i class="fa fa-spinner fa-spin fa-2x fa-fw"></i></div>';
+        var tdClassname = 'm-0 p-0';
+        var dom = '<"top">tr<"bottom"p>';
+        var searching = false;
+        function Template(full) {
+
+
+
+            var temp =
+                '<div class="list_general p-3"><ul><li>'
+
+
+                + '<table style="background-color: transparent !important; width: 100%;">'
+                + '<tr style="background-color: transparent !important;">'
+                + '   <td valign="top" style="margin-right: 10px;">'
+                + '      <figure  class="">'
+                + '		    <img src="%-imgSrc-%" class="" alt="" loading="lazy">'
+                + '	     </figure>'
+                + '   </td>'
+                + '   <td class="pl-3">'
+                + '      <a href="#" class="btn" data-toggle="dropdown" style="float: right;">'
+                + '         <i class="fa fa-ellipsis-v burgerMenu" style="font-size: 18px; cursor: pointer;"></i>'
+                + '		 </a>'
+                + '      <ul class="dropdown-menu dropdown-manage-review" style="left: -60px !important">'
+                + '         <li class="mb-3"><a href="javascript:;" class="dropdown-item btn-edit-review" link-id="%-reviewId-%"><i class="fa fa-fw fa-edit"></i> Update</a></li>'
+                + '         <li class=""><a href="javascript:;" class="dropdown-item btn-delete-review" link-id="%-reviewId-%"><i class="fa fa-fw fa-times-circle-o"></i> Remove</a></li>'
+                + '		 </ul>'
+                + '		 <small>%-parentName-%</small>'
+                + '	     <h4><a href="%-PlaceUrl-%" class="" link-value="">%-placeTitle-%</a></h4>'
+                + '		 <p class="text-justify mb-0">'
+                + '		    %-reviewStars-%'
+                + '		    &nbsp;&nbsp; - &nbsp;&nbsp; %-createdDate-%'
+                + '		 </p>'
+                + '		 <p class="text-justify wordwrap">%-reviewText-%</p>'
+                + '   </td>'
+
+                //+ '<div class="row "> '
+                //+ '   <figure  class="">'
+                //+ '		 <img src="%-imgSrc-%" class="" alt="" loading="lazy">'
+                //+ '	  </figure>'
+                //+ '  <ul class="buttons ml-auto">'
+                //+ '		<li>'
+                //+ '			<a href="javascript:;" class="btn_1 bg-warning btn-edit-review" link-id="%-reviewId-%"><i class="fa fa-fw fa-edit"></i> Edit</a>'
+                //+ '			<a href="javascript:;" class="btn_1 bg-danger btn-delete-review" link-id="%-reviewId-%"><i class="fa fa-fw fa-times-circle-o"></i> Remove</a>'
+                //+ '		</li>'
+                //+ '	 </ul>'
+                //+ '</div> '
+                //+ ' '
+                //+ '	<small>%-parentName-%</small>'
+                //+ '	<h4><a href="javascript:;" class="btn-navigate-details" link-value="/Places/Details/%-placeId-%">%-placeTitle-%</a></h4>'
+                //+ '	<p class="text-justify mb-0">'
+                //+ '		%-reviewStars-%'
+                //+ '		&nbsp;&nbsp; - &nbsp;&nbsp; %-createdDate-%'
+                //+ '	</p>'
+                //+ '	<p class="text-justify">%-reviewText-%</p>'
+
+                + '</li></ul></div>'
+                ;
+
+            temp = temp
+                .replace(/%-createdDate-%/g, full.createdDate)
+                .replace(/%-placeId-%/g, full.p.Id)
+                .replace(/%-PlaceUrl-%/g, full.PlaceUrl)
+                .replace(/%-parentName-%/g, full.p.ParentName)
+                .replace(/%-placeTitle-%/g, full.p.Title)
+                .replace(/%-imgSrc-%/g, full.placeImgSrc)
+                .replace(/%-reviewId-%/g, full.t.Id)
+                .replace(/%-reviewText-%/g, full.t.ReviewText)
+                .replace(/%-reviewStars-%/g, full.ReviewStars)
+                ;
+            return temp;
+        }
+    </script>
+
+    <script type="text/javascript" src="~/Scripts/datatable-script.js?2"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            PARAMS.init(
+                tableElementId,
+                emptyTableString,
+                requestUrl,
+                requestData,
+                Template,
+                processing,
+                tdClassname,
+                dom,
+                searching
+            );
+        });
+    </script>
+}

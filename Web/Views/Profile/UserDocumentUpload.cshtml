@@ -1,0 +1,183 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ProfileLayout.cshtml";
+
+    var message = TempData.Peek("Message")?.ToString() ?? "";
+    var messageType = TempData.Peek("MessageType")?.ToString() ?? "success";
+}
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Profile</a>
+            </li>
+            <li class="breadcrumb-item active">Documents</li>
+        </ol>
+
+        @if (!string.IsNullOrEmpty(message))
+        {
+            <div class="row">
+                <div class="col-8">
+                    <div class="alert @(messageType == "success" ? "alert-success" : "alert-danger") alert-dismissible fade show " role="alert">
+                        @message
+
+                        @{
+                            TempData["Message"] = "";
+                            TempData["MessageType"] = "";
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="box_general padding_bottom">
+
+                    <div class="header_box version_2">
+                        <h2><i class="fa fa-file"></i>Documents</h2>
+                        <button type="button" class="btn_1 small float-right btn-document-details" link-id="0" id="btn-upload-document"><i class="fa fa-upload"></i> Upload</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <table id="example" class="" style="width:100%; height:100%;">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- /box_general-->
+                <!-- /row-->
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid-->
+</div>
+<!-- /.container-wrapper-->
+
+<div id="uploaded-document-detail-container"></div>
+
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            GetUploadedDocuments();
+
+            $(document).on('click', '.btn-document-details', function () {
+                $('.btn-document-details').prop('disabled', true);
+
+                $.ajax({
+                    url: '/Profile/UploadedDocument',
+                    type: 'get',
+                    data: { id: $(this).attr('link-id') },
+                    success: function (result) {
+                        $('#uploaded-document-detail-container').html(result);
+                        $('#modal-upload-document').modal({ 'backdrop': 'static' }).modal('show');
+                        $('.btn-document-details').prop('disabled', false);
+                    },
+                    error: function (ex) {
+                        $('.btn-document-details').prop('disabled', false);
+                    }
+                });
+            });
+        });
+
+        function GetUploadedDocuments() {
+            $.ajax({
+                url: '/Profile/GetUploadedList',
+                type: 'get',
+                data: {},
+                success: function (result) {
+                    $('#div-document-container').html(result);
+                },
+                error: function (ex) {
+
+                }
+            });
+        }
+    </script>
+
+
+
+    <script>
+        var tableElementId = '#example';
+        var emptyTableString =
+			 ' <div class="row">'
+			 +'  <div class="col-12">'
+			 +'       <div class="alert alert-success alert-dismissible fade show " role="alert">'
+             +'               <strong>No uploaded documents to display.</strong>'
+			 +'       </div>'
+			 +'   </div>'
+			 +' </div>'
+            ;
+        var requestUrl = '@Url.Action("DatatableUserDocuments")';
+        var requestData = function (d) {
+        };
+        var processing = '<div><i class="fa fa-spinner fa-spin fa-2x fa-fw"></i></div>';
+        var tdClassname = 'm-0 p-0';
+        var dom = '<"top">tr<"bottom"p>';
+        var searching = false;
+        function Template(full) {
+
+              var temp =
+                  '<div class="list_general"><ul>'
+                 +'<li>'
+                +'   <figure onclick="UserAddNewFile(\'userupload/details?guid=%-guid-%&isfromios=%-isFromIos-%\')">'
+                + '		<img style="" src="%-imgUrl-%" class="" alt="" loading="lazy">'
+                + '	</figure>'
+                + '	<small>%-dateUploaded-%</small>'
+                + '	@*<h4><a href="javascript:;"></a></h4>*@'
+                + '	<p class="mb-0">Type: %-type-%</p>'
+                + '	<p class="text-justify">%-remarks-%</p>'
+                + '	<ul class="buttons">'
+                + '		<li>'
+                + '			<a href="javascript:;" class="btn_1 bg-warning btn-document-details" link-id="%-id-%"><i class="fa fa-fw fa-eye"></i> View</a>'
+                + '			<a href="/Profile/DeleteUploadedDocument/%-id-%" class="btn_1 bg-danger"><i class="fa fa-fw fa-times-circle-o"></i> Remove</a>'
+                + '		</li>'
+                + '	</ul>'
+                + '</li>'
+                + '</ul></div>'
+                ;
+
+            temp = temp
+                .replace(/%-id-%/g, full.t.Id)
+                .replace(/%-guid-%/g, full.t.Guid)
+                .replace(/%-isFromIos-%/g, full.isFromIos)
+                .replace(/%-imgUrl-%/g, full.imgUrl)
+                .replace(/%-dateUploaded-%/g, full.dateUploaded)
+                .replace(/%-type-%/g, full.type)
+                .replace(/%-remarks-%/g, full.remarks)
+                ;
+            return temp;
+        }
+    </script>
+
+    <script type="text/javascript" src="~/Scripts/datatable-script.js?2"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            PARAMS.init(
+                tableElementId,
+                emptyTableString,
+                requestUrl,
+                requestData,
+                Template,
+                processing,
+                tdClassname,
+                dom,
+                searching
+            );
+        });
+    </script>
+
+}

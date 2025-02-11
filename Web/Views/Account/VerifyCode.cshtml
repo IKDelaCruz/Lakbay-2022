@@ -1,0 +1,115 @@
+﻿@model Web.Models.VerifyCodeViewModel
+@{
+    ViewBag.Title = "Verify";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div id="login">
+    <aside>
+        <figure>
+            <a href="/Home/"><img src="~/Content/img/logo.png" width="155" data-retina="true" alt="" class="logo_sticky"></a>
+        </figure>
+
+        @if (!string.IsNullOrEmpty(Model?.Message))
+        {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                @Model.Message
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        @using (Html.BeginForm("VerifyCode", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("provider", @Model.Provider)
+            @Html.Hidden("rememberMe", @Model.RememberMe)
+            
+            @Html.HiddenFor(s => s._code, new { @id="_code"})
+
+            @Html.HiddenFor(s => s.LinkId)
+            @Html.HiddenFor(s => s.Type)
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                <label>Verification Code</label>
+
+                <div class="form-group row ml-1">
+
+
+                    @Html.TextBoxFor(m => m.Code, new { @class = "form-control col-8", style= "padding-left:15px;" })
+
+                    @*<i class="icon_info_alt"></i>*@
+                    <a href="javascript:;" class="ml-2" id="sendCode" style="display: flex; align-items: center; "> Send code</a>
+                </div>
+
+
+
+                @*@Html.ValidationMessageFor(m => m.Code, "", new { @class = "text-danger" })*@
+
+            </div>
+
+            <p id="sentText" style="display:none;">
+                @if (Model.Type == Project.Models.Enums.UserLinkedAccountTypeEnums.Email)
+                {
+                    @:Verification code has been sent to your email
+                }
+                else
+                {
+                    @:Verification code has been sent to your mobile number
+                }
+
+            </p>
+
+            <div class="clearfix add_bottom_30">
+                <div class="checkboxes float-left">
+                    <label class="container_check">
+                        Remember this browser?
+                        @Html.CheckBoxFor(m => m.RememberBrowser)
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+
+            <input type="submit" class="btn_1 rounded full-width" value="Submit" />
+        }
+
+
+        <div class="copy">© 2021 Travel Oriental Mindoro</div>
+    </aside>
+
+
+
+</div>
+@section Scripts {
+  
+    <script src="~/Scripts/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            $(document).on('click', '#sendCode', function () {
+               $.ajax({
+                url: '@Url.Action("SendCode")',
+                type: "post",
+                   data: {
+                       username: '@Model.LinkId',
+                       type: '@Model.Type'
+                    },
+                   success: function (data) {
+                       if (data.returnData.Success) {
+                           $('#_code').val(data.returnData.ReturnParam);
+                           $('#sentText').show();
+                           $('#sendCode').hide();
+                       }
+
+                    },
+                    error: function () {
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+

@@ -1,0 +1,63 @@
+﻿@model Web.ViewModel.PlaceHomeViewModel
+@using Project.Models.Models;
+@using Web.Utilities;
+
+@{
+    ViewBag.Title = "Municipalities";
+}
+
+
+
+
+<div class="main_title_2">
+    <span><em></em></span>
+    <h2>
+        Incredible destinations
+    </h2>
+    <p>Oriental Mindoro is home to pristine islands, incredible beaches and untouched nature.</p>
+</div>
+
+
+<div id="reccomended" class="owl-carousel owl-theme">
+
+    @if (Model.Places != null)
+    {
+        foreach (PlaceDto t in Model.Places)
+        {
+            <div class="item">
+                <div class="box_grid">
+                    <figure class="home-widget-owl">
+                        @*<a href="#0" class="wish_bt"></a>*@
+                        <a href="/Places/Destination/@t.Id">
+                            <img src="@Model.CDNHOST@(t.HomeThumbnail.Replace(".jpg", "_thumb.jpg"))" class="img-fluid" alt="">
+                            <div class="read_more"><span>Read more</span></div>
+                        </a>
+                        <small>@t.ParentName</small>
+                    </figure>
+                    <div class="wrapper">
+                        <h3><a href="/Places/Destination/@t.Id">@t.Title</a></h3>
+                        <p>@t.Description.TruncateLongString(100)</p>
+                        @*<span class="price">@t.CompleteAddress</span>*@
+                    </div>
+                    @*<ul>
+                            <li><i class="icon_compass"></i> @t.DistanceFromManila kms</li>
+                            <li><div class="score"><span>Superb<em>@t.TotalPlaces Places</em></span></div></li>
+                        </ul>*@
+                </div>
+            </div>
+        }
+    }
+
+
+
+    <!-- /item -->
+
+</div>
+<!-- /carousel -->
+<p class="btn_home_align"><a href="/Places/Destinations/" class="btn_1 rounded">Show All</a></p>
+<hr class="large">
+
+
+
+
+<!-- /container -->

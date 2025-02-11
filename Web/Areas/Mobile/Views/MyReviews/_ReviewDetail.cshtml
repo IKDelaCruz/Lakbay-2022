@@ -1,0 +1,166 @@
+﻿@model Web.ViewModel.Profile.ReviewHistoryViewModel
+@{
+    var CDNHOST = System.Configuration.ConfigurationManager.AppSettings["CDNHOST"];
+}
+
+<style>
+    .rating-star-icon {
+        font-size: 2rem;
+        color: lightgray;
+    }
+
+        .rating-star-icon:hover {
+            cursor: pointer;
+        }
+
+        .rating-star-icon.checked {
+            color: #086908;
+        }
+
+</style>
+
+<div id="modal-review-detail" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="box_general padding_bottom mb-0">
+                <div class="header_box version_2">
+                    <a href="javascript:;" class="float-right text-right" style="font-size: 25px;" data-dismiss="modal"><i class="fa fa-fw fa-times-circle-o mr-0"></i></a>
+                    <small>@Model.Place.ParentName</small>
+                    <h4>@Model.Place.Title</h4>
+                </div>
+                <div>
+                    @if (Model != null && Model.Review != null && Model.Review.Id > 0)
+                    {
+                        using (Html.BeginForm("UpdateDetails", "Profile", FormMethod.Post, new { id = "form-update-review" }))
+                        {
+                            @Html.HiddenFor(a => a.Review.Id)
+                            @Html.HiddenFor(a => a.Review.UserId)
+                            @Html.HiddenFor(a => a.Review.PlaceId)
+                            @Html.HiddenFor(a => a.Review.ReviewStars, new { id = "reviewStars" })
+                            @Html.HiddenFor(a => a.Review.CreatedDate)
+
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <label>Rating</label>
+                                    <div class="form-group mb-2">
+                                        <span link-rating="1" id="rate-1" class="fa fa-star rating-star-icon @(Model.Review?.ReviewStars >= 1 ? "checked":"")"></span>
+                                        <span link-rating="2" id="rate-2" class="fa fa-star rating-star-icon @(Model.Review?.ReviewStars >= 2 ? "checked":"")"></span>
+                                        <span link-rating="3" id="rate-3" class="fa fa-star rating-star-icon @(Model.Review?.ReviewStars >= 3 ? "checked":"")"></span>
+                                        <span link-rating="4" id="rate-4" class="fa fa-star rating-star-icon @(Model.Review?.ReviewStars >= 4 ? "checked":"")"></span>
+                                        <span link-rating="5" id="rate-5" class="fa fa-star rating-star-icon @(Model.Review?.ReviewStars >= 5 ? "checked":"")"></span>
+                                    </div>
+
+                                    <label>Your Review</label>
+                                    <div class="form-group mb-3">
+                                        <textarea class="form-control" name="Review.ReviewText" style="min-height: 100px; max-height: 200px; max-width: 100%;">@Model.Review.ReviewText</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 text-right">
+                                    @*<a href="javascript:;" link-id="@Model.Review.Id" class="btn_1 bg-danger btn-delete-review" data-dismiss="modal"><i class="fa fa-fw fa-trash"></i> Delete</a>*@
+                                    <button type="submit" class="btn_1" id="btn-submit-review"><i class="fa fa-fw fa-save"></i> Save Changes</button>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <div class="alert alert-success alert-dismissible fade show " role="alert">
+                                    <strong>Unable to display review details.</strong> Please close this dialog box and try again later.
+                                </div>
+                            </div>
+
+                            @*<div class="col-12 text-right">
+                                <button class="btn_1" data-dismiss="modal"><i class="fa fa-fw fa-times-circle-o"></i> Close</button>
+                            </div>*@
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).on('click', '.rating-star-icon', function () {
+        var rating = parseInt($(this).attr('link-rating'));
+        $('#reviewStars').val(rating);
+
+        for (let i = 1; i <= 5; i++) {
+
+            var element = document.getElementById("rate-" + i);
+
+            if (i <= rating) {
+                element.classList.add("checked");
+            } else {
+                element.classList.remove("checked");
+            }
+
+        }
+    });
+
+</script>
+
+
+
+
+
+
+
+
+@*@if (Model == null || Model.Count() == 0)
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-success alert-dismissible fade show " role="alert">
+                    <strong>No reviews to display.</strong>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-12">
+
+                <div class="list_general">
+                    <ul>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var t in Model)
+                            {
+                                <li>
+                                    <figure>
+                                        <img src="@(CDNHOST + (t.Place.HomeThumbnail.Replace(".jpg", "_thumb.jpg")))" class="" alt="" loading="lazy">
+                                    </figure>
+                                    <small>@t.Place.ParentName</small>
+                                    <h4><a href="/Places/Details/@t.Place.Id">@t.Place.Title</a></h4>
+                                    <p class="text-justify mb-0">
+                                        @for (int x = 0; x < t.Review.ReviewStars; x++)
+                                        {
+                                            <i class="fa fa-star" style="color: #3dc13d;"></i>
+                                        }
+
+                                        &nbsp;&nbsp; - &nbsp;&nbsp; @t.Review.CreatedDate.ToLongDateString()
+                                    </p>
+                                    <p class="text-justify">@t.Review.ReviewText</p>
+
+                                    <ul class="buttons">
+                                        <li>
+                                            <button class="btn_1 bg-warning btn-edit-review" link-id="@t.Review.Id"><i class="fa fa-fw fa-edit"></i> Edit</button>
+                                            <button class="btn_1 bg-danger btn-delete-review" link-id="@t.Review.Id"><i class="fa fa-fw fa-times-circle-o"></i> Remove</button>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    }*@

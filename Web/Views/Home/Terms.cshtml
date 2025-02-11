@@ -1,0 +1,37 @@
+﻿@model Web.ViewModel.PlaceDetailViewModel
+@using Project.Models.Models;
+@using Web.Utilities;
+
+@{
+    ViewBag.Title = "Terms and Conditions";
+    Layout = "~/Views/Shared/_PlacesLayout.cshtml";
+}
+<style>
+    .cart_section {
+        background: #477d47 url(@Model.CDNHOST@("pages.png")) center bottom repeat-x !important;
+        color: rgba(255, 255, 255, 0.7);
+    }
+   
+</style>
+<link href="~/Content/css/blog.css" rel="stylesheet">
+<section class="hero_in  cart_section start_bg_zoom">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>@Model.Place.Title</h1>
+        </div>
+
+    </div>
+</section>
+<div class="bg_color_1">
+
+    <!-- /container -->
+    <div class="container margin_60_35">
+        <div class="row">
+            <div class="col-lg-12">
+                <div id="detailhtmlcontainer" class="bloglist singlepost ">
+                    @Html.Raw(Model.Place.DescriptionHTML)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

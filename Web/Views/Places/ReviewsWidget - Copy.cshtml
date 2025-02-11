@@ -1,0 +1,196 @@
+﻿@model Web.ViewModel.ReviewViewModel
+@using Project.Models.Models;
+@using Web.Utilities;
+
+
+@{
+    ViewBag.Title = "ReviewsWidget";
+}
+
+<style>
+    .rating-star-icon {
+        font-size: 2rem;
+        color: lightgray;
+    }
+
+        .rating-star-icon:hover {
+            cursor: pointer;
+        }
+
+        .rating-star-icon.checked {
+            color: #086908;
+        }
+</style>
+
+<section id="reviews">
+    <h2>Reviews</h2>
+    <hr>
+    <div class="reviews-container">
+
+        @if (Model.PlaceReviews != null && Model.PlaceReviews.Count > 0)
+        {
+            foreach (ReviewDto t in Model.PlaceReviews)
+            {
+                <div class="review-box clearfix" style="padding: 0;">
+                    <div class="rev-content">
+
+                        @if (Model.UserId == t.UserId)
+                        {
+                            <a href="javascript:;" class="float-right btn-redit-review" style="font-size: 15px; color: #3dc13d;"
+                               onclick="EditReview('@t.Id', '@t.PlaceId', '@t.UserId', '@t.ReviewStars', '@t.ReviewText')" title="Edit"><i class="fa fa-edit"></i></a>
+                            <a href="javascript:;" class="float-right btn-delete-review" link-id="@t.Id" style="font-size: 15px; color: red; margin-right: 20px;" title="Remove"><i class="fa fa-trash"></i></a>
+                        }
+
+
+                        <div class="rating" style="margin-bottom: 10px;">
+
+                            <table class="table-borderless p-0">
+                                <tr>
+                                    <td class="pr-1">
+                                        <img src="@(Url.Action("ProfilePictureById", "Profile", new { id = t.UserId, area = "" }))"
+                                             class="img-fluid img-thumbnail" alt="" loading="lazy" 
+                                             style="width:70px; height:70px; border-radius: 50%;">
+                                    </td>
+                                    <td style="vertical-align: baseline;">
+                                        @for (int x = 0; x < t.ReviewStars; x++)
+                                        {
+                                            <i class="icon_star voted"></i>
+                                        }
+
+                                        <div class="rev-info mb-0">
+                                            @t.Username – @t.CreatedDate.ToLongDateString():
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            @*<figure class="rev-thumb">
+                <img src="@Model.CDNHOST/avatar/default.png" alt="">
+            </figure>*@
+
+                        </div>
+                        <div class="rev-text">
+                            <p>
+                                @t.ReviewText
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- /review-box -->
+                <!-- /review-box -->
+            }
+        }
+        else
+        {
+            <p>No reviews yet.</p>
+        }
+
+    </div>
+    <!-- /review-container -->
+</section>
+
+<!-- /section -->
+@if (User.Identity.IsAuthenticated)
+{
+    <hr>
+    <div class="add-review">
+        @if (Model.UserReview == null)
+        {
+            <h5 id="leave-review-header-title">Leave a review</h5>
+        }
+        else
+        {
+            <h5 id="leave-review-header-title">Edit your review</h5>
+        }
+
+        <form>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Rating </label>
+                    <br />
+                    <input type="hidden" name="rating_id" id="rating_id" value="0" />
+                    <input type="hidden" name="rating_place_id" id="rating_place_id" value="0" />
+                    <input type="hidden" name="rating_user_id" id="rating_user_id" value="0" />
+                    <input type="hidden" name="rating_review" id="rating_review" value="0" />
+
+                    <span onclick="ChangeRating(1)" id="rate-1" class="fa fa-star rating-star-icon @(Model.UserReview?.ReviewStars >= 1 ? "checked":"")"></span>
+                    <span onclick="ChangeRating(2)" id="rate-2" class="fa fa-star rating-star-icon @(Model.UserReview?.ReviewStars >= 2 ? "checked":"")"></span>
+                    <span onclick="ChangeRating(3)" id="rate-3" class="fa fa-star rating-star-icon @(Model.UserReview?.ReviewStars >= 3 ? "checked":"")"></span>
+                    <span onclick="ChangeRating(4)" id="rate-4" class="fa fa-star rating-star-icon @(Model.UserReview?.ReviewStars >= 4 ? "checked":"")"></span>
+                    <span onclick="ChangeRating(5)" id="rate-5" class="fa fa-star rating-star-icon @(Model.UserReview?.ReviewStars >= 5 ? "checked":"")"></span>
+
+                    @*<div class="custom-select-form">
+                            <select name="rating_review" id="rating_review" class="wide">
+                                <option value="1"
+                                        @if (Model.UserReview?.ReviewStars == 1) { @: selected='selected'
+                                        }>
+                                    1 (lowest)
+                                </option>
+                                <option value="2"
+                                        @if (Model.UserReview?.ReviewStars == 2) { @: selected='selected'
+                                        }>
+                                    2
+                                </option>
+                                <option value="3"
+                                        @if (Model.UserReview?.ReviewStars == 3) { @: selected='selected'
+                                        }>
+                                    3
+                                </option>
+                                <option value="4"
+                                        @if (Model.UserReview?.ReviewStars == 4) { @: selected='selected'
+                                        }>
+                                    4
+                                </option>
+                                <option value="5"
+                                        @if (Model.UserReview?.ReviewStars == 5 || Model.UserReview == null) { @: selected='selected'
+                                        }>
+                                    5 (highest)
+                                </option>
+                            </select>
+                        </div>*@
+                </div>
+                <div class="form-group col-md-12">
+                    <label>Your Review</label>
+                    <textarea name="review_text" id="review_text" class="form-control" style="height:130px;">@Model.UserReviewText</textarea>
+                </div>
+                <div class="form-group col-md-12 add_top_20">
+                    <input type="submit" value="Submit" class="btn_1" id="submit-review">
+                </div>
+            </div>
+        </form>
+    </div>
+
+}
+
+
+<script>
+    function ChangeRating(rating) {
+
+        document.getElementById("rating_review").value = rating;
+
+        for (let i = 1; i <= 5; i++) {
+
+            var element = document.getElementById("rate-" + i);
+
+            if (i <= rating) {
+                element.classList.add("checked");
+            } else {
+                element.classList.remove("checked");
+            }
+
+        }
+    }
+
+    function EditReview(id, placeid, user, rating, remarks) {
+        ChangeRating(rating);
+        document.getElementById("rating_id").value = id;
+        document.getElementById("rating_place_id").value = placeid;
+        document.getElementById("rating_user_id").value = user;
+        document.getElementById("review_text").value = remarks;
+        document.getElementById("review_text").focus();
+
+        document.getElementById("leave-review-header-title").innerHTML = "Edit your review";
+        document.getElementById("submit-review").value = "Submit Changes";
+    }
+
+</script>

@@ -1,0 +1,122 @@
+﻿
+@model Web.ViewModel.PlaceHomeViewModel
+@using Web.ViewModel;
+@using Project.Models;
+@using Project.Models.Models;
+@using Web.Utilities;
+
+@{
+    ViewBag.Title = "Events";
+}
+
+<style>
+    footer {
+        display: none;
+    }
+
+    .box_grid_height {
+        min-height: 100% !important;
+    }
+
+    .nice-select,
+    .nice-select ul {
+        width: 100%;
+    }
+
+        .nice-select .list {
+            height: auto;
+            max-height: 50vh !important;
+            overflow: auto;
+        }
+</style>
+
+<div class="container add_top_15 container-custom">
+
+ 
+
+
+    @if (Model.PlacesViewModel != null)
+    {
+        <div class="">
+            @foreach (PlaceDto t in Model.PlacesViewModel)
+            {
+                var url = Url.Action("eventdetails", "goto", new { area = "mobile", id = t.Id, userid = Model.UserId });
+                var showFavorites = Model.UserId > 0;
+                var favoritesClass = (t as PlaceViewModel)?.IsLiked ?? false ? "liked" : "";
+
+                <div class="item" style="width: 100%; background-color: white;">
+                    <div class="">
+                        <div class="box_grid">
+                            <figure>
+                                @if (showFavorites)
+                                {
+                                    <a href="javascript:;" class="wish_bt @favoritesClass" t-userid="@Model.UserId" t-id="@t.Id" onclick="FavoritesToggle(this)"></a>
+                                }
+                                <a href="/mobile/goto/eventdetails/@t.Id" onclick="EventNavigate('goto/eventdetails/@t.Id')"><img src="@(Model.CDNHOST + (t.HomeThumbnail.Replace(".jpg", "_thumb.jpg")))" class="img-fluid" alt="" loading="lazy"><div class="read_more"><span>Read more</span></div></a>
+                                <small>@t.ParentName</small>
+                            </figure>
+                            <div class="wrapper">
+                                <h3> <a href="/mobile/goto/eventdetails/@t.Id" />@t.Title</h3>
+                                <p class="">
+                                    <i class="ti-pin "></i> @(t.ParentName.ToUpper())    <i class="icon-calendar"></i> @t.PublishedDate.ToString("MMMM dd")
+                                </p>
+
+                                <p class="text-justify">@t.Description.TruncateLongString(200)</p>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            }
+        </div>
+    }
+
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            $(document).on('click', '.btn-navigate-to', function (e) {
+                var value = $(this).attr('link-value');
+                if (parseInt(value) > 0) {
+                    invokeCSCode('type:url|value:' + value + '|function:navigation');
+                }
+            });
+            $('#year').on('change', function () {
+                var userId = "@Model.UserId";
+                if (userId == "" || userId.length == 0) {
+                    userId = "0";
+                }
+                var domainName = "@HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority)";
+                var url = domainName+"/mobile/viewall/events?id=" + userId + "&year=" + this.value;
+           
+                location = url;
+                //invokeCSCode('type:isURL|value:' + url + '|function:');
+            });
+        });
+        function FavoritesToggle(button) {
+            var id = $(button).attr('t-id');
+            var userid = $(button).attr('t-userid');
+            var liked = !$(button).hasClass('liked');
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ToggleFavorites", "Api")?userid=' + userid + '&id=' + id + '&liked='+liked,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (result) {
+                }
+            });
+        }
+        function EventNavigate(url) {
+            if (url !== undefined && url !== "") {
+                invokeCSCode('type:isURL|value:' + url + '|function:');
+            }
+        }
+    </script>
+}

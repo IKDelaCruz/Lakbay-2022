@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YZGTF8Y6PY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-YZGTF8Y6PY');
+    </script>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no">
+    <meta name="description" content="Travel Oriental Mindoro">
+    <meta name="author" content="ITDC SYSTEMS DEVELOPMENT SERVICES">
+    <title>LAKBAY | Travel Oriental Mindoro</title>
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="/Content/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" type="image/x-icon" href="img/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png">
+
+    <!-- GOOGLE WEB FONT -->
+    <link href="~/Content/vendor/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+    <!-- BASE CSS -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/css/style.css?v=3" rel="stylesheet">
+    <link href="~/Content/css/vendors.css" rel="stylesheet">
+
+    <!-- YOUR CUSTOM CSS -->
+    <link href="~/Content/css/custom.css" rel="stylesheet">
+    <link href="~/Content/css/custom for mobile.css" rel="stylesheet">
+
+    <link href="~/Content/css/slick.css" rel="stylesheet">
+    <link href="~/Content/css/slick-theme.css" rel="stylesheet">
+
+    <!-- Modernizr -->
+    <script src="~/Content/js/modernizr.js"></script>
+    <style>
+        .owl-carousel h4 {
+            font-size: 14px !important;
+        }
+
+        .owl-carousel p {
+            font-size: 12px !important;
+        }
+
+        .owl-carousel ul li {
+            font-size: 10px !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="page">
+
+        <header class="header" style="display: none;">
+            <div id="preloader"><div data-loader="circle-side"></div></div><!-- /Page Preload -->
+            <div id="logo">
+                <a href="/Home/">
+                    <img src="~/Content/img/logo-white.png" width="150" alt="logo-white" class="logo_normal">
+                    <img src="~/Content/img/logo.png" width="150" alt="" class="logo_sticky">
+                </a>
+            </div>
+            <ul id="top_menu">
+            </ul>
+            <!-- /top_menu -->
+            <a href="#menu" class="btn_mobile">
+                <div class="hamburger hamburger--spin" id="hamburger">
+                    <div class="hamburger-box">
+                        <div class="hamburger-inner"></div>
+                    </div>
+                </div>
+            </a>
+            <nav id="menu" class="main-menu">
+                <ul>
+                    <li>
+                        <span><a href="/Home/">Home</a></span>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+
+        <main>
+            @RenderBody()
+        </main>
+
+        @Html.Action("MobileFooter", "Menu", new { area = "" })
+
+    </div>
+
+    @Html.Partial("_ModalMessage")
+    <div id="announcement-container"></div>
+
+    <div id="toTop"></div>
+
+    <!-- COMMON SCRIPTS -->
+    <script src="~/Content/js/common_scripts.js"></script>
+    <script src="~/Content/js/main.js"></script>
+    <script src="~/Content/assets/validate.js"></script>
+
+
+
+    <!-- Masonry Filtering -->
+    <script src="~/Content/js/isotope.min.js"></script>
+
+    <!-- SPECIFIC SCRIPTS -->
+    <script src="~/Content/js/video_header.js"></script>
+    <script src="~/Content/js/slick.min.js"></script>
+
+    <script type="text/javascript">
+        function invokeCSCode(data) {
+            try {
+                invokeCSharpAction(data);
+            }
+            catch (err) {
+
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(window).on('load', function () {
+            var $container = $('.isotope-wrapper');
+            $container.isotope({ itemSelector: '.isotope-item', layoutMode: 'masonry' });
+        });
+
+        $('.filters_listing').on('click', 'input', 'change', function () {
+            var selector = $(this).attr('data-filter');
+            $('.isotope-wrapper').isotope({ filter: selector });
+        });
+    </script>
+
+    <script>
+
+        var bgColor = window.getComputedStyle(document.getElementsByTagName('main')[0], null).getPropertyValue("background-color");
+        $('body').css({ 'background-color': bgColor });
+
+
+    </script>
+
+    @RenderSection("scripts", required: false)
+
+    <!-- Map -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBePsuAk6MI1aS351hp5rGuyjYz0ABQfc"></script>
+    <script src="~/Content/js/map_single_hotel.js"></script>
+    <script src="~/Content/js/infobox.js"></script>
+</body>
+</html>

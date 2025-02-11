@@ -1,0 +1,11 @@
+{
+   "applinks": {
+     "apps": [],
+     "details": [
+       {
+         "appID": "F2DZBYG7L2.ph.travelorientalmindoro.ios",
+         "paths": [ "/places/details/", "/places/details/*"]
+       }
+     ]
+   }
+}

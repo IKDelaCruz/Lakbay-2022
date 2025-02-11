@@ -1,0 +1,113 @@
+﻿
+@using Project.Models;
+@using Web.Utilities;
+
+@{
+    ViewBag.Title = "Explore";
+    int userId = ViewBag.UserId;
+}
+
+<style>
+    .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px !important;
+        margin-left: -15px !important;
+    }
+
+    .flex-item {
+        position: relative;
+        height: 100%;
+        min-height: 75px;
+        text-align: center;
+        margin-left: 7.5px;
+        margin-right: 7.5px;
+        margin-bottom: 15px;
+        flex: 1 1 30%; /*grow | shrink | basis */
+    }
+
+        .flex-item span {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: center !important;
+            height: 100% !important;
+            width: 100% !important;
+            text-transform: uppercase;
+            color: black;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .flex-item.bg-01 {
+            background: #b0ce67 url(../../../../Content/img/pattern_1.svg) center bottom repeat-x;
+            background-size: cover;
+        }
+
+        .flex-item.bg-02 {
+            background: #b0ce67 url(../../../../Content/img/pattern_1.svg) center bottom repeat-x;
+            background-size: cover;
+        }
+
+        .flex-item.bg-03 {
+            background: #b0ce67 url(../../../../Content/img/pattern_1.svg) center bottom repeat-x;
+            background-size: cover;
+        }
+
+        .flex-item.bg-04 {
+            background: #b0ce67 url(../../../../Content/img/pattern_1.svg) center bottom repeat-x;
+            background-size: cover;
+        }
+
+        .flex-item.bg-05 {
+            background: #b0ce67 url(../../../../Content/img/pattern_1.svg) center bottom repeat-x;
+            background-size: cover;
+        }
+
+        .flex-item.bg-06 {
+            /*background: #b0ce67 url(../../../../Content/img/pattern_1.svg) center bottom repeat-x;*/
+            background-size: cover;
+        }
+</style>
+
+<section class="hero_in  cart_section start_bg_zoom">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>Contact Us</h1>
+        </div>
+
+    </div>
+</section>
+
+<div class="container add_top_15 container-custom">
+
+
+
+
+    <div class="flex-container add_bottom_15">
+        <a href="javascript:;" class="flex-item item-1 bg-01 btn-navigate-to" link-value="@((int)Enums.CategoryTypeEnum.Attraction)"><span>attractions</span></a>
+        <a href="javascript:;" class="flex-item item-1 bg-02 btn-navigate-to" link-value="@((int)Enums.CategoryTypeEnum.Shop)"><span>shopping</span></a>
+        <a href="javascript:;" class="flex-item item-1 bg-03 btn-navigate-to" link-value="@((int)Enums.CategoryTypeEnum.Restaurant)"><span>food &amp; dining</span></a>
+        <a href="javascript:;" class="flex-item item-2 bg-04 btn-navigate-to" link-value="@((int)Enums.CategoryTypeEnum.Accommodation)"><span>accommodation</span></a>
+        <a href="javascript:;" class="flex-item item-2 bg-05 btn-navigate-to" link-value="@((int)Enums.CategoryTypeEnum.Recreation)"><span>recreations</span></a>
+        <a href="javascript:;" class="flex-item item-2 bg-06 btn-navigate-to" link-value="@(0)"><span>&nbsp;</span></a>
+    </div>
+
+    @Html.Action("Dives", "Widgets", new { id = 0, userId = userId, area = "mobile" })
+
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            $(document).on('click', '.btn-navigate-to', function (e) {
+                var value = $(this).attr('link-value');
+                if (parseInt(value) > 0) {
+                    invokeCSCode('type:isCategoryType|value:' + value + '|function:viewall');
+                }
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,80 @@
+﻿@model Web.ViewModel.PlaceDetailViewModel
+@using Project.Models.Models;
+
+@{
+    ViewBag.Title =  Model.Place.Title ?? "Municipality";
+    ViewBag.URL = Request.Url.AbsoluteUri;
+    Layout = "~/Views/Shared/_PlacesVideoLayout.cshtml";
+}
+<style>
+    .hero_single.version_2:before {
+        background: url(/Content/img/uploads/@Model.Place.HomeThumbnail) center center no-repeat !important;
+    }
+</style>
+<section class="hero_single version_2">
+    <div class="wrapper">
+        <div class="container">
+            <h3>WELCOME TO @Model.Place.Title</h3>
+            <p>Explore attractions, hotels, restaurants, and shops</p>
+            <form action="/Places/Search">
+                <div id="custom-search-input">
+                    <div class="input-group">
+                        <input type="text" class=" search-query" placeholder="Ex. Tours, Hotels ...">
+                        <input type="hidden" name="cityId" class=" search-query" value="@Model.Place.ChildId">
+                        <input type="submit" class="btn_search" value="Search">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<div class="container container-custom margin_60_35">
+    <div class="mb-2 d-block d-lg-none">
+        <button type="button" class="btn btn-success" onclick="goBack()">❮ Back</button>
+    </div>
+
+    <h1 class="">@Model.Place.Title</h1>
+    <p class="text-justify">@Model.Place.Description</p>
+    <div class="grid mb-4">
+        <div class="magnific-gallery">
+            @if (Model.Images != null)
+            {
+                foreach (PlaceImagesDto t in Model.Images)
+                {
+                    //<a class="popup-youtube" href="http://www.youtube.com/watch?v=0O2aH4XLbto">Open YouTube video</a>
+                    if (t.Type == Project.Models.Enums.PlaceImagesType.YoutubeURL)
+                    {
+                        var thumbnail = t.YoutubeThumbnail;
+                        if (!string.IsNullOrEmpty(t.Filename))
+                        {
+                            thumbnail = Model.CDNHOST + t.Filename.Replace(".jpg", "_thumb.jpg");
+                        }
+                        <a class="mfp-iframe" href="@t.YoutubeUrl">
+                            <img src="@thumbnail" class="mb-2" width="160" height="90" loading="lazy">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Model.CDNHOST@t.Filename" class="mb-2" title="@t.ImageText">
+                            <img src="@Model.CDNHOST@t.Filename.Replace(".jpg", "_thumb.jpg")" width="160" height="90" class="mb-2 " loading="lazy">
+                        </a>
+                    }
+
+                }
+            }
+        </div>
+    </div>
+
+    @Html.Action("AttractionsWidget", "Places", new { id = @Model.Place.ChildId })
+
+    @Html.Action("AccomodationsWidget", "Places", new { id = @Model.Place.ChildId })
+
+    @Html.Action("RestaurantsWidget", "Places", new { id = @Model.Place.ChildId })
+
+    @Html.Action("ShopsWidget", "Places", new { id = @Model.Place.ChildId })
+
+    @Html.Action("RecreationsWidget", "Places", new { id = @Model.Place.ChildId })
+
+    @*@Html.Action("HomeWidget", "Festivals")*@
+</div>

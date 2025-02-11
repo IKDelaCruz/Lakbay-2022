@@ -1,0 +1,63 @@
+﻿
+@model Web.ViewModel.PlaceHomeViewModel
+@using Project.Models;
+@using Project.Models.Models;
+@using Web.Utilities;
+
+@{
+    Layout = "";
+}
+
+<style>
+    .owl-dots {
+        display: none;
+    }
+</style>
+
+@if (Model.Places != null)
+{
+    <div class="add_bottom_30 mt-3 margin_60_35">
+
+        <div class="grid mb-4">
+            <div class="row">
+                <h5 class="col-6">@ViewBag.MainTitle</h5>
+
+                @*<a class="col-6 text-right" href="javascript:;">
+                    View All <i class="fa fa-chevron-right"></i>
+                </a>*@
+            </div>
+        </div>
+
+        <div class="">
+            <div id="place_owl_carousel" class="owl-carousel owl-theme">
+                @foreach (PlaceDto t in Model.Places)
+                {
+                    var url = Url.Action("details", "goto", new { id = t.Id, userId = Model.UserId, area= "mobile" });
+                    <div class="item" style="width: 100%; background-color: white;">
+                        <div class="box_grid">
+                            <a href="@url" class="grid_item">
+                                <figure style="height: 100% !important;">
+                                    <img src="@(Model.CDNHOST + (t.HomeThumbnail.Replace(".jpg", "_thumb.jpg")))" class="img-fluid" alt="" loading="lazy" width="400" height="200">
+                                    <div class="info">
+                                        <em>@t.Title</em>
+                                    </div>
+                                </figure>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+}
+
+<script>
+
+    function EventNavigate(url) {
+        if (url !== undefined && url !== "") {
+            invokeCSCode('type:isURL|value:' + url + '|function:');
+        }
+    }
+
+</script>

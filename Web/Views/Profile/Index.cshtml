@@ -1,0 +1,194 @@
+﻿@model Web.ViewModel.ProfileViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ProfileLayout.cshtml";
+}
+<style>
+ 
+</style>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Profile</a>
+            </li>
+            <li class="breadcrumb-item active">Details</li>
+        </ol>
+
+        @if (!string.IsNullOrEmpty(ViewBag.Message))
+        {
+            <div class="row">
+                <div class="col-8">
+                    <div class="alert alert-success alert-dismissible fade show " role="alert">
+                        @ViewBag.Message
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="box_general padding_bottom">
+
+                    @using (Html.BeginForm("Index", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.HiddenFor(s => s.Id);
+                        @Html.HiddenFor(s => s.UserId);
+                        @Html.HiddenFor(s => s.Guid);
+                        @Html.HiddenFor(s => s.Dto.Address);
+                        @Html.HiddenFor(s => s.Dto.ProfilePictureUrl);
+                        <div class="header_box version_2">
+                            <h2><i class="fa fa-user"></i>Profile details</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <a class="profile-popup-link" href='@(Url.Action("ProfilePicture", "Profile", new { guid = Model.Guid, isThumbnail = false, area = "" }))'>
+                                    <div>
+                                        <img src="@(Url.Action("ProfilePicture", "Profile", new { guid = Model.Guid, isThumbnail = true, area = "" }))"
+                                             class="img-fluid img-thumbnail" alt="" loading="lazy" style="height: 75px; width: 75px; border-radius: 50%; ">
+                                    </div>
+                                </a>
+
+                                <div class="form-group">
+                                    <label>Upload Profile Pic:</label>
+                                    <div class="">
+                                        @Html.TextBoxFor(m => m.UploadProfilePic, new { type = "file", accept = "image/*" })
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-12 add_top_30">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            @Html.TextBoxFor(s => s.FullName, new { @class = "form-control", placeholder = "Full Name" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /row-->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Mobile Number</label>
+                                            @Html.TextBoxFor(s => s.MobileNumber, new { @class = "form-control", placeholder = "Your Mobile Number" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            @Html.TextBoxFor(s => s.Email, new { @type = "email", @class = "form-control", placeholder = "Your Email" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /row-->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Country</label>
+                                            @Html.DropDownListFor(s => s.Country, Model.GetCountries(), "", new { @id = "dd-country", @class = "form-control", placeholder = "Your Mobile Number" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>City</label>
+                                            @Html.DropDownListFor(s => s.City, Model.GetCities(), "", new { @id = "dd-city", @class = "form-control", placeholder = "Your Mobile Number" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /row-->
+                            </div>
+                        </div>
+                        <p><button class="btn_1 medium">Save</button></p>
+                    }
+
+                </div>
+                <!-- /box_general-->
+                <!-- /row-->
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid-->
+</div>
+<!-- /.container-wrapper-->
+
+
+@section scripts{
+
+
+    <script>
+        
+        function changeImgSize() {
+            var img = this.content.find('img');
+            img.css('max-height', '400px');
+            img.css('width', 'auto');
+            img.css('max-width', 'auto');
+        }
+        function closePopup() {
+            $.magnificPopup.close();
+        }
+     
+        $('.profile-popup-link').magnificPopup({
+            type: 'image',
+            closeOnContentClick: true,
+            image: {
+            },
+            callbacks: {
+                resize: changeImgSize,
+                imageLoadComplete: changeImgSize,
+                change: changeImgSize
+            }
+
+        });
+        function GetCountry() {
+            return $('#dd-country').val();
+        }
+        $(document).ready(function () {
+
+            $('#dd-country').on("change", function () {
+                $.ajax({
+                    type: 'POST',
+                    cache: true,
+                    contentType: "application/json",
+                    dataType: 'json',
+                    data: JSON.stringify({ Country: GetCountry() }),
+                    url: '/Profile/GetCities',
+                    success: function (result) {
+                        $("#dd-city").empty();
+                        $.each(result, function (i, item) {
+                            var selected = "";
+                            if (item.Selected) {
+                                selected = 'selected=selected';
+                            }
+                            $("#dd-city").append('<option ' + selected + '  value="' + item.Value + '">' +
+                                item.Text + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+
+                    }
+                });
+                event.preventDefault(event);
+            })
+
+            //$('#dd-country').select2({
+            //    selectOnClose: true,
+            //    theme: "bootstrap"
+            //});
+            //$('#dd-city').select2({
+            //    selectOnClose: true,
+            //    theme: "bootstrap",
+            //    ajax: {
+            //        url: '/GetCities?country=' + GetCountry,
+
+            //    }
+            //});
+        });
+    </script>
+
+}

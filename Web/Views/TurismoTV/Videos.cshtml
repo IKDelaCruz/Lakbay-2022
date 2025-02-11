@@ -1,0 +1,80 @@
+﻿@model Web.ViewModel.PlaceDetailViewModel
+@using Project.Models.Models;
+@using Web.Utilities;
+
+@{
+    ViewBag.Title = "Turismo TV";
+ ViewBag.URL = Request.Url.AbsoluteUri;
+    Layout = "~/Views/Shared/_PlacesLayout.cshtml";
+}
+
+<style>
+    .cart_section {
+        background: #477d47 url(@Model.CDNHOST@(Model.Place.Type.ToString() + ".png")) center bottom repeat-x !important;
+        color: rgba(255, 255, 255, 0.7);
+    }
+</style>
+<link href="~/Content/css/blog.css" rel="stylesheet">
+<section class="hero_in  cart_section start_bg_zoom">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>@Model.Place.Title</h1>
+        </div>
+
+    </div>
+</section>
+<div class="bg_color_1">
+
+    <!-- /container -->
+    <div class="container margin_60_35">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class=" min-height-650">
+                    <h1 class="font-weight-bold text-success">TurismoTV</h1>
+                    <p>#LakbayOrientalMindoro #OrientalMindoroItoAngGustoKo</p>
+                    <div class="magnific-gallery ">
+                        <div class="row">
+                            @if (Model.Images != null)
+                            {
+                            foreach (PlaceImagesDto t in Model.Images)
+                            {
+                            <div class="col-lg-4 ">
+                                <div class="box_grid ">
+
+                                    <figure>
+
+                                        @if (t.Type == Project.Models.Enums.PlaceImagesType.YoutubeURL)
+                                        {
+
+                                        <a class="mfp-iframe" href="https://www.youtube.com/watch?v=@(t.YouTubeId)">
+                                            <img src="@Model.CDNHOST@t.Filename.Replace(" .jpg", "_thumb.jpg" )">
+                                        </a>
+                                        }
+
+                                    </figure>
+                                    <div class="wrapper">
+                                        <span>  <i class="ti-location-pin"></i> @t.ImageText</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+
+        $(".singlepost img").addClass("img-fluid");
+
+    });
+</script>

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Project.Models.Models.PlaceDto>
+
+@{
+    var cdnhost = System.Configuration.ConfigurationManager.AppSettings["CDNHOST"];
+}
+
+@if (Model != null && Model.Any())
+{
+    foreach (var t in Model.OrderBy(a => a.ParentName).ThenBy(a => a.Title))
+    {
+        var url = Url.Action("Index", "AssignedPlace", new { area = "mobileadmin", guid = t.GUID });
+        <div class="col-12">
+            <div class="box_grid">
+                <a href="@url" class="btn-navigate-details grid_item">
+                    <figure class="home-widget" style="background-image: url(@(cdnhost + (t.HomeThumbnail.Replace(".jpg", "_thumb.jpg")))); ">
+
+                        <div class="score"><strong>#@(t.ParentName.ToString().ToUpper())</strong></div>
+                        <div class="info">
+                            <h3 class="text-white">@t.Title</h3>
+                            <span>@t.CompleteAddress</span>
+                        </div>
+                    </figure>
+                </a>
+            </div>
+        </div>
+    }
+}
+else
+{
+
+    <div class="col-12">
+
+        <div class="alert alert-success alert-dismissible fade show" style="padding: .75rem 1.25rem;" role="alert">
+            No locations found.
+        </div>
+
+    </div>
+}

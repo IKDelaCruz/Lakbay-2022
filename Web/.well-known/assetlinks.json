@@ -1,0 +1,20 @@
+[
+	{
+	  "relation": ["delegate_permission/common.handle_all_urls"],
+	  "target": {
+		"namespace": "android_app",
+		"package_name": "app.travelorientalmindoro.ph",
+		"sha256_cert_fingerprints":
+		["CB:50:FB:22:AF:A5:F8:49:B7:E7:8B:73:AE:CA:BA:02:36:AB:2D:47:DA:18:DE:76:74:6D:66:A6:CB:07:20:A8"]
+	  }
+	},
+	{
+	  "relation": ["delegate_permission/common.handle_all_urls"],
+	  "target": {
+		"namespace": "android_app",
+		"package_name": "app.travelorientalmindoro.ph",
+		"sha256_cert_fingerprints":
+		["0D:1A:A7:37:87:BA:0A:3E:B9:15:E3:10:A3:2D:12:D3:C3:CC:47:D3:DD:66:5B:C9:30:8F:21:9B:37:B7:5E:1E"]
+	  }
+	}
+]

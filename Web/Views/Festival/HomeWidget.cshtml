@@ -1,0 +1,58 @@
+﻿
+@model Web.ViewModel.PlaceHomeViewModel
+@using Project.Models.Models;
+@using Web.Utilities;
+@{
+    ViewBag.Title = "Festival";
+}
+
+
+
+
+<div class="bg-white">
+    <div class="container container-custom margin_80_0 container-fullwidth pb-5">
+        <div class="main_title_2">
+            <span><em></em></span>
+            <h3>Festivals</h3>
+            <p>Catch a glimpse of Oriental Mindoro’s colorful culture</p>
+        </div>
+        <div class="row ">
+
+            @if (Model.Places != null)
+            {
+                foreach (PlaceDto t in Model.Places)
+                {
+                    <div class="col-lg-4  isotope-item popular">
+                        <div class="box_grid box_grid_height">
+                            <figure>
+                                @*<a href="#0" class="wish_bt"></a>*@
+                                <a href="/Festival/Details/@t.Id"><img src="@(Model.CDNHOST + (t.HomeThumbnail.Replace(".jpg", "_thumb.jpg")))" class="img-fluid" alt="" loading="lazy"><div class="read_more"><span>Read more</span></div></a>
+                                <small>@t.ParentName</small>
+                            </figure>
+                            <div class="wrapper">
+                                <h3><a href="/Festival/Details/@t.Id">@t.Title</a></h3>
+                                <p class="">
+                                    <i class="ti-pin "></i> @(t.ParentName.ToUpper())    <i class="icon-calendar"></i> @t.PublishedDate.ToString("MMMM dd")
+                                </p>
+
+
+
+                                <p class="text-justify">@t.Description.TruncateLongString(200)</p>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                }
+            }
+            <!-- /box_news -->
+            <!-- /box_news -->
+        </div>
+        <!-- /row -->
+        <p class="btn_home_align"><a href="/Festival" class="btn_1 rounded">View all</a></p>
+    </div>
+    <!-- /container -->
+</div>
+<!-- /bg_color_1 -->

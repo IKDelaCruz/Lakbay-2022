@@ -1,0 +1,181 @@
+﻿@model Web.ViewModel.PlaceHomeViewModel
+@using Project.Models.Models;
+@using Web.ViewModel;
+@using Web.Utilities;
+@{
+    ViewBag.Title = "Bookmarks";
+    Layout = "~/Views/Shared/_ProfileLayout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Profile</a>
+            </li>
+            <li class="breadcrumb-item active">Favorites</li>
+        </ol>
+        @if (!string.IsNullOrEmpty(ViewBag.Message))
+        {
+            <div class="row">
+                <div class="col-8">
+                    <div class="alert alert-success alert-dismissible fade show " role="alert">
+                        @ViewBag.Message
+                    </div>
+                </div>
+            </div>
+        }
+        @using (Html.BeginForm("ChangePassword", "Profile", FormMethod.Post))
+        {
+            <!-- /box_general-->
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="box_general padding_bottom">
+                        <div class="header_box version_2">
+                            <h2><i class="fa fa-heart-o"></i>Favorites</h2>
+                        </div>
+                        <div>
+                            @*@if (Model.PlacesViewModel == null || Model.PlacesViewModel.Count() == 0)
+                                {
+
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="alert alert-success alert-dismissible fade show " role="alert">
+                                                <strong>No Favorites to display.</strong> To add your favorite place, search for places then click Add To Favorites button.
+                                            </div>
+                                        </div>
+                                    </div>
+                                }*@
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <table id="example" class="" style="width:100%; height:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /row-->
+
+        }
+
+    </div>
+    <!-- /.container-fluid-->
+</div>
+<!-- /.container-wrapper-->
+
+
+
+
+@section scripts{
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <script>
+        function FavoritesToggle(button) {
+            var id = $(button).attr('t-id');
+            var userid = $(button).attr('t-userid');
+            var liked = !$(button).hasClass('liked');
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ToggleFavorites", "FavoritesApi")?userid=' + userid + '&id=' + id + '&liked=false',
+                dataType: "json",
+                contentType: "application/json",
+                success: function (result) {
+                    RefreshView();
+                }
+            });
+        }
+    </script>
+
+
+    <script>
+        var tableElementId = '#example';
+        var emptyTableString =
+			 ' <div class="row">'
+			 +'  <div class="col-12">'
+			 +'       <div class="alert alert-success alert-dismissible fade show " role="alert">'
+			 +'          <strong>No Favorites to display.</strong> To add your favorite place, search for places then click Add To Favorites button.'
+			 +'       </div>'
+			 +'   </div>'
+			 +' </div>'
+            ;
+        var requestUrl = '@Url.Action("FavoritesDatatable", "FavoritesApi")';
+        var requestData = function (d) {
+			d.userid = @Model.UserId;
+        };
+        var processing = '<div><i class="fa fa-spinner fa-spin fa-2x fa-fw"></i></div>';
+        var tdClassname = 'm-0 p-0';
+        var dom = '<"top">tr<"bottom"p>';
+        var searching = false;
+        function Template(full) {
+
+
+
+              var temp =
+                  '<div class="list_general"><ul><li>'
+                + ' <div class="row">'
+                + '	    <figure>'
+                + ' 		<img src="%-imgsrc-%" class="" alt="" loading="lazy">'
+                + '	    </figure>'
+                + ' 	<ul class="buttons" style="top: 10px;">'
+                + '	    	<li>'
+                + '	    		<a href="%-href-%" class="btn_1 bg-warning" ><i class="fa fa-fw fa-eye"></i> View</a>'
+                + '	    		<a href="javascript:;" class="btn_1 bg-danger delete wishlist_close" t-userid="%-userId-%" t-id="%-id-%" onclick="FavoritesToggle(this)"><i class="fa fa-fw fa-times-circle-o"></i> Remove </a>'
+                + '	    	</li>'
+                + '	    </ul>'
+                + ' </div>'
+                + '	<small>%-parentName-%</small>'
+                + '	<h4><a href="%-href-%">%-title-%</a></h4>'
+                + '	<p class="text-justify">%-desc-%</p>'
+
+                + '</li></ul></div>'
+            ;
+
+            temp = temp
+                .replace(/%-id-%/g, full.Id)
+                .replace(/%-parentName-%/g, full.ParentName)
+                .replace(/%-href-%/g, full.href)
+                .replace(/%-userId-%/g, full.UserId)
+                .replace(/%-userid-%/g, full.UserId)
+                .replace(/%-desc-%/g, full.Description)
+                .replace(/%-title-%/g, full.Title)
+                .replace(/%-favoritesClass-%/g, full.FavoritesClass)
+                .replace(/%-imgsrc-%/g, full.imgSrc)
+                ;
+            return temp;
+        }
+    </script>
+
+    <script type="text/javascript" src="~/Scripts/datatable-script.js?2"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            PARAMS.init(
+                tableElementId,
+                emptyTableString,
+                requestUrl,
+                requestData,
+                Template,
+                processing,
+                tdClassname,
+                dom,
+                searching
+            );
+        });
+    </script>
+}

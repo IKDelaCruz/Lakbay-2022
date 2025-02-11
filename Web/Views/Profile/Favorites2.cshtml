@@ -1,0 +1,126 @@
+﻿@model Web.ViewModel.PlaceHomeViewModel
+@using Project.Models.Models;
+@using Web.ViewModel;
+@using Web.Utilities;
+@{
+    ViewBag.Title = "Bookmarks";
+    Layout = "~/Views/Shared/_ProfileLayout.cshtml";
+}
+
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Profile</a>
+            </li>
+            <li class="breadcrumb-item active">Travel History</li>
+        </ol>
+        @if (!string.IsNullOrEmpty(ViewBag.Message))
+        {
+            <div class="row">
+                <div class="col-8">
+                    <div class="alert alert-success alert-dismissible fade show " role="alert">
+                        @ViewBag.Message
+                    </div>
+                </div>
+            </div>
+        }
+        @using (Html.BeginForm("ChangePassword", "Profile", FormMethod.Post))
+        {
+            <!-- /box_general-->
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="box_general padding_bottom">
+                        <div class="header_box version_2">
+                            <h2><i class="fa fa-heart-o"></i>Favorites</h2>
+                        </div>
+                        <div>
+                            @if (Model.PlacesViewModel == null || Model.PlacesViewModel.Count() == 0)
+                            {
+
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="alert alert-success alert-dismissible fade show " role="alert">
+                                            <strong>No Favorites to display.</strong> To add your favorite place, search for places then click Add To Favorites button.
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col-12">
+
+
+                                        <div class="list_general">
+                                            <ul>
+                                                @if (Model.PlacesViewModel != null)
+                                                {
+                                                    foreach (PlaceDto t in Model.PlacesViewModel)
+                                                    {
+                                                        var showFavorites = Model.UserId > 0;
+                                                        var favoritesClass = (t as PlaceViewModel)?.IsLiked ?? false ? "liked" : "";
+                                                        <li>
+                                                            <figure>
+                                                                <img src="@(Model.CDNHOST + (t.HomeThumbnail.Replace(".jpg", "_thumb.jpg")))" class="" alt="" loading="lazy">
+                                                            </figure>
+                                                            <small>@t.ParentName</small>
+                                                            <h4><a href="/Places/Details/@t.Id">@t.Title</a></h4>
+                                                            <p class="text-justify">@t.Description</p>
+                                                            
+                                                            <ul class="buttons">
+                                                                <li>
+                                                                    @*<a href="javascript:;" class="wish_bt @favoritesClass" t-userid="@Model.UserId" t-id="@t.Id" onclick="FavoritesToggle(this)"></a>*@
+                                                                    <a href="/Places/Details/@t.Id" class="btn_1 bg-warning" ><i class="fa fa-fw fa-eye"></i> View</a>
+                                                                    <a href="javascript:;" class="btn_1 bg-danger delete wishlist_close" t-userid="@Model.UserId" t-id="@t.Id" onclick="FavoritesToggle(this)"><i class="fa fa-fw fa-times-circle-o"></i> Remove </a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    }
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /row-->
+
+        }
+
+    </div>
+    <!-- /.container-fluid-->
+</div>
+<!-- /.container-wrapper-->
+
+
+
+
+@section scripts{
+    <script>
+        function FavoritesToggle(button) {
+            var id = $(button).attr('t-id');
+            var userid = $(button).attr('t-userid');
+            var liked = !$(button).hasClass('liked');
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ToggleFavorites", "FavoritesApi")?userid=' + userid + '&id=' + id + '&liked=false',
+                dataType: "json",
+                contentType: "application/json",
+                success: function (result) {
+
+
+                }
+            });
+        }
+    </script>
+}

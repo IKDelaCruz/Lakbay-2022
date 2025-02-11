@@ -1,0 +1,259 @@
+﻿@using Project.Models.Models.UserModels;
+@model IEnumerable<Web.ViewModel.UserUploadFileViewModel>
+
+@{
+    ViewBag.Title = "User Upload Files";
+    Layout = "~/Views/Shared/_MobileLayoutLite.cshtml";
+    var userid = TempData.Peek("UserId");
+    var isFromIos = TempData.Peek("IsFromIOS");
+    var showAddButton = Convert.ToBoolean(TempData.Peek("ShowAddButton") ?? "");
+}
+
+<link href="~/Content/css/admin.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+
+<style>
+    /* Apply this to your `table` element. */
+    #page {
+        border-collapse: collapse;
+    }
+
+        /* And this to your table's `td` elements. */
+        #page td {
+            padding: 0;
+            margin: 0;
+        }
+
+        #page tr {
+            padding: 0;
+            margin: 0;
+        }
+
+    button.mfp-close {
+        top: 40px !important;
+        background-color: rgba(0,0,0,0.5);
+        font-size: 30px;
+    }
+
+    @@media(max-width: 480px){
+        button.mfp-close {
+            font-size: 7vw;
+            height: 10vw;
+            width: 10vw;
+        }
+
+    }
+</style>
+
+@if (showAddButton)
+{
+    <div class="col-12 mt-2 mb-2">
+        <button id="btn-add-file" class="btn_1" style="width: 100%;" onclick="UserAddNewFile('userupload/add?userGuid=@userid.ToString()&isfromios=false')">
+            <i class="fa fa-plus"></i> &nbsp;&nbsp;&nbsp; Upload New Document
+        </button>
+    </div>
+}
+
+<div class="row col-12 m-0 p-0 mb-2 min-height-450 ">
+
+    @if (Model.Count() == 0)
+    {
+        <div class="col-12 mt-2">
+            <div class="col-12">
+                <div class="alert alert-success alert-dismissible fade show " role="alert">
+                    No file(s) uploaded.
+                </div>
+            </div>
+        </div>
+    }
+    @if (Model != null && Model.Count() > 0)
+    {
+        <table id="table1" class="table borderless">
+            <thead>
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Web.ViewModel.UserUploadFileViewModel t in Model.OrderByDescending(a => a.DateUploaded))
+                {
+                    <tr>
+                        <td>
+                            <div @*class="col-xl-6 col-lg-6 col-md-6 isotope-item"*@>
+                                <div class="">
+                                    <div class="">
+                                        <div class="list_general p-3 ">
+                                            <ul>
+                                                <li @*onclick="UserAddNewFile('userupload/details?guid=@t.Guid.ToString()&isfromios=false')"*@>
+
+                                                    <table style="width: 100%;">
+                                                        <tr style="background-color: transparent !important;">
+                                                            <td style="border-top: 0;">
+                                                                <figure onclick="OpenFile('@t.Path', '@t.Filename', '@t.FileExtension')" @*onclick="UserAddNewFile('userupload/details?guid=@t.Guid.ToString()&isfromios=false')"*@>
+                                                                    @switch (t.FileExtension)
+                                                                    {
+                                                                        case ".jpg":
+                                                                        case ".jpeg":
+                                                                        case ".png":
+                                                                        case ".gif":
+                                                                            <a class="popup-img" href='@t.imgUrl'>
+
+                                                                                <img src="@t.imgUrl"
+                                                                                     class="img-fluid img-thumbnail" alt="" loading="lazy">
+
+                                                                            </a>
+                                                                            break;
+                                                                        case ".pdf":
+                                                                            <img style="width: 100% !important;" src="~/Content/img/icon_pdf.png" class="" alt="" loading="lazy">
+                                                                            break;
+                                                                        default:
+                                                                            <img style="width: 100% !important;" src="~/Content/img/icon_file.png" class="" alt="" loading="lazy">
+                                                                            break;
+                                                                    }
+                                                                </figure>
+                                                            </td>
+                                                            <td style="border-top: 0;">
+                                                                @if (showAddButton)
+                                                                {
+                                                                    <div style="float: right;">
+                                                                        <a href="javascript:;" class="btn_1 bg-danger delete wishlist_close" t-id="@t.Guid" onclick="Delete(this)"><i class="fa fa-fw fa-times-circle-o"></i> Remove </a>
+                                                                    </div>
+                                                                }
+
+                                                                <small onclick="OpenFile('@t.Path', '@t.Filename', '@t.FileExtension')">@t.DateUploaded.ToLongDateString() &gt; @t.DateUploaded.ToShortTimeString()</small>
+                                                                <p onclick="OpenFile('@t.Path', '@t.Filename', '@t.FileExtension')" class="mb-0">@t.Type.ToString().Replace("_", " ")</p>
+                                                                <p onclick="OpenFile('@t.Path', '@t.Filename', '@t.FileExtension')" class="text-justify">Remarks: @t.Remarks</p>
+
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+    }
+</div>
+
+
+<div class="modal text-center" id="profile-picture-modal" style="height: 100%; z-index: 999999;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <img src="" id="profile-image-container" style="max-height: 90vh; max-width: 100%;" title="" />
+        </div>
+
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/vendor/jquery.magnific-popup.min.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>*@
+    <script>
+        function changeImgSize() {
+            //var img = this.content.find('img');
+            //img.css('max-height', '400px');
+            //img.css('width', 'auto');
+            //img.css('max-width', 'auto');
+        }
+        function closePopup() {
+            $.magnificPopup.close();
+        }
+        $('.popup-img').magnificPopup({
+            type: 'image',
+            closeOnContentClick: true,
+            image: {
+            },
+            callbacks: {
+                resize: changeImgSize,
+                imageLoadComplete: changeImgSize,
+                change: changeImgSize
+            }
+
+        });
+
+        $(document).ready(function () {
+
+            $('#table1').css('display', 'table');
+            var table = $('#table1').DataTable({
+                "ordering": false,
+                "info": false,
+                "searching": false,
+                "bLengthChange": false,
+                "pageLength": 5,
+                "language": {
+                    "emptyTable": "No file(s) uploaded."
+                }
+            });
+            $('#table1_wrapper').addClass('col-12 m-0 p-0');
+
+            table.on('page.dt', function () {
+                $('html, body').animate({
+                    scrollTop: $(".dataTables_wrapper").offset().top
+                }, 'slow');
+            });
+        });
+
+        function OpenFile(path, filename, extension) {
+
+            switch (extension) {
+                case ".jpg":
+                case ".jpeg":
+                case ".png":
+                case ".gif":
+
+                    $('#profile-image-container').attr('src', path);
+                    $('#img-id').attr('src', path);
+                   // $('#profile-picture-modal').modal('show');
+
+                    break;
+                case ".pdf":
+                default:
+                    //var link = document.createElement("a");
+                    //link.setAttribute('download', filename);
+                    //link.href = path;
+                    //document.body.appendChild(link);
+                    //link.click();
+                    //link.remove();
+
+                    if (path !== "") {
+                        invokeCSCode('type:isExternalURL|value:' + path + '|function:');
+                    }
+
+                    break;
+            }
+
+        }
+
+        function UserAddNewFile(value) {
+            if (value !== "") {
+                invokeCSCode('type:isURL|value:' + value + '|function:');
+            }
+        }
+         function Delete(button) {
+            var id = $(button).attr('t-id');
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Delete", "UserUpload", new { area = "mobile" })?guid=' + id,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (result) {
+                    location.reload();
+                }
+            });
+        }
+
+    </script>
+}

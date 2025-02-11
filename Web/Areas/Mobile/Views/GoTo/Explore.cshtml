@@ -1,0 +1,157 @@
+﻿
+@using Project.Models;
+@using Web.Utilities;
+
+@{
+    ViewBag.Title = "Explore";
+    Layout = "~/Views/Shared/_MobileLayoutLite.cshtml";
+    int userId = ViewBag.UserId;
+}
+
+<style>
+    .items {
+        text-align: center;
+        padding: 5px;
+        text-decoration: none;
+    }
+
+        .items div {
+            /*border: 1px solid green;*/
+            border-radius: 10px;
+            background-color: #eeffe0;
+            height: 75px;
+            padding: 20px 0;
+        }
+
+        .items em {
+            width: 100%;
+            font-size: 20px;
+        }
+
+        .items span {
+            font-size: 12px;
+            color: black;
+            text-transform: capitalize;
+        }
+
+    .owl-dots {
+        display: none;
+    }
+</style>
+
+<section class="hero_single version_2" style="height: 50vh">
+    <div class="wrapper">
+        <div class="container">
+            <h6 style="color: white;">WELCOME TO ORIENTAL MINDORO</h6>
+            <p>Explore attractions, hotels, restaurants and shops</p>
+           
+            @*<button onclick="goshop('https://shopmore.travelorientalmindoro.ph')" class="bg-success p-2 pr-3 pl-3 user-select-none" style="color:white !important; font-weight:lighter"><i class="ti-shopping-cart pr-2 "></i>Visit Online Store</button>*@
+       
+
+        </div>
+    </div>
+</section>
+
+<div class="add_top_15">
+    <div class="card">
+        <div class="card-body" style="padding: 10px 20px;">
+            <div class="row">
+                <a href="javascript:;" class="items col-4 btn-navigate-to" link-value="@((int)Enums.CategoryTypeEnum.Attraction)"><div><em class="fas fa-ticket-alt"></em><span>Attraction</span></div></a>
+                <a href="javascript:;" class="items col-4 btn-navigate-to" link-value="@((int)Enums.CategoryTypeEnum.Shop)"><div><em class="fas fa-store"></em><span>shopping</span></div></a>
+                <a href="javascript:;" class="items col-4 btn-navigate-to" link-value="@((int)Enums.CategoryTypeEnum.Restaurant)"><div><em class="fas fa-utensils"></em><span>food &amp; dining</span></div></a>
+                <a href="javascript:;" class="items col-4 btn-navigate-to" link-value="@((int)Enums.CategoryTypeEnum.Accommodation)"><div><em class="fas fa-bed"></em><span>accommodation</span></div></a>
+                <a href="javascript:;" class="items col-4 btn-navigate-to" link-value="@((int)Enums.CategoryTypeEnum.Recreation)"><div><em class="fas fa-hiking"></em><span>recreation</span></div></a>
+                <a href="javascript:;" class="items col-4 btn-navigate-to" link-value="@((int)Enums.CategoryTypeEnum.DiveShops)">
+                    <div>
+                        <em class="fas "><img src="~/Content/img/diving.png" height="20"></em>
+                        <span>diving</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container add_top_15 container-custom">
+    @Html.Action("Events", "Widgets", new { id = userId, area = "mobile" })
+</div>
+
+<div id="announcement-container"></div>
+
+
+
+@section scripts{
+    <script type="text/javascript" src="~/Scripts/js.cookie.min.js"></script>
+    <script>
+        function goshop(url) {
+            //invokeCSCode('type:gotoshop|value:' + url + '|function:');
+            invokeCSCode('type:isExternalLink|value:' + url + '|function:');
+        }
+        $(document).ready(function () {
+
+            $(document).on('click', '.btn-navigate-to', function (e) {
+                var value = $(this).attr('link-value');
+                if (parseInt(value) > 0) {
+                    invokeCSCode('type:isCategoryType|value:' + value + '|function:viewall');
+                }
+            });
+
+            var cookie = Cookies.get('lakbayAnnouncementShown');
+            if (cookie != 'true') {
+
+                 $.ajax({
+                    url: '@Url.Action("ShowAnnouncement", "Menu", new { area = "" })',
+                    data: { mobileView: true },
+                    type: 'get',
+                    success: function (result) {
+                        $('#announcement-container').html(result);
+                        Cookies.set('lakbayAnnouncementShown', 'true', {expires: 0.5})
+                    }
+                });
+            }
+
+
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            $(document).on('click', '.btn-goshop', function (e) {
+                var value = $(this).attr('link-value');
+                if (value !== "") {
+                    invokeCSCode('type:isExternalLink|value:' + value + '|function:');
+                }
+            });
+
+        });
+        $(document).ready(function () {
+            $('#explore_event_carousel').owlCarousel({
+                center: true,
+                items: 3,
+                loop: false,
+                margin: 15,
+                autoplay: false,
+
+                //autoplayTimeout: 2000,
+                //autoplayHoverPause: true,
+
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    767: {
+                        items: 2
+                    },
+                    1000: {
+                        items: 3
+                    },
+                    1400: {
+                        items: 4
+                    }
+                }
+            });
+        });
+
+    </script>
+}

@@ -1,0 +1,382 @@
+﻿@model Web.ViewModel.PlaceDetailViewModel
+@using Project.Models.Models;
+
+@{
+    ViewBag.Title = "Destination";
+    var bgPath = Model.CDNHOST + Model.Place.HomeThumbnail.Replace(".jpg", "_thumb.jpg");
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+<style>
+    .hero_single.version_2:before {
+        background: url( @bgPath ) center center no-repeat;
+        background-size: cover;
+    }
+    .mfp-counter {
+        font-size: 0;
+    }
+</style>
+<script>
+    var mapslatitude = '@Model.Place.MapsLatitude';
+    var mapslongtitude = '@Model.Place.MapsLongtitude';
+
+     var
+        mapObject,
+        markers = [],
+        markersData = {
+            'Marker': [
+                {
+                                type_point: '@(Model.Place.CompleteAddress?.Trim())',
+                                name: '@(Model.Place.Title?.Trim())',
+                                location_latitude: mapslatitude,
+                                location_longitude: mapslongtitude,
+
+                                rate: '#TRAVELORIENTALMINDORO',
+                                name_point: '@(Model.Place.Title?.Trim()) ',
+                                get_directions_start_address: '13.427361048959744, 121.19417572449319',
+                                phone: '@(Model.Place.ContactNumber?.Trim())'
+                }
+            ]
+
+        };
+</script>
+
+<section class="hero_single version_2" style="height: 25vh">
+    <div class="wrapper">
+        <div class="container">
+            @*<div style="position: absolute; bottom:15px; border-radius: 15px; background-color: rgba(0,0,0,0.7); padding: 15px;">
+                    <h6 class="m-0" style="color: white;">@Model.Place.Title</h6>
+                </div>*@
+            @*<p>@Model.Place.Title</p>*@
+        </div>
+    </div>
+</section>
+
+<div class="bg_color_1">
+
+    <div class="container margin_60_35 ">
+
+        @{
+            var favoritesClass = "far";
+            if (Model.IsFavorite)
+            {
+                favoritesClass = "fas";
+            }
+        }
+        <div class="mb-4  " style="width: 100%;">
+            <button class="btn float-right green" t-userid="@Model.UserId" t-id="@Model.Place.Id" onclick="Share(this)"><i class="fas fa-share-alt"></i></button>
+            @if (Model.UserId > 0)
+            {
+                <button class="btn float-right" t-userid="@Model.UserId" t-id="@Model.Place.Id" onclick="FavoritesToggle(this)"><i class="@favoritesClass fa-heart green"></i></button>
+            }
+
+
+        </div>
+
+        @*@if (Model.IsFavorite)
+            {
+                <div class="mb-4" style="width: 100%;">
+                    <button id="btn-remove-to-favourite" class="btn btn-secondary" style="width: 100%;">
+                        Remove from Favorites
+                    </button>
+                </div>
+            }
+            else
+            {
+                <div class="mb-4" style="width: 100%;">
+                    <button id="btn-add-to-favourite" class="btn_1" style="width: 100%;">
+                        <i class="fa fa-star"></i> &nbsp;&nbsp;&nbsp; Add to Favorites
+                    </button>
+                </div>
+            }*@
+
+        @if (Model.Images != null)
+        {
+            int counter = 0;
+            var file = Model.Images.FirstOrDefault();
+
+            <div class="grid mb-4">
+                <h5 class="font-weight-bold lobster">@Model.Place.Title</h5>
+                <div class="row">
+                    <h5 class="col-6">Gallery</h5>
+
+                    @if (Model.Images.Count > 2 && file != null)
+                    {
+                        <a class="col-6 text-right" href="javascript:triggerMagnifier();">
+                            View All <i class="fa fa-chevron-right"></i>
+                        </a>
+
+                        <script>
+                            //const { ajax } = require("jquery");
+
+                            function triggerMagnifier() {
+                                $('#click-image').trigger('click');
+                            }
+
+                            /* END EXTERNAL SOURCE */
+                            /* BEGIN EXTERNAL SOURCE */
+                            function name171() {
+                                PlaceDetailsDialPhone(/************************/)
+                            }
+                            /* END EXTERNAL SOURCE */
+                            /* BEGIN EXTERNAL SOURCE */
+                            function name172() {
+                                PlaceDetailsSendEmail(/****************/)
+                            }
+                        </script>
+                    }
+                </div>
+
+                <div class="magnific-gallery row">
+                    @foreach (PlaceImagesDto t in Model.Images)
+                    {
+                        counter++;
+                        if (t.Type == Project.Models.Enums.PlaceImagesType.YoutubeURL)
+                        {
+                            var imgsrc = t.YoutubeThumbnail;
+                            if (!string.IsNullOrEmpty(t.Filename))
+                            {
+                                imgsrc = Model.CDNHOST + t.Filename;
+                            }
+                            <a id="@(counter == 1 ? "click-image" : "")" class="mfp-iframe col-6" href="@t.YoutubeUrl" @(counter > 2 ? "hidden" : "")>
+                                <img src="@imgsrc" class="mb-2 " style="width: 100%;">
+                            </a>
+                        }
+                        else
+                        {
+                            <a id="@(counter == 1 ? "click-image" : "")" href="@Model.CDNHOST@t.Filename" class="mb-2 col-6" title="@t.ImageText" @(counter > 2 ? "hidden" : "")>
+                                <img src="@Model.CDNHOST@t.Filename.Replace(".jpg", "_thumb.jpg")" class="mb-2 " style="width: 100%;">
+                            </a>
+                        }
+                    }
+                </div>
+            </div>
+
+        }
+
+        <p>@Model.Place.Description</p>
+
+        <h5>Contact Details</h5>
+
+        <div class="row mt-3">
+            <div class="col-lg-6">
+                @*<p class="mb-0">
+                        <i class="ti-user mr-2"></i><strong> @(Model.Place.ContactPerson?.ToUpper())</strong>
+                    </p>*@
+                <p class="mb-0">
+
+
+                    @if (Model.Place.ContactNumber?.IndexOf(',') > 0)
+                    {
+                        var nos = Model.Place.ContactNumber.Split(',');
+                        foreach (string s in nos)
+                        {
+                            if (!string.IsNullOrEmpty(s))
+                            {
+                                <a href="tel:@s"><i class="ti-mobile mr-2"></i>@s  </a>
+                                <br />
+                            }
+
+                        }
+
+
+                    }
+                    else
+                    {
+                        if (!String.IsNullOrEmpty(Model.Place.ContactNumber))
+                        {
+                            <a href="tel:@Model.Place.ContactNumber"><i class="ti-mobile mr-2"></i>@Model.Place.ContactNumber</a>
+                            <br />
+                        }
+
+                    }
+
+                </p>
+
+
+            </div>
+            <div class="col-lg-6">
+                @if (!string.IsNullOrEmpty(Model.Place.Email))
+                {
+                    <p class="mb-0">
+                        @if (Model.Place.Email?.IndexOf(',') > 0)
+                        {
+                            var nos = Model.Place.Email.Split(',');
+                            foreach (string s in nos)
+                            {
+                                if (!string.IsNullOrEmpty(s))
+                                {
+                                    <a href="mailto:@s"><i class="ti-email mr-2"></i>@s  </a>
+                                    <br />
+                                }
+
+                            }
+
+
+                        }
+                        else
+                        {
+                            if (!String.IsNullOrEmpty(Model.Place.ContactNumber))
+                            {
+                                <a href="mailto:@Model.Place.Email"><i class="ti-email mr-2"></i> @Model.Place.Email</a>
+                                <br />
+                            }
+
+                        }
+
+
+
+                    </p>
+                }
+
+                @if (!string.IsNullOrEmpty(Model.Place.Url))
+                {
+                    <p>
+                        <a href="@Model.Place.Url"><i class="ti-world mr-2"></i> Visit Website</a>
+                    </p>
+                }
+
+
+                @if (!string.IsNullOrEmpty(Model.Place.ShopUrl))
+                {
+                    @*<p>
+                        <a href="#"  onclick="goshop('@Model.Place.ShopUrl')"  class="bg-success p-1 pr-2 pl-0 user-select-none" style="color:white !important;"><i class="ti-shopping-cart mr-2"></i> Visit Online Store</a>
+                       
+                    </p>*@
+                }
+            </div>
+        </div>
+
+        <h5 class="mt-3">Location</h5>
+        <p>@Model.Place.CompleteAddress</p>
+        <p><strong>Directions : </strong>@Model.Place.Directions <a href="https://www.google.com/maps/dir/?api=1&destination=@Model.Place.MapsLatitude,@Model.Place.MapsLongtitude">View on Google Map</a></p>
+
+        <div id="map" class="map map_single add_bottom_15"></div>
+
+        <div id="reviews-container">
+            @*@Html.Action("Review", "Widgets", new { id = Model.Place.Id, userId = Model.UserId, area = "mobile" })*@
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <script>
+        function FavoritesToggle(button) {
+            var id = $(button).attr('t-id');
+            var userid = $(button).attr('t-userid');
+            var icon = $(button).children().first();
+            var liked = !$(icon).hasClass('fas');
+
+            if (!liked) {
+                $(icon).removeClass('fas');
+                $(icon).addClass('far');
+            } else {
+                $(icon).removeClass('far');
+                $(icon).addClass('fas');
+            }
+            $(button).blur();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ToggleFavorites", "Api")?userid=' + userid + '&id=' + id + '&liked='+liked,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (result) {
+                }
+            });
+        }
+        function Share(button) {
+            var id = $(button).attr('t-id');
+            var userid = $(button).attr('t-userid');
+
+            var url = '@Url.Action("Details", "Places", new { area = "", id="-id-", userid=0}, this.Request.Url.Scheme)'.replace(/-id-/,id);
+            if (url !== "") {
+                invokeCSCode('type:isShare|value:' + url + '|function:');
+            }
+
+        }
+
+        $(document).on('click', '#btn-add-to-favourite, #btn-remove-to-favourite', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '@Url.Action("addtofavourites", "goto", new {area = "mobile"})',
+                type: 'post',
+                data: {
+                    placeId: '@Model.Place.Id',
+                    userId: '@Model.UserId',
+                    isFavourite: '@Model.IsFavorite'
+                },
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        });
+
+
+
+        $('#place_owl_carousel').owlCarousel({
+            center: false,
+            items: 3,
+            loop: true,
+            margin: 15,
+            autoplay: false,
+
+            //autoplayTimeout: 2000,
+            //autoplayHoverPause: true,
+
+            responsive: {
+                0: {
+                    items: 2.15
+                },
+                767: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
+                },
+                1400: {
+                    items: 4
+                }
+            }
+        });
+    </script>
+
+    <script>
+        function PlaceDetailsDialPhone(value) {
+            if (value !== "") {
+                invokeCSCode('type:isPhoneNumber|value:' + value + '|function:');
+            }
+        }
+
+        function PlaceDetailsSendEmail(value) {
+            if (value !== "") {
+                invokeCSCode('type:isEmail|value:' + value + '|function:');
+            }
+        }
+
+        function goshop(url) {
+            //invokeCSCode('type:gotoshop|value:' + url + '|function:');
+            invokeCSCode('type:isExternalLink|value:' + url + '|function:');
+        }
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("Review", "Widgets", new { id = Model.Place.Id, userId = Model.UserId, area = "mobile" })',
+                type: 'get',
+                data: { },
+                success: function (data) {
+                    $("#reviews-container").html(data);
+                    REVIEW_INIT(
+                        '@Model.Place.Id',
+                        '@Model.UserId'
+                    );
+                }
+            });
+        });
+
+    </script>
+}

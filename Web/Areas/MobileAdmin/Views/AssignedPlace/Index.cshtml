@@ -1,0 +1,128 @@
+﻿@model Project.Models.Models.PlaceDto
+@using Project.Models.Models;
+@using Web.Utilities;
+@using Newtonsoft.Json;
+@{
+    Layout = "~/Views/Shared/_MobileLayoutLite.cshtml";
+
+    var cdnhost = System.Configuration.ConfigurationManager.AppSettings["CDNHOST"];
+}
+
+<style>
+    footer, #toTop {
+        display: none !important;
+    }
+
+    .btn_1 {
+        border: 1px solid #086908;
+        padding: 15px 0px;
+    }
+
+        .btn_1.outline_1 {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #086908;
+        }
+
+        .btn_1.red {
+            background-color: red;
+            border: 1px solid red;
+        }
+
+    .min-height-450 {
+        min-height: 90vh !important;
+    }
+</style>
+
+<div class="isotope-wrapper add_top_15">
+    @if (Model == null)
+    {
+        <div class="min-height-450" style="display: flex;">
+            <table class="table table-borderless" style="flex: 1;">
+                <tr style="height: 80%;">
+                    <td style="vertical-align: middle;">
+                        <div class="col-12">
+
+                            <div class="alert alert-success alert-dismissible fade show" style="padding: .75rem 1.25rem;" role="alert">
+
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <td style="width: 55px; vertical-align: middle;">
+                                            <img src="~/Content/img/icon_error_location.png" height="50" width="50" />
+                                        </td>
+                                        <td style="vertical-align: middle;">
+                                            <strong class="text-center">No location assigned.</strong> Please click select location button and select your assigned location.
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 20%;">
+                    <td style="text-align: center;">
+                        <a href="@Url.Action("ListPlaces")" class="btn_1" style="width: 200px;">Select Location</a>
+                        @*<button class="btn_1 invokeSelectPlace" style="width: 150px;">Select Location</button>*@
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="col-12 min-height-450">
+            <div class="row">
+                <div class="col-12 mb-4 text-center">
+                    <img src="@(cdnhost + Model.HomeThumbnail.Replace(".jpg", "_thumb.jpg"))" title="@Model.Title" height="150" />
+                </div>
+
+                <div class="col-12 mb-2">
+                    <label>Location</label>
+                    <input type="text" class="form-control" disabled value="@Model.Title" />
+                </div>
+
+                <div class="col-12 mb-2">
+                    <label>Address</label>
+                    <textarea class="form-control" disabled>@Model.CompleteAddress</textarea>
+                </div>
+
+                <div class="col-12 mt-3 mb-4">
+                    <div style="display: flex;">
+                        <div style="flex: 1 auto;">
+                            <a href="@Url.Action("ListPlaces")" class="btn_1 outline_1" style="width: 100%;">Select Location</a>
+                            @*<button class="btn_1 outline_1 invokeSelectPlace" style="width: 100%;">Select Location</button>*@
+                        </div>
+                        <div style="flex: 1 auto; padding-left: 5px;">
+                            <button class="btn_1" id="btn_save" style="width: 100%;">Save Location</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            var isFocused = true;
+
+            $(document).on('click', '.invokeSelectPlace', function () {
+                invokeCSCode('type:gotoPlaces|value:|function:');
+            });
+
+            $(document).on('click', '#btn_save', function () {
+                var data = '@(JsonConvert.SerializeObject(Model))';
+                invokeCSCode('type:savePlace|value:' + data + '|function:');
+            });
+
+
+        });
+
+    </script>
+}

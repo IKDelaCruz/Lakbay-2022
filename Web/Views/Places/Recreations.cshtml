@@ -1,0 +1,163 @@
+﻿@model Web.ViewModel.PlaceHomeViewModel
+@using Project.Models.Models;
+@using Web.Utilities;
+@{
+    ViewBag.Title = "Recreations - " + Model.ParentName ?? "";
+    ViewBag.URL = Request.Url.AbsoluteUri;
+    Layout = "~/Views/Shared/_PlacesLayout.cshtml";
+}
+<style>
+    .cart_section {
+        background: #477d47 url(@Model.CDNHOST@(Model.Type.ToString() + ".png")) center bottom repeat-x !important;
+        color: rgba(255, 255, 255, 0.7);
+    }
+</style>
+<section class="hero_in  cart_section start_bg_zoom">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>@(String.IsNullOrEmpty(Model.ParentName) ? "Recreation" : Model.ParentName )</h1>
+        </div>
+
+    </div>
+</section>
+<!--/hero_in-->
+
+<!--<div class="filters_listing sticky_horizontal">
+    <div class="container">
+        <ul class="clearfix">
+            <li>
+                <div class="switch-field">
+                    <input type="radio" id="all" name="listing_filter" value="all" checked data-filter="*" class="selected">
+                    <label for="all">All</label>
+                    <input type="radio" id="popular" name="listing_filter" value="popular" data-filter=".popular">
+                    <label for="popular">Popular</label>
+                    <input type="radio" id="latest" name="listing_filter" value="latest" data-filter=".latest">
+                    <label for="latest">Latest</label>
+                </div>
+            </li>
+
+
+        </ul>
+    </div>-->
+    <!-- /container -->
+<!--</div>-->
+<!-- /filters -->
+
+<div class="collapse" id="collapseMap">
+    <div id="map" class="map"></div>
+</div>
+<!-- End Map -->
+
+<div class="container mt-4">
+    <div class="col-lg-12">
+        <form action="/Places/Search" class="row no-gutters custom-search-input-2 inner">
+            <div class="col-lg-10">
+                <div class="form-group">
+                    <input name="searchKeyword" class="form-control" type="text" placeholder="What are you looking for...">
+                    <i class="icon_search"></i>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <input type="submit" class="btn_search" value="Search">
+            </div>
+        </form>
+        <!-- /row -->
+    </div>
+    <!-- /custom-search-input-2 -->
+
+    <div class="isotope-wrapper">
+        <div class="row">
+
+            @if (Model.Places != null)
+            {
+                foreach (PlaceDto t in Model.Places)
+                {
+                    <div class="col-xl-4 col-lg-6 col-md-6 isotope-item popular">
+                        <div class="box_grid  recreation_box_grid_height">
+                            <figure>
+                                @*<a href="#0" class="wish_bt"></a>*@
+                                <a href="/Places/Details/@t.Id">
+                                    <img src="@(Model.CDNHOST + (t.HomeThumbnail.Replace(".jpg", "_thumb.jpg")))" class="img-fluid" alt="" loading="lazy">
+                                    <div class="read_more"><span>Read more</span></div>
+                                </a>
+                                <small>@t.ParentName</small>
+                            </figure>
+                            <div class="wrapper">
+                                <h3><a href="/Places/Details/@t.Id">@t.Title</a></h3>
+                                @if (!String.IsNullOrEmpty(t.Description))
+                                {
+                                    <p>@t.Description.TruncateLongString(100)</p>
+                                }
+
+                                <p>
+                                    <i class="ti-pin mr-2"></i> @(t.CompleteAddress?.ToUpper())
+                                </p>
+                                <p>
+                                    @if (!String.IsNullOrEmpty(t.Url))
+                                    {
+                                        <a href="@t.Url" target="_blank"><i class="ti-world mr-2"></i>Visit Website</a>
+                                        <br />
+                                    }
+                                    @if (!String.IsNullOrEmpty(t.ShopUrl))
+                                    {
+                                        @*<a href="@t.ShopUrl" target="_blank"><i class="ti-shopping-cart mr-2"></i>Visit Online Store</a>
+                                        <br />*@
+                                    }
+                                    @if (!String.IsNullOrEmpty(t.Email))
+                                    {
+                                        <a href="mailto:@t.Email" target="_blank"><i class="ti-email mr-2"></i>@(t.Email.TruncateEmail(30))</a>
+                                        <br />
+                                    }
+
+                                    @if (!String.IsNullOrEmpty(t.ContactNumber))
+                                    {
+                                        if (t.ContactNumber?.IndexOf(',') > 0)
+                                        {
+                                            var nos = t.ContactNumber.Split(',');
+                                            foreach (string s in nos)
+                                            {
+                                                if (s.Length > 0)
+                                                {
+                                                    <a href="tel:@s" target="_blank"><i class="ti-mobile mr-2"></i>@s </a>
+                                                    <br />
+                                                    break;
+                                                }
+                                            }
+
+
+                                        }
+                                        else
+                                        {
+                                            <a href="tel:@t.ContactNumber" target="_blank"><i class="ti-mobile mr-2"></i>@t.ContactNumber</a>
+                                            <br />
+                                        }
+                                    }
+
+                                </p>
+                            </div>
+                            @*<ul>
+                                    <li><i class="icon_compass"></i> @t.DistanceFromManila kms</li>
+                                    <li><div class="score"><span>Superb<em>@t.TotalPlaces Places</em></span></div></li>
+                                </ul>*@
+                        </div>
+                    </div>
+
+
+
+                }
+            }
+
+            <!-- /box_grid -->
+            <!-- /box_grid -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /isotope-wrapper -->
+
+    @*<p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>*@
+
+</div>
+<!-- /container -->
+
+@Html.Action("Policy", "Menu")

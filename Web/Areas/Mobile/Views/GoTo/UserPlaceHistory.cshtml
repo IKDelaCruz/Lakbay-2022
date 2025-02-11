@@ -1,0 +1,98 @@
+﻿@using Project.Models.Models.UserModels;
+@model Web.ViewModel.UserPlaceVisitHistoryViewModel
+
+@{
+    ViewBag.Title = "History";
+    Layout = "~/Views/Shared/_MobileLayoutLite.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<style>
+    /* Apply this to your `table` element. */
+    #page {
+        border-collapse: collapse;
+    }
+
+        /* And this to your table's `td` elements. */
+        #page td {
+            padding: 0;
+            margin: 0;
+        }
+
+        #page tr {
+            padding: 0;
+            margin: 0;
+        }
+</style>
+
+<div class="row col-12 m-0 p-0 mb-2 min-height-450 ">
+    @if (Model.List.Count() == 0)
+    {
+        <div class="col-12 mt-2  ">
+            <div class="col-12">
+                <div class="alert alert-success alert-dismissible fade show " role="alert">
+                    No visit history
+                </div>
+            </div>
+        </div>
+    }
+    @if (Model.List != null && Model.List.Count() > 0)
+    {
+        <table id="table1" class="table borderless">
+            <thead>
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (UserPlaceVisitModel t in Model.List)
+                {
+                    var url = string.Format("goto/destinationdetails?id={0}&userid={1}", t.Place.Id, Model.UserId);
+                    <tr>
+                        <td>
+                            <div @*class="col-xl-6 col-lg-6 col-md-6 isotope-item"*@>
+                                <div class="box_grid">
+
+                                    <div class="wrapper">
+                                        <span>@t.dto.DateVisit.ToLongDateString() &gt; @t.dto.DateVisit.ToShortTimeString()</span><br />
+                                        <span><strong>@t.Place.Title</strong></span><br />
+                                        <span>@t.Place.CompleteAddress</span><br />
+                                        <span>Remarks: @t.dto.Remarks</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+    }
+</div>
+
+@section scripts{
+
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table1').css('display', 'table');
+            var table = $('#table1').DataTable({
+                "ordering": false,
+                "info": false,
+                "searching": false,
+                "bLengthChange": false,
+                "pageLength": 5,
+                "language": {
+                    "emptyTable": "No visit history"
+                }
+            });
+            $('#table1_wrapper').addClass('col-12 m-0 p-0');
+
+            table.on('page.dt', function () {
+                $('html, body').animate({
+                    scrollTop: $(".dataTables_wrapper").offset().top
+                }, 'slow');
+            });
+        });
+    </script>
+}

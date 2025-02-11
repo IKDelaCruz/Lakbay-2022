@@ -1,0 +1,299 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:uwp="using:Syncfusion.XForms.UWP.Buttons">
+
+    <uwp:DisplayModeToVisibilityConverter x:Key="DisplayModeToVisibilityConverter" />
+
+    <Style x:Key="DefaultSfSegmentedViewStyle" TargetType="uwp:SfSegmentedControl" >
+        <Setter Property="BorderBrush" Value="LightGray" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="uwp:SfSegmentedControl">
+                    <Border
+                        x:Name="PART_ViewBorder"
+                        Background="{Binding Path=Background, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                        BorderBrush="{Binding Path=BorderBrush, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                        CornerRadius="{Binding Path=CornerRadius, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                        BorderThickness="{Binding Path=BorderThickness, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" >
+                        
+                            <Grid x:Name="PART_Header"  >
+                                <ScrollViewer x:Name="PART_ScrollViewer" 
+                                              VerticalScrollBarVisibility="Disabled"
+                                              VerticalScrollMode="Disabled"
+                                              HorizontalScrollMode="Enabled"
+                                              HorizontalScrollBarVisibility="Hidden">
+                                    <Grid >
+                                        <Border 
+                                            x:Name="SelectionStrip" 
+                                            HorizontalAlignment="Left" Canvas.ZIndex="1"
+                                            VerticalAlignment="Center"
+                                           />
+                                        <ItemsPresenter />
+                                    </Grid>
+                                </ScrollViewer>
+                            </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource DefaultSfSegmentedViewStyle}" TargetType="uwp:SfSegmentedControl" />
+
+    <Style x:Key="DefaultSfSegmentItemStyle" TargetType="uwp:SfSegmentItem">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="uwp:SfSegmentItem">
+                    <Grid  x:Name="PART_ItemBorder"
+                                 HorizontalAlignment="Stretch"
+                                 Background="Transparent"
+                                 VerticalAlignment="Stretch">
+                       
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock x:Name="PART_Icon" Grid.Row="0"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"  
+                                       Text="{Binding Path=IconFont, RelativeSource={RelativeSource Mode=TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
+                                       FontFamily="{Binding Path=FontIconFontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
+                                       FontSize="{Binding Path=FontIconFontSize, RelativeSource={RelativeSource Mode=TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
+                                       Visibility="{Binding Path=Parent.DisplayMode, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={StaticResource DisplayModeToVisibilityConverter},ConverterParameter=image}"   
+                                 
+                                        />
+                            <TextBlock x:Name="PART_Text" Grid.Row="1"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"   
+                                       Text="{Binding Path=Text, RelativeSource={RelativeSource Mode=TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
+                                       FontStyle="{Binding Path=TitleFontAttributes, RelativeSource={RelativeSource Mode=TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
+                                       FontWeight="{Binding Path=TitleFontWeight, RelativeSource={RelativeSource Mode=TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
+                                       FontFamily="{Binding Path=TitleFontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
+                                       FontSize="{Binding Path=TitleFontSize, RelativeSource={RelativeSource Mode=TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
+                                       Visibility="{Binding Path=Parent.DisplayMode, RelativeSource={RelativeSource Mode=TemplatedParent},Converter={StaticResource DisplayModeToVisibilityConverter},ConverterParameter=text}"   
+                                        />
+                        </StackPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource DefaultSfSegmentItemStyle}" TargetType="uwp:SfSegmentItem" />
+
+    <Style TargetType="uwp:SfCheckBox">
+        <Setter Property="Background" Value="{ThemeResource CheckBoxBackgroundUnchecked}" />
+        <Setter Property="Foreground" Value="{ThemeResource CheckBoxForegroundUnchecked}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource CheckBoxBorderBrushUnchecked}" />
+        <Setter Property="Padding" Value="8,5,0,0" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+        <Setter Property="MinWidth" Value="32" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="UseSystemFocusVisuals" Value="True" />
+        <Setter Property="FocusVisualMargin" Value="-7,-3,-7,-3" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="uwp:SfCheckBox">
+                    <Grid x:Name="RootGrid"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}" >
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CombinedStates">
+                                <VisualState x:Name="UncheckedNormal">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle" Storyboard.TargetProperty="Stroke">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding UncheckedColor, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle" Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0"  Value="{Binding TickColor, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="UncheckedPointerOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle" Storyboard.TargetProperty="Stroke">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding UncheckedColor, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle" Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0"  Value="{Binding TickColor, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="UncheckedDisabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CheckBoxForegroundUncheckedDisabled}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CheckBoxCheckBackgroundStrokeUncheckedDisabled}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CheckBoxCheckBackgroundFillUncheckedDisabled}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="CheckGlyph">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CheckBoxCheckGlyphForegroundUncheckedDisabled}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="CheckedNormal">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle" Storyboard.TargetProperty="Stroke">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding CheckedColor, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle" Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding CheckedColor, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0"  Value="{Binding TickColor, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="CheckedPointerOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle" Storyboard.TargetProperty="Stroke">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding CheckedColor, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle" Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding CheckedColor, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding TickColor, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="CheckedDisabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CheckBoxForegroundCheckedDisabled}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CheckBoxCheckBackgroundStrokeCheckedDisabled}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CheckBoxCheckBackgroundFillCheckedDisabled}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="CheckGlyph">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CheckBoxCheckGlyphForegroundCheckedDisabled}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckGlyph"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="IndeterminateNormal">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle" Storyboard.TargetProperty="Stroke">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding CheckedColor, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle" Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding TickColor, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Glyph">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="&#xE73C;" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="IndeterminatePointerOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle" Storyboard.TargetProperty="Stroke">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding CheckedColor, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle" Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding TickColor, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Glyph">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="&#xE73C;" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="IndeterminateDisabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CheckBoxForegroundIndeterminateDisabled}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="NormalRectangle">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CheckBoxCheckBackgroundStrokeIndeterminateDisabled}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="NormalRectangle">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CheckBoxCheckBackgroundFillIndeterminateDisabled}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="CheckGlyph">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CheckBoxCheckGlyphForegroundIndeterminateDisabled}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Glyph" Storyboard.TargetName="CheckGlyph">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="&#xE73C;"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckGlyph"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid VerticalAlignment="Top" Height="{Binding ControlSize, RelativeSource={RelativeSource TemplatedParent}}" Margin="0,6,0,6" >
+                            <Rectangle x:Name="NormalRectangle"
+                                       Fill="{Binding CheckedColor, RelativeSource={RelativeSource TemplatedParent}}"
+                                       Stroke="{Binding UncheckedColor, RelativeSource={RelativeSource TemplatedParent}}"
+                                       StrokeThickness="{Binding BorderWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                                       UseLayoutRounding="False"
+                                       RadiusX="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}"
+                                       RadiusY="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}"
+                                       Height="{Binding ControlSize, RelativeSource={RelativeSource TemplatedParent}}" 
+                                       Width="{Binding ControlSize, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <FontIcon x:Name="CheckGlyph"
+                                      FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                      Glyph="&#xE001;"
+                                      FontSize="{Binding FontIconSize, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Foreground="{Binding TickColor, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Opacity="0" />
+                        </Grid>
+                        <ContentPresenter x:Name="ContentPresenter"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          ContentTransitions="{TemplateBinding ContentTransitions}"
+                                          Content="{TemplateBinding Content}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Grid.Column="1"
+                                          AutomationProperties.AccessibilityView="Raw"
+                                          TextWrapping="Wrap" 
+                                          Foreground="{TemplateBinding Foreground}"/>
+                    </Grid>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
+

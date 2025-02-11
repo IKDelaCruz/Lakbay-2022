@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="139aa957bbac4984af7d1b7b0fc46379" Name="Diagram1" ZoomLevel="77">
+        <EntityTypeShape EntityType="LakbayDBModel.C__MigrationHistory" Width="1.5" PointX="8.75" PointY="9.625" />
+        <EntityTypeShape EntityType="LakbayDBModel.Announcement" Width="1.5" PointX="8.75" PointY="12.625" />
+        <EntityTypeShape EntityType="LakbayDBModel.AspNetRole" Width="1.5" PointX="5.75" PointY="5.375" />
+        <EntityTypeShape EntityType="LakbayDBModel.AspNetUserClaim" Width="1.5" PointX="10.25" PointY="6.5" />
+        <EntityTypeShape EntityType="LakbayDBModel.AspNetUserLogin" Width="1.5" PointX="10.25" PointY="3.875" />
+        <EntityTypeShape EntityType="LakbayDBModel.AspNetUser" Width="1.5" PointX="8" PointY="4.25" />
+        <EntityTypeShape EntityType="LakbayDBModel.Baranggay" Width="1.5" PointX="1.5" PointY="6" />
+        <EntityTypeShape EntityType="LakbayDBModel.City" Width="1.5" PointX="1.5" PointY="2" />
+        <EntityTypeShape EntityType="LakbayDBModel.CMSUser" Width="1.5" PointX="10.75" PointY="9.625" />
+        <EntityTypeShape EntityType="LakbayDBModel.CMSUserRole" Width="1.5" PointX="10.75" PointY="13.625" />
+        <EntityTypeShape EntityType="LakbayDBModel.Country" Width="1.5" PointX="1.5" PointY="22.625" />
+        <EntityTypeShape EntityType="LakbayDBModel.Favorite" Width="1.5" PointX="6" PointY="13.5" />
+        <EntityTypeShape EntityType="LakbayDBModel.FirebaseUserToken" Width="1.5" PointX="3" PointY="10" />
+        <EntityTypeShape EntityType="LakbayDBModel.Image" Width="1.5" PointX="3.75" PointY="20.375" />
+        <EntityTypeShape EntityType="LakbayDBModel.Log" Width="1.5" PointX="12.75" PointY="3.625" />
+        <EntityTypeShape EntityType="LakbayDBModel.Place" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="LakbayDBModel.PlaceFacility" Width="1.5" PointX="12.75" PointY="6.625" />
+        <EntityTypeShape EntityType="LakbayDBModel.PlaceImage" Width="1.5" PointX="6" PointY="21.625" />
+        <EntityTypeShape EntityType="LakbayDBModel.PlaceReview" Width="1.5" PointX="3" PointY="15.875" />
+        <EntityTypeShape EntityType="LakbayDBModel.Province" Width="1.5" PointX="1.5" PointY="19.375" />
+        <EntityTypeShape EntityType="LakbayDBModel.User" Width="1.5" PointX="0.75" PointY="12.25" />
+        <EntityTypeShape EntityType="LakbayDBModel.UserDetail" Width="1.5" PointX="6" PointY="16.625" />
+        <EntityTypeShape EntityType="LakbayDBModel.UserLinkedAccount" Width="1.5" PointX="3" PointY="27.125" />
+        <EntityTypeShape EntityType="LakbayDBModel.UserPlaceVisitHistory" Width="1.5" PointX="6" PointY="10.375" />
+        <EntityTypeShape EntityType="LakbayDBModel.UserUploadedFile" Width="1.5" PointX="12.75" PointY="9.625" />
+        <EntityTypeShape EntityType="LakbayDBModel.PlaceOperatingHour" Width="1.5" PointX="12.75" PointY="14.625" />
+        <AssociationConnector Association="LakbayDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="LakbayDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="LakbayDBModel.FK_Baranggay_City" />
+        <AssociationConnector Association="LakbayDBModel.FK_Place_Barangay" />
+        <AssociationConnector Association="LakbayDBModel.FK_City_Place" />
+        <AssociationConnector Association="LakbayDBModel.FK_City_Province" />
+        <AssociationConnector Association="LakbayDBModel.FK_Place_ParentCity" />
+        <AssociationConnector Association="LakbayDBModel.FK_Province_Country" />
+        <AssociationConnector Association="LakbayDBModel.FK_Favorites_Place" />
+        <AssociationConnector Association="LakbayDBModel.FK_Favorites_User" />
+        <AssociationConnector Association="LakbayDBModel.FK_FirebaseUserTokens_User" />
+        <AssociationConnector Association="LakbayDBModel.FK_UserDetail_Image" />
+        <AssociationConnector Association="LakbayDBModel.FK_PlaceImages_Place" />
+        <AssociationConnector Association="LakbayDBModel.FK_UserPlaceVisitHistory_Place" />
+        <AssociationConnector Association="LakbayDBModel.FK_PlaceReview_User" />
+        <AssociationConnector Association="LakbayDBModel.FK_UserDetail_User" />
+        <AssociationConnector Association="LakbayDBModel.FK_UserLinkedAccount_User" />
+        <AssociationConnector Association="LakbayDBModel.FK_UserPlaceVisitHistory_User" />
+        <AssociationConnector Association="LakbayDBModel.AspNetUserRoles" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

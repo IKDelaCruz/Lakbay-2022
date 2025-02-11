@@ -1,0 +1,147 @@
+﻿@using Project.Models.Models.UserModels;
+@model Web.ViewModel.UserUploadFileViewModel
+
+@{
+    ViewBag.Title = "User Upload Files";
+    Layout = "~/Views/Shared/_MobileLayoutLiteNoFooter.cshtml";
+
+    var isFromIos = TempData.Peek("IsFromIOS");
+}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<style>
+    /* Apply this to your `table` element. */
+    #page {
+        border-collapse: collapse;
+    }
+
+        /* And this to your table's `td` elements. */
+        #page td {
+            padding: 0;
+            margin: 0;
+        }
+
+        #page tr {
+            padding: 0;
+            margin: 0;
+        }
+</style>
+
+<div class="row col-12 m-0 p-0 mb-2 min-height-450 ">
+
+    @using (Html.BeginForm("JsonAdd", "UserUpload", FormMethod.Post, new { id = "form-upload", enctype = "multipart/form-data", style = "width: 100%;" }))
+    {
+        @Html.HiddenFor(a => a.UserId)
+        @Html.HiddenFor(a => a.UploadBy)
+        @Html.HiddenFor(a => a.Guid)
+        @Html.HiddenFor(a => a.DateUploaded)
+
+        <div class="form-horizontal row" style="padding: 20px;">
+            <div class="form-group col-md-12">
+                <label>ID Type </label>
+                <div class="custom-select-form">
+                    <select name="Type" id="Type" class="wide">
+                        @foreach (var item in Model.Types)
+                        {
+                            <option value="@item.Value" @((int)Model.Type == Convert.ToInt32(item.Value) ? "selected='selected'" : "")>
+                                @item.Text
+                            </option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-md-12">
+                <label>Remarks</label>
+                <textarea name="Remarks" id="Remarks" class="form-control" style="min-height:130px;">@Model.Remarks</textarea>
+            </div>
+
+            <div class="form-group col-md-12">
+                <input type="file" id="File" name="File" />
+            </div>
+
+            <div class="form-group col-md-12 add_top_20">
+                <input type="submit" value="Upload" class="btn_1" id="btn-upload">
+            </div>
+
+        </div>
+
+    }
+
+</div>
+
+@section scripts{
+
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table1').css('display', 'table');
+            var table = $('#table1').DataTable({
+                "ordering": false,
+                "info": false,
+                "searching": false,
+                "bLengthChange": false,
+                "pageLength": 5,
+                "language": {
+                    "emptyTable": "No file(s) uploaded."
+                }
+            });
+            $('#table1_wrapper').addClass('col-12 m-0 p-0');
+
+            table.on('page.dt', function () {
+                $('html, body').animate({
+                    scrollTop: $(".dataTables_wrapper").offset().top
+                }, 'slow');
+            });
+        });
+
+        function UserAddNewFile(value) {
+            if (value !== "") {
+                invokeCSCode('type:isURL|value:' + value + '|function:');
+            }
+        }
+    </script>
+
+    <script>
+        $(document).on('change', '#File', function (e) {
+            if (this.files[0].size > 2097152) {
+                alert("File is too big!");
+                this.value = "";
+                return;
+            };
+        });
+
+        $(document).bind("mobileinit", function () {
+            $.mobile.ajaxEnabled = false;
+        });
+
+        $(document).on('submit', '#form-upload', function (e) {
+            e.preventDefault();
+            $('#btn-upload').prop('disabled', true);
+            var url = $(this).attr('action');
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: url,
+                type: 'post',
+                enctype: 'multipart/form-data',
+                processData: false,  // Important!
+                contentType: false,
+                cache: false,
+                data: formData,
+                success: function (ret) {
+                    var result = JSON.stringify(ret);
+                    invokeCSCode('type:reloadUserUploadPage|value:' + result + '|function:close');
+
+                    $('#btn-upload').prop('disabled', false);
+                },
+                error: function (e) {
+                    var error = JSON.stringify(@(new Project.Models.Models.ReturnValue() { Message = "Unable to upload file." }));
+                    invokeCSCode('type:showMessage|value:' + error + '|function:');
+
+                    $('#btn-upload').prop('disabled', false);
+                }
+            });
+        });
+    </script>
+}
