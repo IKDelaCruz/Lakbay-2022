@@ -1,13 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\ITDC\\Documents\\work\\Lakbay-2022\\Web\\",
+  "WorkspaceRootPath": "C:\\Users\\radov\\Desktop\\Lakbay-2022\\Web\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BC542C51-1C07-40A5-93E8-D4EA8067A2F0}|Web.csproj|c:\\users\\itdc\\documents\\work\\lakbay-2022\\web\\global.asax.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BC542C51-1C07-40A5-93E8-D4EA8067A2F0}|Web.csproj|solutionrelative:global.asax.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C4BD539E-898E-4519-A5E9-DB0BDED16E18}|..\\Project.Repository\\Project.Repository.csproj|c:\\users\\itdc\\documents\\work\\lakbay-2022\\project.repository\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+      "AbsoluteMoniker": "D:0:0:{BC542C51-1C07-40A5-93E8-D4EA8067A2F0}|Web.csproj|c:\\users\\radov\\desktop\\lakbay-2022\\web\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{BC542C51-1C07-40A5-93E8-D4EA8067A2F0}|Web.csproj|solutionrelative:web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     }
   ],
   "DocumentGroupContainers": [
@@ -16,12 +13,12 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "DockedWidth": 1074,
+          "SelectedChildIndex": 13,
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Bookmark",
@@ -29,11 +26,19 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
             },
             {
               "$type": "Bookmark",
@@ -62,13 +67,30 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Web.config",
+              "DocumentMoniker": "C:\\Users\\radov\\Desktop\\Lakbay-2022\\Web\\Web.config",
+              "RelativeDocumentMoniker": "Web.config",
+              "ToolTip": "C:\\Users\\radov\\Desktop\\Lakbay-2022\\Web\\Web.config",
+              "RelativeToolTip": "Web.config",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABgAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-02-13T02:05:21.525Z",
+              "EditorCaption": ""
             }
           ]
         },
         {
-          "DockedWidth": 1508,
-          "SelectedChildIndex": 3,
+          "DockedWidth": 267,
+          "SelectedChildIndex": -1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
@@ -80,31 +102,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Global.asax.cs",
-              "DocumentMoniker": "C:\\Users\\ITDC\\Documents\\work\\Lakbay-2022\\Web\\Global.asax.cs",
-              "RelativeDocumentMoniker": "Global.asax.cs",
-              "ToolTip": "C:\\Users\\ITDC\\Documents\\work\\Lakbay-2022\\Web\\Global.asax.cs",
-              "RelativeToolTip": "Global.asax.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAcwAsAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-11T03:48:31.737Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "app.config",
-              "DocumentMoniker": "C:\\Users\\ITDC\\Documents\\work\\Lakbay-2022\\Project.Repository\\app.config",
-              "RelativeDocumentMoniker": "..\\Project.Repository\\app.config",
-              "ToolTip": "C:\\Users\\ITDC\\Documents\\work\\Lakbay-2022\\Project.Repository\\app.config",
-              "RelativeToolTip": "..\\Project.Repository\\app.config",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2025-02-11T03:36:09.518Z"
             }
           ]
         }
