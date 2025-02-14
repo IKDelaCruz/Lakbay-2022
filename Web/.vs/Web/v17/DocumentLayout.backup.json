@@ -7,7 +7,11 @@
       "RelativeMoniker": "D:0:0:{BC542C51-1C07-40A5-93E8-D4EA8067A2F0}|Web.csproj|solutionrelative:content\\css\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BC542C51-1C07-40A5-93E8-D4EA8067A2F0}|Web.csproj|c:\\users\\karl-\\source\\repos\\lakbay-2022\\web\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "AbsoluteMoniker": "D:0:0:{BC542C51-1C07-40A5-93E8-D4EA8067A2F0}|Web.csproj|C:\\Users\\karl-\\source\\repos\\Lakbay-2022\\Web\\views\\menu\\header.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{BC542C51-1C07-40A5-93E8-D4EA8067A2F0}|Web.csproj|solutionrelative:views\\menu\\header.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BC542C51-1C07-40A5-93E8-D4EA8067A2F0}|Web.csproj|C:\\Users\\karl-\\source\\repos\\Lakbay-2022\\Web\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{BC542C51-1C07-40A5-93E8-D4EA8067A2F0}|Web.csproj|solutionrelative:web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     }
   ],
@@ -66,11 +70,19 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Header.cshtml",
+              "DocumentMoniker": "C:\\Users\\karl-\\source\\repos\\Lakbay-2022\\Web\\Views\\Menu\\Header.cshtml",
+              "RelativeDocumentMoniker": "Views\\Menu\\Header.cshtml",
+              "ToolTip": "C:\\Users\\karl-\\source\\repos\\Lakbay-2022\\Web\\Views\\Menu\\Header.cshtml",
+              "RelativeToolTip": "Views\\Menu\\Header.cshtml",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAswIsAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-13T07:24:04.767Z"
             },
             {
               "$type": "Document",
@@ -80,14 +92,14 @@
               "RelativeDocumentMoniker": "Content\\css\\style.css",
               "ToolTip": "C:\\Users\\karl-\\source\\repos\\Lakbay-2022\\Web\\Content\\css\\style.css",
               "RelativeToolTip": "Content\\css\\style.css",
-              "ViewState": "AgIAAMsLAAAAAAAAAAAuwKENAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAKsbAAAAAAAAAAAuwMYbAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2025-02-13T03:02:06.988Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Web.config",
               "DocumentMoniker": "C:\\Users\\karl-\\source\\repos\\Lakbay-2022\\Web\\Web.config",
               "RelativeDocumentMoniker": "Web.config",

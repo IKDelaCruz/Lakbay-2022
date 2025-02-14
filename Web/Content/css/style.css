@@ -2795,7 +2795,8 @@ a#moveDown {
     -moz-border-radius: 0 3px 3px 0;
     -ms-border-radius: 0 3px 3px 0;
     border-radius: 0 3px 3px 0;
-    background-color: #086908;
+    background-color: #039764; /*086908*/
+    
     margin-right: -1px;
 }
 
@@ -10294,7 +10295,7 @@ figure.home-widget {
 }
 
 .bg_green {
-    background-color: #086908 !important;
+    background-color: #039764 /*086908*/ !important;
 }
 
 .text_white {
