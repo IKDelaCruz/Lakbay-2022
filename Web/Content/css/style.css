@@ -96,7 +96,7 @@
 
         /*First level styles */
         .main-menu > ul > li span > a {
-            color: #086908;
+            color: #ffffff; /*#086908*/
             padding: 0 8px 15px 8px;
             font-size: 14px;
             font-size: 0.875rem;
@@ -109,7 +109,7 @@
 
     header.sticky .main-menu > ul > li span:hover > a {
         opacity: 1;
-        color: #086908;
+        color: #039764;  /*#086908*/
     }
 
     /* Submenu*/
@@ -205,7 +205,7 @@
 
     .main-menu ul ul li:hover > a {
         background-color: #f9f9f9;
-        color: #086908;
+        color: #039764; /*086908*/
         padding-left: 18px;
     }
 }
@@ -2665,7 +2665,7 @@ a#moveDown {
     -moz-border-radius: 0 3px 3px 0;
     -ms-border-radius: 0 3px 3px 0;
     border-radius: 0 3px 3px 0;
-    background-color: #086908;
+    background-color: #039764; /*086908*/
 }
 
     #custom-search-input input[type='submit']:hover {
@@ -2792,7 +2792,8 @@ a#moveDown {
     -moz-border-radius: 0 3px 3px 0;
     -ms-border-radius: 0 3px 3px 0;
     border-radius: 0 3px 3px 0;
-    background-color: #086908;
+    background-color: #039764; /*086908*/
+    
     margin-right: -1px;
 }
 
@@ -8409,7 +8410,7 @@ a.btn_explore {
 }
 
 .bg_color_1 {
-    background-color: #f2f5eb;
+    background-color: #F8F3E3; /*f2f5eb*/
 }
 
 .box_1 {
@@ -10291,7 +10292,7 @@ figure.home-widget {
 }
 
 .bg_green {
-    background-color: #086908 !important;
+    background-color: #039764 /*086908*/ !important;
 }
 
 .text_white {
